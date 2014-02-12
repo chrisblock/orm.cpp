@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="member_types">
+      <UniqueIdentifier>{0063a4c0-30dc-439f-b4d2-cb18043b10c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mapping">
+      <UniqueIdentifier>{165b83d5-4694-4348-854d-779b66fe22ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Expressions">
+      <UniqueIdentifier>{dd55d5f4-529b-45f1-9b63-0fce683236a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sessions">
+      <UniqueIdentifier>{7e9a448e-4d8f-47dd-b304-1810444dc62d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestMemberTypesEntity.h">
+      <Filter>member_types</Filter>
+    </ClInclude>
+    <ClInclude Include="MockDataReader.h" />
+    <ClInclude Include="TestMappingEntity.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMappingEntityMap.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="TestExpressionEntity.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="MockRecord.h" />
+    <ClInclude Include="TestExpressionEntityMap.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="TestExpressionMappingRegistrar.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSessionMappingRegistrar.h">
+      <Filter>Sessions</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSessionEntity.h">
+      <Filter>Sessions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="orm.cpp.tests.cpp" />
+    <ClCompile Include="member_types_tests.cpp">
+      <Filter>member_types</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMemberTypesEntity.cpp">
+      <Filter>member_types</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassMapTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="MockDataReader.cpp" />
+    <ClCompile Include="MakeExpressionTests.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMappingEntity.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMappingEntityMap.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="TestExpressionEntity.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestExpressionEntityMap.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressionOperatorTests.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestExpressionMappingRegistrar.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionFactoryBuilderTests.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSessionMappingRegistrar.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSessionEntity.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

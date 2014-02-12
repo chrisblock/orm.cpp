@@ -1,0 +1,1 @@
+A C++ implementation of a very simple expression-based SQL generation engine to avoid in-line SQL in applications.

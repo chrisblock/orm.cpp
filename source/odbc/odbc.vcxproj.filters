@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="environment.h" />
+    <ClInclude Include="connection.h" />
+    <ClInclude Include="statement.h" />
+    <ClInclude Include="parameter.h" />
+    <ClInclude Include="binary_data.h" />
+    <ClInclude Include="__LOC__.h" />
+    <ClInclude Include="odbc_base.h" />
+    <ClInclude Include="column.h" />
+    <ClInclude Include="case_insensitive.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="environment.cpp" />
+    <ClCompile Include="connection.cpp" />
+    <ClCompile Include="statement.cpp" />
+    <ClCompile Include="parameter.cpp" />
+    <ClCompile Include="binary_data.cpp" />
+    <ClCompile Include="odbc_base.cpp" />
+    <ClCompile Include="column.cpp" />
+    <ClCompile Include="case_insensitive.cpp" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Mapping">
+      <UniqueIdentifier>{475bde6a-fad8-46a9-afc1-4f12c917a87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mapping\ColumnMappers">
+      <UniqueIdentifier>{2471aab4-78ae-4e70-9f1c-ab23d462d78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mapping\ColumnMappers\Impl">
+      <UniqueIdentifier>{f6b3550c-6e74-4b35-a48b-5f6aa5e30726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Expressions">
+      <UniqueIdentifier>{c0864d1a-49c5-41b2-b9dc-5df3ccae7d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Expressions\SqlPredicateBuilders">
+      <UniqueIdentifier>{b6842c9b-2b05-48aa-b38a-f4536879d7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Expressions\SqlPredicateBuilders\Impl">
+      <UniqueIdentifier>{a4db0a00-07d7-4eeb-923f-f5bdceb617de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{0ed43161-0fec-46e4-842c-7b3d9b203a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\Sql">
+      <UniqueIdentifier>{d06d0222-5223-4384-9696-9ee6b11037b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ClassMap.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="IMappingProvider.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="IdColumnBuilder.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerationStrategy.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="IdColumnSpecification.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="IColumnMapper.h">
+      <Filter>Mapping\ColumnMappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="MakeExpression.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryOperators.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpressionOperators.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="GetterMemberExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="IsNullExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ISqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlPredicate.h">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataReader.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="member_types.h" />
+    <ClInclude Include="Guid.h" />
+    <ClInclude Include="Record.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstReferenceSetterConstGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstReferenceSetterGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstReferenceSetterReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstReferenceSetterConstReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstSetterConstGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstSetterGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstSetterReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstSetterConstReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceSetterGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceSetterConstGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceSetterReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceSetterConstReferenceGetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlProjection.h">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseExpression.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstGetterMemberExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceGetterMemberExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstReferenceGetterMemberExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlColumn.h">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionFactory.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionFactoryConfiguration.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionFactoryBuilder.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="MappingRegistrar.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="MappingRegistry.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="IDataReader.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="FromClause.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlTable.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="Query.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="IQuery.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="IdColumnBuilder.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryOperators.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryExpressionSqlPredicateBuilder.cpp">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantExpressionSqlPredicateBuilder.cpp">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="IsNullExpressionSqlPredicateBuilder.cpp">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ISqlPredicateBuilder.cpp">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlPredicate.cpp">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="DataReader.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Guid.cpp" />
+    <ClCompile Include="Record.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="IMappingProvider.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlProjection.cpp">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseExpression.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlColumn.cpp">
+      <Filter>Expressions\SqlPredicateBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressionOperators.cpp">
+      <Filter>Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionFactory.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionFactoryConfiguration.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionFactoryBuilder.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="MappingRegistrar.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="MappingRegistry.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="IDataReader.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="FromClause.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlTable.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="IQuery.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
