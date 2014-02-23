@@ -5,7 +5,7 @@
 #include "MappingRegistrar.h"
 
 SessionFactoryConfiguration::SessionFactoryConfiguration() :
-	  _trusted(false)
+	  _trusted(true)
 {
 }
 
@@ -115,7 +115,9 @@ std::string SessionFactoryConfiguration::BuildConnectionString() const
 
 	if (_driver.empty())
 	{
-		// esplode
+		std::exception e("Driver cannot be empty.");
+
+		throw e;
 	}
 
 	result.append("Driver={");
@@ -124,7 +126,9 @@ std::string SessionFactoryConfiguration::BuildConnectionString() const
 
 	if (_server.empty())
 	{
-		// esplode
+		std::exception e("Server cannot be empty.");
+
+		throw e;
 	}
 
 	result.append("Server=");
@@ -133,7 +137,9 @@ std::string SessionFactoryConfiguration::BuildConnectionString() const
 
 	if (_database.empty())
 	{
-		// esplode
+		std::exception e("Database cannot be empty.");
+
+		throw e;
 	}
 
 	result.append("Database=");
@@ -148,7 +154,9 @@ std::string SessionFactoryConfiguration::BuildConnectionString() const
 	{
 		if (_username.empty() || _password.empty())
 		{
-			// esplode
+			std::exception e("Either trusted connection must be true or you must set the username and password.");
+
+			throw e;
 		}
 
 		result.append("UserName=");

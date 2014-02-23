@@ -23,7 +23,7 @@ namespace odbc
 		parameter &operator =(_In_ const parameter &other);
 
 		std::string get_name() const;
-		void set_name(_In_z_ const char *name);
+		void set_name(_In_ const std::string &name);
 
 		int16_t get_type() const;
 

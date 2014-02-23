@@ -7,7 +7,7 @@
 
 #include "IDataReader.h"
 #include "member_types.h"
-#include "Record.h"
+#include "IRecord.h"
 
 template <typename TEntity, typename TProperty>
 class ConstSetterGetterColumnMapper : public IColumnMapper<TEntity>
@@ -16,7 +16,7 @@ public:
 	typedef typename member_types<TEntity, TProperty>::const_setter const_setter;
 	typedef typename member_types<TEntity, TProperty>::getter getter;
 
-	ConstSetterGetterColumnMapper(const_setter setter, getter getter, const char *columnName) :
+	ConstSetterGetterColumnMapper(const_setter setter, getter getter, const std::string &columnName) :
 		  _getter(getter)
 		, _setter(setter)
 		, _columnName(columnName)
@@ -52,7 +52,7 @@ public:
 		((entity).*(_setter))(value);
 	};
 
-	virtual void WritePropertyValueToRecord(TEntity &entity, Record &record) const
+	virtual void WritePropertyValueToRecord(TEntity &entity, IRecord &record) const
 	{
 		TProperty value = ((entity).*(_getter))();
 

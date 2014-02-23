@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 
+#include "IDataReader.h"
+#include "IRecord.h"
 #include "member_types.h"
 
 template <typename TEntity, typename TProperty>
@@ -50,7 +52,7 @@ public:
 		((entity).*(_setter))(value);
 	};
 
-	virtual void WritePropertyValueToRecord(TEntity &entity, Record &record) const
+	virtual void WritePropertyValueToRecord(TEntity &entity, IRecord &record) const
 	{
 		TProperty value = ((entity).*(_getter))();
 

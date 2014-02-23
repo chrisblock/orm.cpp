@@ -7,7 +7,7 @@
 
 #include "IDataReader.h"
 #include "member_types.h"
-#include "Record.h"
+#include "IRecord.h"
 
 template <typename TEntity, typename TProperty>
 class FieldColumnMapper : public IColumnMapper<TEntity>
@@ -15,7 +15,7 @@ class FieldColumnMapper : public IColumnMapper<TEntity>
 public:
 	typedef typename member_types<TEntity, TProperty>::field field;
 
-	FieldColumnMapper(field field, const char *columnName) :
+	FieldColumnMapper(field field, const std::string &columnName) :
 		  _field(field)
 		, _columnName(columnName)
 	{
@@ -47,7 +47,7 @@ public:
 		((entity).*(_field)) = value;
 	};
 
-	virtual void WritePropertyValueToRecord(TEntity &entity, Record &record) const
+	virtual void WritePropertyValueToRecord(TEntity &entity, IRecord &record) const
 	{
 		TProperty value = ((entity).*(_field));
 

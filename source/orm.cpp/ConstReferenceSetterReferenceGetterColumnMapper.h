@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 
+#include "IDataReader.h"
+#include "IRecord.h"
 #include "member_types.h"
 
 template <typename TEntity, typename TProperty>
@@ -14,7 +16,7 @@ public:
 	typedef typename member_types<TEntity, TProperty>::const_reference_setter const_reference_setter;
 	typedef typename member_types<TEntity, TProperty>::reference_getter reference_getter;
 
-	ConstReferenceSetterReferenceGetterColumnMapper(const_reference_setter setter, reference_getter getter, const char *columnName) :
+	ConstReferenceSetterReferenceGetterColumnMapper(const_reference_setter setter, reference_getter getter, const std::string &columnName) :
 		  _getter(getter)
 		, _setter(setter)
 		, _columnName(columnName)
@@ -50,7 +52,7 @@ public:
 		((entity).*(_setter))(value);
 	};
 
-	virtual void WritePropertyValueToRecord(TEntity &entity, Record &record) const
+	virtual void WritePropertyValueToRecord(TEntity &entity, IRecord &record) const
 	{
 		TProperty value = ((entity).*(_getter))();
 

@@ -27,9 +27,9 @@ protected:
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSix = expr == 6;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSix = expr == 6;
 
 	SqlPredicate predicate = setterGetterIsEqualToSix.GetSqlPredicate(_registry);
 
@@ -39,9 +39,9 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Constant_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSetterGetter = expr == &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterGetter = expr == &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -51,9 +51,9 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Getter_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSetterConstGetter = expr == &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterConstGetter = expr == &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsEqualToSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -63,9 +63,9 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstGetter_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSetterReferenceGetter = expr == &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterReferenceGetter = expr == &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsEqualToSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -75,9 +75,9 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ReferenceGetter_Returns
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSetterConstReferenceGetter = expr == &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterConstReferenceGetter = expr == &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsEqualToSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -87,9 +87,9 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstReferenceGetter_Re
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsNotEqualToSix = expr != 6;
+	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSix = expr != 6;
 
 	SqlPredicate predicate = setterGetterIsNotEqualToSix.GetSqlPredicate(_registry);
 
@@ -99,9 +99,9 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Constant_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsNotEqualToSetterGetter = expr != &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterGetter = expr != &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsNotEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -111,9 +111,9 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Getter_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsNotEqualToSetterConstGetter = expr != &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterConstGetter = expr != &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsNotEqualToSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -123,9 +123,9 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstGetter_ReturnsC
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsNotEqualToSetterReferenceGetter = expr != &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterReferenceGetter = expr != &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsNotEqualToSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -135,9 +135,9 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ReferenceGetter_Retu
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsNotEqualToSetterConstReferenceGetter = expr != &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterConstReferenceGetter = expr != &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsNotEqualToSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -147,9 +147,9 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstReferenceGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanSix = expr < 6;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanSix = expr < 6;
 
 	SqlPredicate predicate = setterGetterIsLessThanSix.GetSqlPredicate(_registry);
 
@@ -159,9 +159,9 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Constant_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanSetterGetter = expr < &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterGetter = expr < &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanSetterGetter.GetSqlPredicate(_registry);
 
@@ -171,9 +171,9 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Getter_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanSetterConstGetter = expr < &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterConstGetter = expr < &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -183,9 +183,9 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstGetter_ReturnsC
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanSetterReferenceGetter = expr < &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterReferenceGetter = expr < &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -195,9 +195,9 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ReferenceGetter_Retu
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanSetterConstReferenceGetter = expr < &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterConstReferenceGetter = expr < &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -207,9 +207,9 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstReferenceGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanOrEqualToSix = expr <= 6;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSix = expr <= 6;
 
 	SqlPredicate predicate = setterGetterIsLessThanOrEqualToSix.GetSqlPredicate(_registry);
 
@@ -219,9 +219,9 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Constant_Re
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanOrEqualToSetterGetter = expr <= &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterGetter = expr <= &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanOrEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -231,9 +231,9 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Getter_Retu
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanOrEqualToSetterConstGetter = expr <= &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterConstGetter = expr <= &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanOrEqualToSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -243,9 +243,9 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanOrEqualToSetterReferenceGetter = expr <= &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterReferenceGetter = expr <= &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanOrEqualToSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -255,9 +255,9 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ReferenceGe
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsLessThanOrEqualToSetterConstReferenceGetter = expr <= &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterConstReferenceGetter = expr <= &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsLessThanOrEqualToSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -267,9 +267,9 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstRefere
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanSix = expr > 6;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSix = expr > 6;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanSix.GetSqlPredicate(_registry);
 
@@ -279,9 +279,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Constant_ReturnsC
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanSetterGetter = expr > &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterGetter = expr > &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanSetterGetter.GetSqlPredicate(_registry);
 
@@ -291,9 +291,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Getter_ReturnsCor
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanSetterConstGetter = expr > &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterConstGetter = expr > &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -303,9 +303,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstGetter_Retur
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanSetterReferenceGetter = expr > &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterReferenceGetter = expr > &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -315,9 +315,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ReferenceGetter_R
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanSetterConstReferenceGetter = expr > &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterConstReferenceGetter = expr > &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -327,9 +327,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstReferenceGet
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanOrEqualToSix = expr >= 6;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSix = expr >= 6;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanOrEqualToSix.GetSqlPredicate(_registry);
 
@@ -339,9 +339,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Constant
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanOrEqualToSetterGetter = expr >= &TestExpressionEntity::SetterGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterGetter = expr >= &TestExpressionEntity::SetterGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanOrEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -351,9 +351,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Getter_R
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanOrEqualToSetterConstGetter = expr >= &TestExpressionEntity::SetterConstGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterConstGetter = expr >= &TestExpressionEntity::SetterConstGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanOrEqualToSetterConstGetter.GetSqlPredicate(_registry);
 
@@ -363,9 +363,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstGet
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanOrEqualToSetterReferenceGetter = expr >= &TestExpressionEntity::SetterReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterReferenceGetter = expr >= &TestExpressionEntity::SetterReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanOrEqualToSetterReferenceGetter.GetSqlPredicate(_registry);
 
@@ -375,9 +375,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Referenc
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsGreaterThanOrEqualToSetterConstReferenceGetter = expr >= &TestExpressionEntity::SetterConstReferenceGetterGetter;
+	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterConstReferenceGetter = expr >= &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
 	SqlPredicate predicate = setterGetterIsGreaterThanOrEqualToSetterConstReferenceGetter.GetSqlPredicate(_registry);
 
@@ -387,9 +387,9 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstRef
 
 TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSixAndTrue = (expr == 6) && true;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndTrue = (expr == 6) && true;
 
 	SqlPredicate predicate = setterGetterIsEqualToSixAndTrue.GetSqlPredicate(_registry);
 
@@ -399,9 +399,9 @@ TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Constant_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, AndOperator_Constant_Exoression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> falseAndSetterGetterIsEqualToSix = false && (expr == 6);
+	Predicate<TestExpressionEntity> falseAndSetterGetterIsEqualToSix = false && (expr == 6);
 
 	SqlPredicate predicate = falseAndSetterGetterIsEqualToSix.GetSqlPredicate(_registry);
 
@@ -411,9 +411,9 @@ TEST_F(ExpressionOperatorTests, AndOperator_Constant_Exoression_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Expression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSixAndSetterGetterNotEqualToFortyTwo = (expr == 6) && (expr != 42);
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndSetterGetterNotEqualToFortyTwo = (expr == 6) && (expr != 42);
 
 	SqlPredicate predicate = setterGetterIsEqualToSixAndSetterGetterNotEqualToFortyTwo.GetSqlPredicate(_registry);
 
@@ -423,9 +423,9 @@ TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Expression_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSixOrTrue = (expr == 6) || true;
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSixOrTrue = (expr == 6) || true;
 
 	SqlPredicate predicate = setterGetterIsEqualToSixOrTrue.GetSqlPredicate(_registry);
 
@@ -435,9 +435,9 @@ TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Constant_ReturnsCorrectPre
 
 TEST_F(ExpressionOperatorTests, OrOperator_Constant_Exoression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> falsOrSetterGetterIsEqualToSix = false || (expr == 6);
+	Predicate<TestExpressionEntity> falsOrSetterGetterIsEqualToSix = false || (expr == 6);
 
 	SqlPredicate predicate = falsOrSetterGetterIsEqualToSix.GetSqlPredicate(_registry);
 
@@ -447,9 +447,9 @@ TEST_F(ExpressionOperatorTests, OrOperator_Constant_Exoression_ReturnsCorrectPre
 
 TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Expression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> setterGetterIsEqualToSixAndOrSetterGetterIsNotEqualToFortyTwo = (expr == 6) || (expr != 42);
+	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndOrSetterGetterIsNotEqualToFortyTwo = (expr == 6) || (expr != 42);
 
 	SqlPredicate predicate = setterGetterIsEqualToSixAndOrSetterGetterIsNotEqualToFortyTwo.GetSqlPredicate(_registry);
 
@@ -459,9 +459,9 @@ TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Expression_ReturnsCorrectP
 
 TEST_F(ExpressionOperatorTests, EqualToOperator_null_Expression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> nullIsEqualToSetterGetter = (nullptr == expr);
+	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (nullptr == expr);
 
 	SqlPredicate predicate = nullIsEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -471,9 +471,9 @@ TEST_F(ExpressionOperatorTests, EqualToOperator_null_Expression_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, EqualToOperator_Expression_null_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> nullIsEqualToSetterGetter = (expr == nullptr);
+	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (expr == nullptr);
 
 	SqlPredicate predicate = nullIsEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -483,9 +483,9 @@ TEST_F(ExpressionOperatorTests, EqualToOperator_Expression_null_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, NotEqualToOperator_null_Expression_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> nullIsEqualToSetterGetter = (nullptr != expr);
+	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (nullptr != expr);
 
 	SqlPredicate predicate = nullIsEqualToSetterGetter.GetSqlPredicate(_registry);
 
@@ -495,9 +495,9 @@ TEST_F(ExpressionOperatorTests, NotEqualToOperator_null_Expression_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, NotEqualToOperator_Expression_null_ReturnsCorrectPredicate)
 {
-	Expression<int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
-	Expression<bool> nullIsEqualToSetterGetter = (expr != nullptr);
+	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (expr != nullptr);
 
 	SqlPredicate predicate = nullIsEqualToSetterGetter.GetSqlPredicate(_registry);
 

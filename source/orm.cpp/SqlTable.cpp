@@ -2,14 +2,12 @@
 
 #include "SqlTable.h"
 
-SqlTable::SqlTable() :
-	  _areNullsAllowed(false)
+SqlTable::SqlTable()
 {
 }
 
 SqlTable::SqlTable(const SqlTable &other) :
-	  _areNullsAllowed(other._areNullsAllowed)
-	, _schema(other._schema)
+	  _schema(other._schema)
 	, _table(other._table)
 {
 }
@@ -22,12 +20,31 @@ SqlTable &SqlTable::operator =(const SqlTable &other)
 {
 	if (this != &other)
 	{
-		_areNullsAllowed = other._areNullsAllowed;
 		_schema = other._schema;
-		_table = other._schema;
+		_table = other._table;
 	}
 
 	return *this;
+}
+
+bool SqlTable::operator ==(const SqlTable &other) const
+{
+	bool result = (this == &other);
+
+	if (this != &other)
+	{
+		result = (_schema == other._schema)
+			&& (_table == other._table);
+	}
+
+	return result;
+}
+
+bool SqlTable::operator !=(const SqlTable &other) const
+{
+	bool result = !(*this == other);
+
+	return result;
 }
 
 
@@ -50,15 +67,4 @@ void SqlTable::SetTable(const std::string &table)
 std::string SqlTable::GetTable() const
 {
 	return _table;
-}
-
-
-void SqlTable::SetAreNullsAllowed(const bool areNullsAllowed)
-{
-	_areNullsAllowed = areNullsAllowed;
-}
-
-bool SqlTable::AreNullsAllowed() const
-{
-	return _areNullsAllowed;
 }

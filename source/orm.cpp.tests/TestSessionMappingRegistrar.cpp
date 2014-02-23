@@ -2,8 +2,12 @@
 
 #include "TestSessionMappingRegistrar.h"
 
+#include "TestSessionEntity.h"
+#include "TestSessionEntityMap.h"
+
 TestSessionMappingRegistrar::TestSessionMappingRegistrar()
 {
+	Register<TestSessionEntity, TestSessionEntityMap>();
 }
 
 TestSessionMappingRegistrar::TestSessionMappingRegistrar(const TestSessionMappingRegistrar &other) :

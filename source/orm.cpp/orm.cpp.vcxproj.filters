@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Mapping">
       <UniqueIdentifier>{475bde6a-fad8-46a9-afc1-4f12c917a87d}</UniqueIdentifier>
     </Filter>
@@ -28,6 +24,12 @@
     </Filter>
     <Filter Include="Database\Sql">
       <UniqueIdentifier>{d06d0222-5223-4384-9696-9ee6b11037b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\Sql\Impl">
+      <UniqueIdentifier>{c9d12ffc-6c6a-44be-bee7-9fef2c3e1cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\Impl">
+      <UniqueIdentifier>{5a39b0ce-9e91-4dfa-8da6-1bb5499c7406}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +83,6 @@
     <ClInclude Include="SqlPredicate.h">
       <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClInclude>
-    <ClInclude Include="DataReader.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="member_types.h" />
     <ClInclude Include="Guid.h" />
     <ClInclude Include="Record.h">
@@ -127,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="ReferenceSetterConstReferenceGetterColumnMapper.h">
       <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlProjection.h">
-      <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClInclude>
     <ClInclude Include="BaseExpression.h">
       <Filter>Expressions</Filter>
@@ -179,12 +175,42 @@
     <ClInclude Include="IQuery.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="ISqlDialect.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlProjection.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlStatement.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlServerDialect.h">
+      <Filter>Database\Sql\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="DataReader.h">
+      <Filter>Database\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="IRecord.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlExecutor.h">
+      <Filter>Database\Sql\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ISqlExecutor.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="JoinClause.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlParameter.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="Predicate.h">
+      <Filter>Expressions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="IdColumnBuilder.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
     <ClCompile Include="BinaryOperators.cpp">
       <Filter>Expressions</Filter>
     </ClCompile>
@@ -203,9 +229,6 @@
     <ClCompile Include="SqlPredicate.cpp">
       <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClCompile>
-    <ClCompile Include="DataReader.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="Guid.cpp" />
     <ClCompile Include="Record.cpp">
       <Filter>Database</Filter>
@@ -213,17 +236,11 @@
     <ClCompile Include="IMappingProvider.cpp">
       <Filter>Mapping</Filter>
     </ClCompile>
-    <ClCompile Include="SqlProjection.cpp">
-      <Filter>Expressions\SqlPredicateBuilders</Filter>
-    </ClCompile>
     <ClCompile Include="BaseExpression.cpp">
       <Filter>Expressions</Filter>
     </ClCompile>
     <ClCompile Include="SqlColumn.cpp">
       <Filter>Expressions\SqlPredicateBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpressionOperators.cpp">
-      <Filter>Expressions</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
       <Filter>Database</Filter>
@@ -254,6 +271,36 @@
     </ClCompile>
     <ClCompile Include="IQuery.cpp">
       <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlProjection.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlStatement.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlServerDialect.cpp">
+      <Filter>Database\Sql\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ISqlDialect.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="DataReader.cpp">
+      <Filter>Database\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="IRecord.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="ISqlExecutor.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlExecutor.cpp">
+      <Filter>Database\Sql\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="JoinClause.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlParameter.cpp">
+      <Filter>Database\Sql</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

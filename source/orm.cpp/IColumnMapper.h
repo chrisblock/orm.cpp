@@ -6,7 +6,7 @@
 #include "member_types.h"
 
 class IDataReader;
-class Record;
+class IRecord;
 
 template <typename TEntity>
 class IColumnMapper
@@ -20,7 +20,7 @@ public:
 
 	virtual void ReadPropertyValueFromDataReader(TEntity &entity, const std::shared_ptr<IDataReader> &reader) const = 0;
 
-	virtual void WritePropertyValueToRecord(TEntity &entity, Record &record) const = 0;
+	virtual void WritePropertyValueToRecord(TEntity &entity, IRecord &record) const = 0;
 
 	template <typename TProperty>
 	bool IsForMember(typename member_types<TEntity, TProperty>::field field) const
@@ -82,6 +82,7 @@ public:
 		return result;
 	};
 
+	/*
 	template <typename TProperty>
 	bool IsForMember(typename member_types<TEntity, TProperty>::const_setter setter) const
 	{
@@ -117,6 +118,7 @@ public:
 
 		return result;
 	};
+	*/
 
 protected:
 	virtual bool IsForMember(_In_ const type_info &type, _In_ const std::string &memberLocation) const = 0;

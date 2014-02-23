@@ -21,7 +21,7 @@ public:
 	//    so we will only allow one type to be used
 	// typedef void (T::*setter)(TProperty);
 	typedef void (T::*const_setter)(const TProperty);
-	//typedef void (T::*reference_setter)(TProperty &);
+	typedef void (T::*reference_setter)(TProperty &);
 	typedef void (T::*const_reference_setter)(const TProperty &);
 
 	typedef TProperty (T::*getter)();
@@ -52,14 +52,12 @@ public:
 		return to_string(c, sizeof (v));
 	};
 
-	/*
 	static std::string to_string(reference_setter v)
 	{
 		const unsigned char *c = reinterpret_cast<const unsigned char *>(&v);
 
 		return to_string(c, sizeof (v));
 	};
-	*/
 
 	static std::string to_string(const_reference_setter v)
 	{

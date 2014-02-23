@@ -47,7 +47,7 @@ std::string odbc::parameter::get_name() const
 	return _name;
 }
 
-void odbc::parameter::set_name(_In_z_ const char *name)
+void odbc::parameter::set_name(_In_ const std::string &name)
 {
 	_name = name;
 }

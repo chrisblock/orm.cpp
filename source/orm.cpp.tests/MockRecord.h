@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Record.h>
+#include <IRecord.h>
 
-class MockRecord : public Record
+class MockRecord : public IRecord
 {
 };

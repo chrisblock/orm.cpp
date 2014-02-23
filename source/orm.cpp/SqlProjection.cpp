@@ -26,3 +26,18 @@ SqlProjection &SqlProjection::operator =(const SqlProjection &other)
 
 	return *this;
 }
+
+void SqlProjection::AddProjection(const SqlColumn &column)
+{
+	_projections.push_back(column);
+}
+
+std::vector<SqlColumn> &SqlProjection::GetProjections()
+{
+	return _projections;
+}
+
+const std::vector<SqlColumn> &SqlProjection::GetProjections() const
+{
+	return _projections;
+}

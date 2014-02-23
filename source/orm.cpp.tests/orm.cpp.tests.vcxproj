@@ -81,10 +81,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IdFieldTestMappingEntityMap.h" />
     <ClInclude Include="MockDataReader.h" />
     <ClInclude Include="MockRecord.h" />
+    <ClInclude Include="MockSqlExecutor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestDatabaseConfiguration.h" />
     <ClInclude Include="TestExpressionEntityMap.h" />
     <ClInclude Include="TestExpressionMappingRegistrar.h" />
     <ClInclude Include="TestMappingEntity.h" />
@@ -92,20 +95,42 @@
     <ClInclude Include="TestMemberTypesEntity.h" />
     <ClInclude Include="TestExpressionEntity.h" />
     <ClInclude Include="TestSessionEntity.h" />
+    <ClInclude Include="TestSessionEntityMap.h" />
     <ClInclude Include="TestSessionMappingRegistrar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClassMapTests.cpp" />
+    <ClCompile Include="ConstReferenceSetterConstGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstReferenceSetterConstReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstReferenceSetterGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstReferenceSetterReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstSetterConstGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstSetterConstReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstSetterGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ConstSetterReferenceGetterColumnMapperTests.cpp" />
     <ClCompile Include="ExpressionOperatorTests.cpp" />
+    <ClCompile Include="FieldColumnMapperTests.cpp" />
+    <ClCompile Include="FromClauseTests.cpp" />
+    <ClCompile Include="IdFieldTestMappingEntityMap.cpp" />
+    <ClCompile Include="JoinClauseTests.cpp" />
     <ClCompile Include="MakeExpressionTests.cpp" />
     <ClCompile Include="member_types_tests.cpp" />
     <ClCompile Include="MockDataReader.cpp" />
+    <ClCompile Include="MockSqlExecutor.cpp" />
     <ClCompile Include="orm.cpp.tests.cpp" />
-    <ClCompile Include="SessionFactoryBuilderTests.cpp" />
+    <ClCompile Include="ReferenceSetterConstGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ReferenceSetterConstReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ReferenceSetterGetterColumnMapperTests.cpp" />
+    <ClCompile Include="ReferenceSetterReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="SessionFactoryConfigurationTests.cpp" />
+    <ClCompile Include="SessionTests.cpp" />
+    <ClCompile Include="SqlColumnTests.cpp" />
+    <ClCompile Include="SqlTableTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestDatabaseConfiguration.cpp" />
     <ClCompile Include="TestExpressionEntity.cpp" />
     <ClCompile Include="TestExpressionEntityMap.cpp" />
     <ClCompile Include="TestExpressionMappingRegistrar.cpp" />
@@ -113,6 +138,7 @@
     <ClCompile Include="TestMappingEntityMap.cpp" />
     <ClCompile Include="TestMemberTypesEntity.cpp" />
     <ClCompile Include="TestSessionEntity.cpp" />
+    <ClCompile Include="TestSessionEntityMap.cpp" />
     <ClCompile Include="TestSessionMappingRegistrar.cpp" />
   </ItemGroup>
   <ItemGroup>

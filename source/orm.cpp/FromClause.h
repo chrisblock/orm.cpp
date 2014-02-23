@@ -5,6 +5,8 @@
 
 #include "SqlTable.h"
 
+class JoinClause;
+
 class FromClause
 {
 public:
@@ -15,13 +17,17 @@ public:
 	FromClause &operator =(const FromClause &other);
 
 	void SetMainTable(const SqlTable &mainTable);
-	SqlTable GetMainTable() const;
+	SqlTable &GetMainTable();
+	const SqlTable &GetMainTable() const;
 
-	void AddAdditionalTable(const SqlTable &additionalTable);
+	// TODO: add overloads for this
+	void AddJoin(const JoinClause &join);
+	std::vector<JoinClause> &GetJoins();
+	const std::vector<JoinClause> &GetJoins() const;
 
 	std::string BuildSqlClause() const;
 
 private:
 	SqlTable _mainTable;
-	std::vector<SqlTable> _additionalTables;
+	std::vector<JoinClause> _joins;
 };

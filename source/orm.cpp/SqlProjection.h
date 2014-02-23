@@ -14,6 +14,10 @@ public:
 
 	SqlProjection &operator =(const SqlProjection &other);
 
+	void AddProjection(const SqlColumn &column);
+	std::vector<SqlColumn> &GetProjections();
+	const std::vector<SqlColumn> &GetProjections() const;
+
 private:
 	std::vector<SqlColumn> _projections;
 };

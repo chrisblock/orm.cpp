@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="member_types">
       <UniqueIdentifier>{0063a4c0-30dc-439f-b4d2-cb18043b10c5}</UniqueIdentifier>
     </Filter>
@@ -47,6 +43,16 @@
     <ClInclude Include="TestSessionEntity.h">
       <Filter>Sessions</Filter>
     </ClInclude>
+    <ClInclude Include="TestSessionEntityMap.h">
+      <Filter>Sessions</Filter>
+    </ClInclude>
+    <ClInclude Include="TestDatabaseConfiguration.h" />
+    <ClInclude Include="MockSqlExecutor.h">
+      <Filter>Sessions</Filter>
+    </ClInclude>
+    <ClInclude Include="IdFieldTestMappingEntityMap.h">
+      <Filter>Mapping</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -82,14 +88,68 @@
     <ClCompile Include="TestExpressionMappingRegistrar.cpp">
       <Filter>Expressions</Filter>
     </ClCompile>
-    <ClCompile Include="SessionFactoryBuilderTests.cpp">
-      <Filter>Sessions</Filter>
-    </ClCompile>
     <ClCompile Include="TestSessionMappingRegistrar.cpp">
       <Filter>Sessions</Filter>
     </ClCompile>
     <ClCompile Include="TestSessionEntity.cpp">
       <Filter>Sessions</Filter>
     </ClCompile>
+    <ClCompile Include="TestSessionEntityMap.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestDatabaseConfiguration.cpp" />
+    <ClCompile Include="SessionFactoryConfigurationTests.cpp" />
+    <ClCompile Include="SessionTests.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="MockSqlExecutor.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlColumnTests.cpp" />
+    <ClCompile Include="SqlTableTests.cpp" />
+    <ClCompile Include="JoinClauseTests.cpp" />
+    <ClCompile Include="IdFieldTestMappingEntityMap.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstReferenceSetterConstGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstReferenceSetterConstReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstReferenceSetterGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstReferenceSetterReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstSetterConstGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstSetterConstReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstSetterGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstSetterReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ReferenceSetterConstGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ReferenceSetterConstReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ReferenceSetterGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="ReferenceSetterReferenceGetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="FromClauseTests.cpp" />
   </ItemGroup>
 </Project>

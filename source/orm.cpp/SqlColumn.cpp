@@ -9,7 +9,6 @@ SqlColumn::SqlColumn()
 SqlColumn::SqlColumn(const SqlColumn &other) :
 	  _table(other._table)
 	, _column(other._column)
-	, _alias(other._alias)
 {
 }
 
@@ -23,10 +22,29 @@ SqlColumn &SqlColumn::operator =(const SqlColumn &other)
 	{
 		_table = other._table;
 		_column = other._column;
-		_alias = other._alias;
 	}
 
 	return *this;
+}
+
+bool SqlColumn::operator ==(const SqlColumn &other) const
+{
+	bool result = (this == &other);
+
+	if (this != &other)
+	{
+		result = (_table == other._table)
+			&& (_column == other._column);
+	}
+
+	return result;
+}
+
+bool SqlColumn::operator !=(const SqlColumn &other) const
+{
+	bool result = !(*this == other);
+
+	return result;
 }
 
 void SqlColumn::SetTable(const std::string &table)
@@ -49,24 +67,16 @@ std::string SqlColumn::GetColumn() const
 	return _column;
 }
 
-void SqlColumn::SetAlias(const std::string &alias)
-{
-	_alias = alias;
-}
-
-std::string SqlColumn::GetAlias() const
-{
-	return _alias;
-}
-
 std::string SqlColumn::GetColumnString() const
 {
-	std::string result = _alias;
+	std::string result = _table;
 
-	if (_alias.empty())
+	if (_table.empty() == false)
 	{
-		result = _table + "." + _column;
+		result.append(".");
 	}
+
+	result.append(_column);
 
 	return result;
 }

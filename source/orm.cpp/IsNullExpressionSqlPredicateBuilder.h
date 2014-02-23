@@ -2,6 +2,8 @@
 
 #include "ISqlPredicateBuilder.h"
 
+#include <memory>
+
 class IsNullExpressionSqlPredicateBuilder : public ISqlPredicateBuilder
 {
 public:

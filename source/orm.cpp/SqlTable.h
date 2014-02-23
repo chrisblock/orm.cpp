@@ -10,6 +10,8 @@ public:
 	~SqlTable();
 
 	SqlTable &operator =(const SqlTable &other);
+	bool operator ==(const SqlTable &other) const;
+	bool operator !=(const SqlTable &other) const;
 
 	void SetSchema(const std::string &schema);
 	std::string GetSchema() const;
@@ -17,11 +19,7 @@ public:
 	void SetTable(const std::string &table);
 	std::string GetTable() const;
 
-	void SetAreNullsAllowed(const bool areNullsAllowed);
-	bool AreNullsAllowed() const;
-
 private:
-	bool _areNullsAllowed;
 	std::string _schema;
 	std::string _table;
 };
