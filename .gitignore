@@ -23,6 +23,7 @@ ipch/
 *.ilk
 *.meta
 *.obj
+*.opensdf
 *.pch
 *.pdb
 *.pgc
@@ -39,6 +40,7 @@ ipch/
 *.vssscc
 .builds
 *.pidb
+*.sdf
 *.svclog
 *.scc
 
