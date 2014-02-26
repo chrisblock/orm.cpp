@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "FromClause.h"
 #include "IQuery.h"
 #include "ISqlDialect.h"
 #include "ISqlExecutor.h"
@@ -67,14 +68,14 @@ public:
 		{
 			//_predicateBuilder = std::make_shared<SqlBi
 		}
-	};
 
-	int32_t Execute()
-	{
+		return *this;
 	};
 
 	void Execute(std::vector<T> &items)
 	{
+		//std::has_default_constructor<T>::
+
 		SqlPredicate predicate;
 
 		std::shared_ptr<ClassMap<T>> mapping = _registry.GetMapping<T>();
@@ -86,7 +87,16 @@ public:
 			predicate = _predicateBuilder->Build(_registry);
 		}
 
-		SqlStatement statement = _dialect->BuildSelectStatement(projection, predicate);
+		FromClause fromClause;
+
+		SqlTable table;
+
+		table.SetSchema(mapping->GetSchema());
+		table.SetTable(mapping->GetTable());
+
+		fromClause.SetMainTable(table);
+
+		SqlStatement statement = _dialect->BuildSelectStatement(projection, fromClause, predicate);
 
 		std::shared_ptr<IDataReader> reader = _executor->ExecuteReader(_environment, _connectionString, statement);
 

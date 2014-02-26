@@ -95,6 +95,7 @@
     <ClInclude Include="Expression.h" />
     <ClInclude Include="ExpressionOperators.h" />
     <ClInclude Include="FieldColumnMapper.h" />
+    <ClInclude Include="FieldMemberExpressionSqlPredicateBuilder.h" />
     <ClInclude Include="FromClause.h" />
     <ClInclude Include="GenerationStrategy.h" />
     <ClInclude Include="GetterMemberExpressionSqlPredicateBuilder.h" />

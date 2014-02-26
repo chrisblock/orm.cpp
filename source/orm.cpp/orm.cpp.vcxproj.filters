@@ -208,6 +208,9 @@
     <ClInclude Include="Predicate.h">
       <Filter>Expressions</Filter>
     </ClInclude>
+    <ClInclude Include="FieldMemberExpressionSqlPredicateBuilder.h">
+      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

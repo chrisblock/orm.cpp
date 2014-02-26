@@ -151,5 +151,8 @@
       <Filter>Mapping</Filter>
     </ClCompile>
     <ClCompile Include="FromClauseTests.cpp" />
+    <ClCompile Include="QueryTests.cpp">
+      <Filter>Sessions</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

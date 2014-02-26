@@ -5,6 +5,7 @@
 
 #include "BinaryExpressionSqlPredicateBuilder.h"
 #include "ConstantExpressionSqlPredicateBuilder.h"
+#include "FieldMemberExpressionSqlPredicateBuilder.h"
 #include "GetterMemberExpressionSqlPredicateBuilder.h"
 #include "ConstGetterMemberExpressionSqlPredicateBuilder.h"
 #include "ReferenceGetterMemberExpressionSqlPredicateBuilder.h"
@@ -22,6 +23,16 @@ Expression<T> MakeExpression(const T &value)
 	return result;
 }
 */
+
+template <typename TEntity, typename TProperty>
+Expression<TEntity, TProperty> MakeExpression(TProperty(TEntity::*field))
+{
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(field);
+
+	Expression<TEntity, TProperty> result(predicateBuilder);
+
+	return result;
+}
 
 template <typename TEntity, typename TProperty>
 //Expression<TEntity, TProperty> MakeExpression(typename member_types<TEntity, TProperty>::getter getter)

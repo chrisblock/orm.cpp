@@ -16,7 +16,7 @@ public:
 
 	SqlServerDialect &operator =(const SqlServerDialect &other);
 
-	virtual SqlStatement BuildSelectStatement(const SqlProjection &projection, const SqlPredicate &predicate) const;
+	virtual SqlStatement BuildSelectStatement(const SqlProjection &projection, const FromClause &fromClause, const SqlPredicate &predicate) const;
 	virtual SqlStatement BuildInsertStatement(const IRecord &record) const;
 	virtual SqlStatement BuildUpdateStatement(const IRecord &record) const;
 	virtual SqlStatement BuildDeleteStatement(const IRecord &record) const;

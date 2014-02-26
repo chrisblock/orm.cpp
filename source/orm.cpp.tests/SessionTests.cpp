@@ -9,6 +9,18 @@
 
 class SessionTests : public testing::Test
 {
+protected:
+	virtual void SetUp()
+	{
+		_registrar.Register(_registry);
+	};
+
+	virtual void TearDown()
+	{
+	};
+
+	TestSessionMappingRegistrar _registrar;
+	MappingRegistry _registry;
 };
 
 TEST_F(SessionTests, QueryOver)
@@ -22,13 +34,7 @@ TEST_F(SessionTests, QueryOver)
 	executor->SetColumnValue("Column1", 2);
 	executor->SetColumnValue("Column2", 3);
 
-	TestSessionMappingRegistrar registrar;
-
-	MappingRegistry registry;
-
-	registrar.Register(registry);
-
-	Session session(environment, connectionString, dialect, executor, registry);
+	Session session(environment, connectionString, dialect, executor, _registry);
 
 	Query<TestSessionEntity> query = session.QueryOver<TestSessionEntity>();
 
@@ -56,13 +62,7 @@ TEST_F(SessionTests, Insert_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	TestSessionMappingRegistrar registrar;
-
-	MappingRegistry registry;
-
-	registrar.Register(registry);
-
-	Session session(environment, connectionString, dialect, executor, registry);
+	Session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 
@@ -84,13 +84,7 @@ TEST_F(SessionTests, Update_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	TestSessionMappingRegistrar registrar;
-
-	MappingRegistry registry;
-
-	registrar.Register(registry);
-
-	Session session(environment, connectionString, dialect, executor, registry);
+	Session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 
@@ -112,13 +106,7 @@ TEST_F(SessionTests, Delete_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	TestSessionMappingRegistrar registrar;
-
-	MappingRegistry registry;
-
-	registrar.Register(registry);
-
-	Session session(environment, connectionString, dialect, executor, registry);
+	Session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 

@@ -32,6 +32,16 @@ TEST_F(MakeExpressionTests, MakeExpression_Constant)
 }
 */
 
+TEST_F(MakeExpressionTests, MakeExpression_Field)
+{
+	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::_field);
+
+	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
+
+	EXPECT_EQ(0, predicate.GetNumberOfParameters());
+	EXPECT_EQ("TestTable.Field", predicate.GetPredicate());
+}
+
 TEST_F(MakeExpressionTests, MakeExpression_SetterGetterGetter)
 {
 	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);

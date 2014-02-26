@@ -64,9 +64,98 @@ TEST(FromClauseTests, CopyConstructor_CopiesJoins)
 	EXPECT_EQ(expected.GetJoins(), actual.GetJoins());
 }
 
-TEST(BuildSqlClause, BuildSqlClause)
+TEST(BuildSqlClause, BuildSqlClause_NoTables_ReturnsEmptyString)
 {
 	FromClause from;
 
-	from.BuildSqlClause();
+	EXPECT_EQ("", from.BuildSqlClause());
+}
+
+TEST(BuildSqlClause, BuildSqlClause_MainTableSet_ReturnsSimpleFromClause)
+{
+	FromClause from;
+
+	SqlTable table;
+	table.SetSchema("dbo");
+	table.SetTable("Table");
+
+	from.SetMainTable(table);
+
+	EXPECT_EQ("FROM dbo.Table", from.BuildSqlClause());
+}
+
+TEST(BuildSqlClause, BuildSqlClause_MainTableSetWithOneInnerJoin_ReturnsFromClauseWithInnerJoin)
+{
+	FromClause from;
+
+	SqlTable mainTable;
+	mainTable.SetSchema("dbo");
+	mainTable.SetTable("MainTable");
+
+	SqlColumn mainColumn;
+
+	mainColumn.SetTable("MainTable");
+	mainColumn.SetColumn("Id");
+
+	from.SetMainTable(mainTable);
+
+	SqlTable destinationTable;
+	destinationTable.SetSchema("dbo");
+	destinationTable.SetTable("DestinationTable");
+
+	SqlColumn destinationColumn;
+
+	destinationColumn.SetTable("DestinationTable");
+	destinationColumn.SetColumn("MainTableId");
+
+	JoinClause join;
+
+	join.SetSourceTable(mainTable);
+	join.SetSourceColumn(mainColumn);
+
+	join.SetDestinationTable(destinationTable);
+	join.SetDestinationColumn(destinationColumn);
+
+	from.AddJoin(join);
+
+	EXPECT_EQ("FROM dbo.MainTable INNER JOIN dbo.DestinationTable ON DestinationTable.MainTableId = MainTable.Id", from.BuildSqlClause());
+}
+
+TEST(BuildSqlClause, BuildSqlClause_MainTableSetWithOneOuterJoin_ReturnsFromClauseWithOuterJoin)
+{
+	FromClause from;
+
+	SqlTable mainTable;
+	mainTable.SetSchema("dbo");
+	mainTable.SetTable("MainTable");
+
+	SqlColumn mainColumn;
+
+	mainColumn.SetTable("MainTable");
+	mainColumn.SetColumn("Id");
+
+	from.SetMainTable(mainTable);
+
+	SqlTable destinationTable;
+	destinationTable.SetSchema("dbo");
+	destinationTable.SetTable("DestinationTable");
+
+	SqlColumn destinationColumn;
+
+	destinationColumn.SetTable("DestinationTable");
+	destinationColumn.SetColumn("MainTableId");
+
+	JoinClause join;
+
+	join.SetIsOuterJoin(true);
+
+	join.SetSourceTable(mainTable);
+	join.SetSourceColumn(mainColumn);
+
+	join.SetDestinationTable(destinationTable);
+	join.SetDestinationColumn(destinationColumn);
+
+	from.AddJoin(join);
+
+	EXPECT_EQ("FROM dbo.MainTable LEFT OUTER JOIN dbo.DestinationTable ON DestinationTable.MainTableId = MainTable.Id", from.BuildSqlClause());
 }

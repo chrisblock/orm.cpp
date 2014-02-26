@@ -2,6 +2,9 @@
 
 #include "FromClause.h"
 
+#include <algorithm>
+#include <functional>
+
 #include "JoinClause.h"
 
 FromClause::FromClause()
@@ -44,6 +47,11 @@ const SqlTable &FromClause::GetMainTable() const
 	return _mainTable;
 }
 
+// TODO: verify correctness of join
+//         if the source table is already in the from clause
+//         if the join is already in the from clause
+//         if the source column's table matches the source table
+//         if the destination column's table matches the destination table
 void FromClause::AddJoin(const JoinClause &join)
 {
 	_joins.push_back(join);
@@ -62,6 +70,40 @@ const std::vector<JoinClause> &FromClause::GetJoins() const
 std::string FromClause::BuildSqlClause() const
 {
 	std::string result;
+
+	if ((_mainTable.GetSchema().empty() == false) && (_mainTable.GetTable().empty() == false))
+	{
+		result.append("FROM ");
+		result.append(_mainTable.GetSchema());
+		result.append(".");
+		result.append(_mainTable.GetTable());
+
+		std::function<void (const JoinClause &)> fn = [&result] (const JoinClause &join)
+		{
+			if (join.IsOuterJoin())
+			{
+				result.append(" LEFT OUTER JOIN ");
+			}
+			else
+			{
+				result.append(" INNER JOIN ");
+			}
+
+			result.append(join.GetDestinationTable().GetSchema());
+			result.append(".");
+			result.append(join.GetDestinationTable().GetTable());
+			result.append(" ON ");
+			result.append(join.GetDestinationColumn().GetTable());
+			result.append(".");
+			result.append(join.GetDestinationColumn().GetColumn());
+			result.append(" = ");
+			result.append(join.GetSourceColumn().GetTable());
+			result.append(".");
+			result.append(join.GetSourceColumn().GetColumn());
+		};
+
+		std::for_each(_joins.cbegin(), _joins.cend(), fn);
+	}
 
 	return result;
 }

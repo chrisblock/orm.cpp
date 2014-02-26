@@ -7,6 +7,7 @@
 
 #include <parameter.h>
 
+#include "FromClause.h"
 #include "IRecord.h"
 #include "SqlColumn.h"
 #include "SqlPredicate.h"
@@ -38,7 +39,7 @@ SqlServerDialect &SqlServerDialect::operator =(const SqlServerDialect &other)
 // TODO: all of the implementation specific stuff (e.g. things not related to how the SQL itself is structured) need to be abstracted out;
 //       probably need to implement the template method pattern for great success, and place these method into an abstract base class of destiny)
 
-SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &projection, const SqlPredicate &predicate) const
+SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &projection, const FromClause &fromClause, const SqlPredicate &predicate) const
 {
 	// TODO: finish implementing this function
 	predicate;
@@ -63,6 +64,10 @@ SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &project
 	}
 
 	std::for_each(start, columns.cend(), appendToSql);
+
+	sql.append(" ");
+
+	sql.append(fromClause.BuildSqlClause());
 
 	result.SetSql(sql);
 

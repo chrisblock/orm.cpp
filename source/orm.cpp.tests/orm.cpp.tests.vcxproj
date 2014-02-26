@@ -118,6 +118,7 @@
     <ClCompile Include="MockDataReader.cpp" />
     <ClCompile Include="MockSqlExecutor.cpp" />
     <ClCompile Include="orm.cpp.tests.cpp" />
+    <ClCompile Include="QueryTests.cpp" />
     <ClCompile Include="ReferenceSetterConstGetterColumnMapperTests.cpp" />
     <ClCompile Include="ReferenceSetterConstReferenceGetterColumnMapperTests.cpp" />
     <ClCompile Include="ReferenceSetterGetterColumnMapperTests.cpp" />
