@@ -85,9 +85,6 @@
     </ClInclude>
     <ClInclude Include="member_types.h" />
     <ClInclude Include="Guid.h" />
-    <ClInclude Include="Record.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="FieldColumnMapper.h">
       <Filter>Mapping\ColumnMappers\Impl</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
     <ClInclude Include="FieldMemberExpressionSqlPredicateBuilder.h">
       <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
     </ClInclude>
+    <ClInclude Include="Record.h">
+      <Filter>Database\Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -233,9 +233,6 @@
       <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClCompile>
     <ClCompile Include="Guid.cpp" />
-    <ClCompile Include="Record.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="IMappingProvider.cpp">
       <Filter>Mapping</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="SqlParameter.cpp">
       <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="Record.cpp">
+      <Filter>Database\Impl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

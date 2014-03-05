@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "BinaryExpressionSqlPredicateBuilder.h"
+#include "BinaryOperators.h"
 #include "FromClause.h"
 #include "IQuery.h"
 #include "ISqlDialect.h"
@@ -33,9 +35,10 @@ public:
 
 	Query(const Query<T> &other) :
 		  _environment(other._environment)
-		, _connectionString(other._connectionString)
 		, _dialect(other._dialect)
 		, _executor(other._executor)
+		, _predicateBuilder(other._predicateBuilder)
+		, _connectionString(other._connectionString)
 		, _registry(other._registry)
 	{
 	};
@@ -49,9 +52,10 @@ public:
 		if (this != other)
 		{
 			_environment = other._environment;
-			_connectionString = other._connectionString;
 			_dialect = other._dialect;
 			_executor = other._executor;
+			_predicateBuilder = other._predicateBuilder;
+			_connectionString = other._connectionString;
 			_registry = other._registry;
 		}
 
@@ -66,7 +70,7 @@ public:
 		}
 		else
 		{
-			//_predicateBuilder = std::make_shared<SqlBi
+			_predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::And, _predicateBuilder, expression.GetSqlPredicateBuilder());
 		}
 
 		return *this;
@@ -74,7 +78,9 @@ public:
 
 	void Execute(std::vector<T> &items)
 	{
-		//std::has_default_constructor<T>::
+		static_assert(std::has_default_constructor<T>::value, "Type must have a default constructor.");
+		static_assert(std::has_copy_constructor<T>::value, "Type must have copy constructor.");
+		static_assert(std::has_copy_assign<T>::value, "Type must have assignment operator.");
 
 		SqlPredicate predicate;
 

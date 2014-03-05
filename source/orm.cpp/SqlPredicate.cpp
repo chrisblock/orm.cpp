@@ -35,6 +35,11 @@ SqlPredicate &SqlPredicate::operator =(const SqlPredicate &other)
 	return *this;
 }
 
+bool SqlPredicate::IsEmpty() const
+{
+	return _predicate.empty();
+}
+
 void SqlPredicate::SetPredicate(const std::string &predicate)
 {
 	_predicate = predicate;
@@ -55,7 +60,7 @@ void SqlPredicate::AddParameter(const std::shared_ptr<odbc::parameter> &paramete
 	_parameters.push_back(parameter);
 }
 
-std::shared_ptr<odbc::parameter> SqlPredicate::GetParameter(uint32_t index) const
+std::shared_ptr<odbc::parameter> SqlPredicate::GetParameter(const uint32_t index) const
 {
 	return _parameters.at(index);
 }

@@ -19,6 +19,8 @@ public:
 
 	SqlPredicate &operator =(const SqlPredicate &other);
 
+	bool IsEmpty() const;
+
 	void SetPredicate(const std::string &predicate);
 	std::string GetPredicate() const;
 

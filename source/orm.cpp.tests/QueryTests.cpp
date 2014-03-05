@@ -29,7 +29,24 @@ protected:
 	MappingRegistry _registry;
 };
 
-TEST_F(QueryTests, Test)
+TEST_F(QueryTests, Execute_NoPredicate_HasStatementWithNoWhereClause)
+{
+	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
+	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
+
+	Query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
+
+	std::vector<TestSessionEntity> entities;
+
+	query.Execute(entities);
+
+	SqlStatement statement = executor->GetLastStatement();
+
+	EXPECT_EQ(1, entities.size());
+	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable", statement.GetSql());
+}
+
+TEST_F(QueryTests, Execute_IdGreaterThanFortyTwo_StatementWithWhereClauseWithIdGreaterThanParameterAndOneParameter)
 {
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
@@ -47,5 +64,6 @@ TEST_F(QueryTests, Test)
 	SqlStatement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
-	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable WHERE TestSessionTable.Id > ?", statement.GetSql());
+	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable WHERE (TestSessionTable.Id > ?)", statement.GetSql());
+	EXPECT_EQ(1, statement.GetNumberOfParameters());
 }

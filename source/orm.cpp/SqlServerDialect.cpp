@@ -41,9 +41,6 @@ SqlServerDialect &SqlServerDialect::operator =(const SqlServerDialect &other)
 
 SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &projection, const FromClause &fromClause, const SqlPredicate &predicate) const
 {
-	// TODO: finish implementing this function
-	predicate;
-
 	SqlStatement result;
 
 	std::string sql("SELECT ");
@@ -68,6 +65,18 @@ SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &project
 	sql.append(" ");
 
 	sql.append(fromClause.BuildSqlClause());
+
+	if (predicate.IsEmpty() == false)
+	{
+		sql.append(" WHERE ");
+
+		sql.append(predicate.GetPredicate());
+
+		for (auto iter = predicate.GetBegin(); iter != predicate.GetEnd(); iter++)
+		{
+			result.AddParameter(*iter);
+		}
+	}
 
 	result.SetSql(sql);
 
