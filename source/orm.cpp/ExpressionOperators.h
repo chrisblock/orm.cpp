@@ -136,8 +136,21 @@ static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left
 }
 
 template <typename TEntity, typename TProperty>
+//static Predicate<TEntity> operator ==(const Expression<TProperty> &left, typename member_types<TEntity, TProperty>::field right)
+static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::Equal, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
 //static Predicate<TEntity> operator ==(const Expression<TProperty> &left, typename member_types<TEntity, TProperty>::getter right)
-static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left, TProperty(TEntity::*right)())
+static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right)())
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<GetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
 
@@ -150,7 +163,7 @@ static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left
 
 template <typename TEntity, typename TProperty>
 //static Predicate<TEntity> operator ==(const Expression<TProperty> &left, typename member_types<TEntity, TProperty>::const_getter right)
-static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left, TProperty(TEntity::*right)() const)
+static Predicate<TEntity> operator ==(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right)() const)
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<ConstGetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
 
@@ -199,6 +212,18 @@ template <typename TEntity, typename TProperty>
 static Predicate<TEntity> operator !=(const Expression<TEntity, TProperty> &left, const TProperty &right)
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<ConstantExpressionSqlPredicateBuilder>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::NotEqual, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
+static Predicate<TEntity> operator !=(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
 
 	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::NotEqual, left.GetSqlPredicateBuilder(), r);
 
@@ -276,6 +301,18 @@ static Predicate<TEntity> operator <(const Expression<TEntity, TProperty> &left,
 }
 
 template <typename TEntity, typename TProperty>
+static Predicate<TEntity> operator <(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::LessThan, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
 static Predicate<TEntity> operator <(const Expression<TEntity, TProperty> &left, TProperty(TEntity::*right)())
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<GetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
@@ -335,6 +372,18 @@ template <typename TEntity, typename TProperty>
 static Predicate<TEntity> operator <=(const Expression<TEntity, TProperty> &left, const TProperty &right)
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<ConstantExpressionSqlPredicateBuilder>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::LessThanOrEqualTo, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
+static Predicate<TEntity> operator <=(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
 
 	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::LessThanOrEqualTo, left.GetSqlPredicateBuilder(), r);
 
@@ -412,6 +461,18 @@ static Predicate<TEntity> operator >(const Expression<TEntity, TProperty> &left,
 }
 
 template <typename TEntity, typename TProperty>
+static Predicate<TEntity> operator >(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::GreaterThan, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
 static Predicate<TEntity> operator >(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right)())
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<GetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
@@ -471,6 +532,18 @@ template <typename TEntity, typename TProperty>
 static Predicate<TEntity> operator >=(const Expression<TEntity, TProperty> &left, const TProperty &right)
 {
 	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<ConstantExpressionSqlPredicateBuilder>(right);
+
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::GreaterThanOrEqualTo, left.GetSqlPredicateBuilder(), r);
+
+	Predicate<TEntity> result(predicateBuilder);
+
+	return result;
+}
+
+template <typename TEntity, typename TProperty>
+static Predicate<TEntity> operator >=(const Expression<TEntity, TProperty> &left, TProperty (TEntity::*right))
+{
+	std::shared_ptr<ISqlPredicateBuilder> r = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(right);
 
 	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<BinaryExpressionSqlPredicateBuilder>(BinaryOperators::GreaterThanOrEqualTo, left.GetSqlPredicateBuilder(), r);
 
