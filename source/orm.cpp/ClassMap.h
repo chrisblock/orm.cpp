@@ -47,7 +47,7 @@ public:
 	{
 	};
 
-	~ClassMap()
+	virtual ~ClassMap()
 	{
 	};
 

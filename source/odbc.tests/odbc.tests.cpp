@@ -1,6 +1,8 @@
 #include "stdafx.h"
 
-int _tmain(int argc, TCHAR* argv[])
+#include <tchar.h>
+
+int _tmain(int argc, TCHAR *argv[])
 {
 	::testing::InitGoogleTest(&argc, argv);
 
@@ -20,7 +22,7 @@ int _tmain(int argc, TCHAR* argv[])
 
 	RUN_ALL_TESTS();
 
-	if (pause == true)
+	if ((::_isatty(::_fileno(stdin))) && (pause == true))
 	{
 		::_tprintf_s(_T("Please press any key to continue."));
 

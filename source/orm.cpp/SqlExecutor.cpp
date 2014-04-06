@@ -64,7 +64,6 @@ uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &envir
 
 	std::function<void (const std::shared_ptr<odbc::parameter> &)> fn = [&stmt] (const std::shared_ptr<odbc::parameter> &parameter) { stmt.add_parameter(parameter); };
 
-	//std::for_each(parameters.cbegin(), parameters.cend(), [&stmt] (const std::shared_ptr<odbc::parameter> &parameter) { stmt.add_parameter(parameter); });
 	std::for_each(parameters.cbegin(), parameters.cend(), fn);
 
 	stmt.execute();

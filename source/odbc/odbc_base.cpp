@@ -13,20 +13,21 @@ odbc::odbc_base::odbc_base()
 
 odbc::odbc_base::odbc_base(const odbc::odbc_base &other)
 {
+	other;
 }
 
 odbc::odbc_base::~odbc_base()
 {
 }
 
-std::string odbc::odbc_base::convert_to_string(const char *str) const
+std::string odbc::odbc_base::convert_to_string(_In_z_ const char *str) const
 {
 	std::string result(str);
 
 	return result;
 }
 
-std::string odbc::odbc_base::convert_to_string(const wchar_t *str) const
+std::string odbc::odbc_base::convert_to_string(_In_z_ const wchar_t *str) const
 {
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 
@@ -35,7 +36,7 @@ std::string odbc::odbc_base::convert_to_string(const wchar_t *str) const
 	return result;
 }
 
-std::wstring odbc::odbc_base::convert_to_wstring(const char *str) const
+std::wstring odbc::odbc_base::convert_to_wstring(_In_z_ const char *str) const
 {
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 
@@ -44,7 +45,7 @@ std::wstring odbc::odbc_base::convert_to_wstring(const char *str) const
 	return result;
 }
 
-std::wstring odbc::odbc_base::convert_to_wstring(const wchar_t *str) const
+std::wstring odbc::odbc_base::convert_to_wstring(_In_z_ const wchar_t *str) const
 {
 	std::wstring result(str);
 
@@ -208,10 +209,10 @@ int16_t odbc::odbc_base::get_c_type(const int16_t sqlType) const
 	case SQL_BIGINT:
 		result = SQL_C_SBIGINT;
 		break;
-	case SQL_FLOAT:
+	case SQL_REAL:
 		result = SQL_C_FLOAT;
 		break;
-	case SQL_REAL:
+	case SQL_FLOAT:
 		result = SQL_C_DOUBLE;
 		break;
 	case SQL_DOUBLE:
@@ -284,16 +285,22 @@ void odbc::odbc_base::process_return_code(_In_opt_ void *handle, _In_ int16_t ha
 
 void odbc::odbc_base::trace(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode) const
 {
-	std::string message = read_diagnostic_record(handle, handleType, returnCode);
+	std::string diagnostic = read_diagnostic_record(handle, handleType, returnCode);
 
-	::OutputDebugStringA(message.c_str());
+	::OutputDebugStringA(diagnostic.c_str());
 }
 
 void odbc::odbc_base::trace_and_throw(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode, _In_z_ const char *errorMessage) const
 {
-	trace(handle, handleType, returnCode);
+	std::string diagnostic = read_diagnostic_record(handle, handleType, returnCode);
 
-	std::exception e(errorMessage);
+	std::string message(errorMessage);
+	message.append("\n");
+	message.append(diagnostic);
+
+	::OutputDebugStringA(diagnostic.c_str());
+
+	std::exception e(message.c_str());
 
 	throw e;
 }

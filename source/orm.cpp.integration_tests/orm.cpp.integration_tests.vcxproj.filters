@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestColumnEntity.h" />
+    <ClInclude Include="TestColumnEntityMap.h" />
+    <ClInclude Include="TestMappingRegistrar.h" />
+    <ClInclude Include="TestColumnTestFixture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="orm.cpp.integration_tests.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="DoubleColumnEntityTests.cpp" />
+    <ClCompile Include="TestColumnTestFixture.cpp" />
+  </ItemGroup>
+</Project>

@@ -13,10 +13,10 @@ namespace odbc
 		virtual ~odbc_base();
 
 	protected:
-		std::string convert_to_string(const char *str) const;
-		std::string convert_to_string(const wchar_t *str) const;
-		std::wstring convert_to_wstring(const char *str) const;
-		std::wstring convert_to_wstring(const wchar_t *str) const;
+		std::string convert_to_string(_In_z_ const char *str) const;
+		std::string convert_to_string(_In_z_ const wchar_t *str) const;
+		std::wstring convert_to_wstring(_In_z_ const char *str) const;
+		std::wstring convert_to_wstring(_In_z_ const wchar_t *str) const;
 
 		bool are_types_convertible(const int16_t left, const int16_t right) const;
 		int16_t get_c_type(const int16_t type) const;

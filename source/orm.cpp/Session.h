@@ -34,7 +34,7 @@ public:
 	};
 
 	template <typename TEntity>
-	void Insert(TEntity &entity) const
+	uint32_t Insert(TEntity &entity) const
 	{
 		std::shared_ptr<ClassMap<TEntity>> map = _registry.GetMapping<TEntity>();
 
@@ -44,11 +44,13 @@ public:
 
 		SqlStatement statement = _dialect->BuildInsertStatement(record);
 
-		ExecuteSql(statement);
+		uint32_t result = ExecuteSql(statement);
+
+		return result;
 	};
 
 	template <typename TEntity>
-	void Update(TEntity &entity) const
+	uint32_t Update(TEntity &entity) const
 	{
 		std::shared_ptr<ClassMap<TEntity>> map = _registry.GetMapping<TEntity>();
 
@@ -58,11 +60,13 @@ public:
 
 		SqlStatement statement = _dialect->BuildUpdateStatement(record);
 
-		ExecuteSql(statement);
+		uint32_t result = ExecuteSql(statement);
+
+		return result;
 	};
 
 	template <typename TEntity>
-	void Delete(TEntity &entity) const
+	uint32_t Delete(TEntity &entity) const
 	{
 		std::shared_ptr<ClassMap<TEntity>> map = _registry.GetMapping<TEntity>();
 
@@ -72,7 +76,9 @@ public:
 
 		SqlStatement statement = _dialect->BuildDeleteStatement(record);
 
-		ExecuteSql(statement);
+		uint32_t result = ExecuteSql(statement);
+
+		return result;
 	};
 
 private:

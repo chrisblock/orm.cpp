@@ -27,6 +27,8 @@ protected:
 		static_assert(std::is_base_of<ClassMap<TEntity>, TMapping>::value, "Must register a type that extends ClassMap<T> for the mapping of type T.");
 		static_assert(std::is_base_of<IMappingProvider, TMapping>::value, "Cannot CreateMapping for types that do not inherit from IMappingProvider.");
 
+		static_assert(std::has_default_constructor<TMapping>::value, "Mapping must be default constructable.");
+
 		std::string entityTypeName = typeid (TEntity).name();
 
 		Register(entityTypeName, std::make_shared<TMapping>);

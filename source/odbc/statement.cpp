@@ -96,7 +96,7 @@ odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection) 
 {
 }
 
-odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection, _In_z_ const char *commandText) :
+odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection, _In_ const std::string &commandText) :
 	  _connection(connection)
 	, _commandText(commandText)
 	, _statement(nullptr)
@@ -118,7 +118,7 @@ odbc::statement::~statement()
 
 	if (_statement != nullptr)
 	{
-		::SQLFreeStmt(_statement, SQL_UNBIND);  //TODO: this call may not be necessary
+		::SQLFreeStmt(_statement, SQL_UNBIND); //TODO: this call may not be necessary
 		::SQLFreeStmt(_statement, SQL_CLOSE); //TODO: this call may not be necessary
 
 		::SQLFreeHandle(SQL_HANDLE_STMT, _statement);
@@ -162,7 +162,7 @@ std::string odbc::statement::get_command_text() const
 	return _commandText;
 }
 
-void odbc::statement::set_command_text(_In_z_ const char *commandText)
+void odbc::statement::set_command_text(_In_ const std::string &commandText)
 {
 	_commandText = commandText;
 }
@@ -240,7 +240,7 @@ uint32_t odbc::statement::get_number_of_columns() const
 }
 
 
-bool odbc::statement::is_column_null(const char *columnName) const
+bool odbc::statement::is_column_null(const std::string &columnName) const
 {
 	uint32_t columnIndex = get_column_index(columnName);
 
@@ -1628,7 +1628,7 @@ void odbc::statement::fetch_unbound_column_data(odbc::column &column)
 	}
 }
 
-uint32_t odbc::statement::get_column_index(const char *columnName) const
+uint32_t odbc::statement::get_column_index(const std::string &columnName) const
 {
 	std::map<std::string, uint32_t, case_insensitive_less>::const_iterator indexPair = _nameToIndex.find(columnName);
 
@@ -1650,7 +1650,7 @@ uint32_t odbc::statement::get_column_index(const char *columnName) const
 	return columnIndex;
 }
 
-odbc::column &odbc::statement::get_column(const char *columnName) const
+odbc::column &odbc::statement::get_column(const std::string &columnName) const
 {
 	uint32_t columnIndex = get_column_index(columnName);
 

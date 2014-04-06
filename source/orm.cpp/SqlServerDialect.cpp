@@ -101,11 +101,11 @@ SqlStatement SqlServerDialect::BuildInsertStatement(const IRecord &record) const
 	
 	if (record.IsIdAssigned())
 	{
-		predicate = [&record] (const std::shared_ptr<odbc::parameter> &) { return true; };
+		predicate = [] (const std::shared_ptr<odbc::parameter> &) { return true; };
 	}
 	else
 	{
-		predicate = [&record] (const std::shared_ptr<odbc::parameter> &p) { return record.IsIdColumn(p->get_name()); };
+		predicate = [&record] (const std::shared_ptr<odbc::parameter> &p) { return (record.IsIdColumn(p->get_name()) == false); };
 	}
 
 	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator iter = std::find_if(parameters.cbegin(), parameters.cend(), predicate);

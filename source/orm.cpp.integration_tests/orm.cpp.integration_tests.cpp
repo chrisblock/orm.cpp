@@ -2,7 +2,7 @@
 
 #include <tchar.h>
 
-int _tmain(int argc, TCHAR* argv[])
+int _tmain(int32_t argc, TCHAR *argv[])
 {
 	::testing::InitGoogleTest(&argc, argv);
 
@@ -12,7 +12,7 @@ int _tmain(int argc, TCHAR* argv[])
 
 	bool pause = false;
 
-	for (int i = 1; i < argc; i++)
+	for (int32_t i = 1; i < argc; i++)
 	{
 		if (::_tcsicmp(argv[i], PAUSE) == 0)
 		{

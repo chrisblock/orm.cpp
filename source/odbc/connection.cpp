@@ -59,7 +59,7 @@ odbc::connection::connection(_In_ const std::shared_ptr<odbc::environment> &envi
 	process_return_code(_environment->get_environment_handle(), SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while allocating the connection.");
 }
 
-odbc::connection::connection(_In_ const std::shared_ptr<odbc::environment> &environment, _In_z_ const char *connectionString) :
+odbc::connection::connection(_In_ const std::shared_ptr<odbc::environment> &environment, _In_ const std::string &connectionString) :
 	  _environment(environment)
 	, _connection(nullptr)
 	, _connectionString(connectionString)
@@ -91,16 +91,16 @@ void odbc::connection::open()
 	open(_connectionString.c_str());
 }
 
-void odbc::connection::open(_In_z_ const char *connectionString)
+void odbc::connection::open(_In_z_ const std::string &connectionString)
 {
-	if ((connectionString == nullptr) || (*connectionString == '\0'))
+	if (connectionString.empty())
 	{
 		std::exception e("Empty connection string is invalid.");
 
 		throw e;
 	}
 
-	RETCODE rc = ::SQLDriverConnectA(_connection, nullptr, (SQLCHAR *) connectionString, SQL_NTS, nullptr, 0, nullptr, SQL_DRIVER_NOPROMPT);
+	RETCODE rc = ::SQLDriverConnectA(_connection, nullptr, (SQLCHAR *) connectionString.c_str(), SQL_NTS, nullptr, 0, nullptr, SQL_DRIVER_NOPROMPT);
 
 	process_return_code(_connection, SQL_HANDLE_DBC, rc, __LOC_A__ "Error while connecting to the database.");
 
@@ -162,9 +162,9 @@ void odbc::connection::set_attribute(_In_ long attribute, _In_ unsigned long val
 	process_return_code(_connection, SQL_HANDLE_DBC, rc, __LOC_A__ "Error while setting connection attribute.");
 }
 
-void odbc::connection::set_attribute(_In_ long attribute, _In_z_ const char *value)
+void odbc::connection::set_attribute(_In_ long attribute, _In_z_ const std::string &value)
 {
-	RETCODE rc = SQLSetConnectAttrA(_connection, (SQLINTEGER) attribute, (SQLPOINTER) value, SQL_NTS);
+	RETCODE rc = ::SQLSetConnectAttrA(_connection, (SQLINTEGER) attribute, (SQLPOINTER) value.c_str(), SQL_NTS);
 
 	process_return_code(_connection, SQL_HANDLE_DBC, rc, __LOC_A__ "Error while setting connection attribute.");
 }

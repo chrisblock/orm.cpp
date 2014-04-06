@@ -24,7 +24,7 @@ namespace odbc
 	{
 	public:
 		statement(const std::shared_ptr<odbc::connection> &connection);
-		statement(const std::shared_ptr<odbc::connection> &connection, _In_z_ const char *commandText);
+		statement(const std::shared_ptr<odbc::connection> &connection, _In_ const std::string &commandText);
 		statement(const statement &other);
 		virtual ~statement();
 
@@ -33,14 +33,14 @@ namespace odbc
 		void add_parameter(const std::shared_ptr<odbc::parameter> &parameter);
 
 		std::string get_command_text() const;
-		void set_command_text(_In_z_ const char *commandText);
+		void set_command_text(_In_ const std::string &commandText);
 
 		void execute();
 		bool next();
 		uint32_t get_rows_affected() const;
 		uint32_t get_number_of_columns() const;
 
-		bool is_column_null(const char *columnName) const;
+		bool is_column_null(const std::string &columnName) const;
 		bool is_column_null(const uint32_t columnIndex) const;
 
 		void get(const char *columnName, std::string &value) const;
@@ -160,8 +160,8 @@ namespace odbc
 		void reset_column(odbc::column &column);
 		void fetch_unbound_column_data(odbc::column &column);
 
-		uint32_t get_column_index(const char *columnName) const;
+		uint32_t get_column_index(const std::string &columnName) const;
 		odbc::column &get_column(const uint32_t columnIndex) const;
-		odbc::column &get_column(const char *columnName) const;
+		odbc::column &get_column(const std::string &columnName) const;
 	};
 };

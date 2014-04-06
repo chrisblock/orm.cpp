@@ -15,11 +15,11 @@ namespace odbc
 	{
 	public:
 		connection(_In_ const std::shared_ptr<odbc::environment> &environment);
-		connection(_In_ const std::shared_ptr<odbc::environment> &environment, _In_z_ const char *connectionString);
+		connection(_In_ const std::shared_ptr<odbc::environment> &environment, _In_ const std::string &connectionString);
 		virtual ~connection();
 
 		void open();
-		void open(_In_z_ const char *connectionString);
+		void open(_In_z_ const std::string &connectionString);
 		void close();
 
 		_Success_(return != SQL_INVALID_HANDLE)
@@ -27,7 +27,7 @@ namespace odbc
 
 		void set_attribute(_In_ long attribute, _In_ long value);
 		void set_attribute(_In_ long attribute, _In_ unsigned long value);
-		void set_attribute(_In_ long attribute, _In_z_ const char *value);
+		void set_attribute(_In_ long attribute, _In_ const std::string &value);
 
 	private:
 		std::shared_ptr<odbc::environment> _environment;
