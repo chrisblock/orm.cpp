@@ -2,6 +2,7 @@
 
 #include "ISqlExecutor.h"
 
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -18,5 +19,5 @@ public:
 	SqlExecutor &operator =(const SqlExecutor &other);
 
 	virtual std::shared_ptr<IDataReader> ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const;
-	virtual uint32_t ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const;
+	virtual std::uint32_t ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const;
 };

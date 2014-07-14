@@ -10,7 +10,7 @@
 class MockDataReader : public IDataReader
 {
 public:
-	MockDataReader(const std::map<std::string, int32_t> &values, const uint32_t numberOfRecords = 1);
+	MockDataReader(const std::map<std::string, std::int32_t> &values, const std::uint32_t numberOfRecords = 1);
 	MockDataReader(const MockDataReader &other) = delete;
 	virtual ~MockDataReader();
 
@@ -18,29 +18,29 @@ public:
 
 	virtual bool Read();
 
-	virtual void Get(const std::string &columnName, int8_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<int8_t> &value) const;
+	virtual void Get(const std::string &columnName, std::int8_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::int8_t> &value) const;
 
-	virtual void Get(const std::string &columnName, uint8_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<uint8_t> &value) const;
+	virtual void Get(const std::string &columnName, std::uint8_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::uint8_t> &value) const;
 
-	virtual void Get(const std::string &columnName, int16_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<int16_t> &value) const;
+	virtual void Get(const std::string &columnName, std::int16_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::int16_t> &value) const;
 
-	virtual void Get(const std::string &columnName, uint16_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<uint16_t> &value) const;
+	virtual void Get(const std::string &columnName, std::uint16_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::uint16_t> &value) const;
 
-	virtual void Get(const std::string &columnName, int32_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<int32_t> &value) const;
+	virtual void Get(const std::string &columnName, std::int32_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::int32_t> &value) const;
 
-	virtual void Get(const std::string &columnName, uint32_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<uint32_t> &value) const;
+	virtual void Get(const std::string &columnName, std::uint32_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::uint32_t> &value) const;
 
-	virtual void Get(const std::string &columnName, int64_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<int64_t> &value) const;
+	virtual void Get(const std::string &columnName, std::int64_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::int64_t> &value) const;
 
-	virtual void Get(const std::string &columnName, uint64_t &value) const;
-	virtual void Get(const std::string &columnName, std::shared_ptr<uint64_t> &value) const;
+	virtual void Get(const std::string &columnName, std::uint64_t &value) const;
+	virtual void Get(const std::string &columnName, std::shared_ptr<std::uint64_t> &value) const;
 
 	virtual void Get(const std::string &columnName, float &value) const;
 	virtual void Get(const std::string &columnName, std::shared_ptr<float> &value) const;
@@ -64,7 +64,7 @@ public:
 	virtual void Get(const std::string &columnName, std::shared_ptr<std::tm> &value) const;
 
 private:
-	uint32_t _currentRecord;
-	uint32_t _numberOfRecords;
-	std::map<std::string, int32_t> _values;
+	std::uint32_t _currentRecord;
+	std::uint32_t _numberOfRecords;
+	std::map<std::string, std::int32_t> _values;
 };

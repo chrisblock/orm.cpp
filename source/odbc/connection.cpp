@@ -50,6 +50,20 @@ std::wstring GetModuleFileNameW()
 #define GetModuleFileName GetModuleFileNameA
 #endif
 
+void odbc::swap(odbc::connection &left, odbc::connection &right)
+{
+	using std::swap;
+
+	swap(left._connection, right._connection);
+	swap(left._connectionString, right._connectionString);
+	swap(left._environment, right._environment);
+}
+
+odbc::connection::connection() :
+	  _connection(nullptr)
+{
+}
+
 odbc::connection::connection(_In_ const std::shared_ptr<odbc::environment> &environment) :
 	  _environment(environment)
 	, _connection(nullptr)
@@ -69,6 +83,12 @@ odbc::connection::connection(_In_ const std::shared_ptr<odbc::environment> &envi
 	process_return_code(_environment->get_environment_handle(), SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while allocating the connection.");
 }
 
+odbc::connection::connection(odbc::connection &&other) :
+	  odbc::connection()
+{
+	swap(*this, other);
+}
+
 odbc::connection::~connection()
 {
 	close();
@@ -86,12 +106,19 @@ odbc::connection::~connection()
 	}
 }
 
-void odbc::connection::open()
+odbc::connection &odbc::connection::operator =(odbc::connection other)
 {
-	open(_connectionString.c_str());
+	swap(*this, other);
+
+	return *this;
 }
 
-void odbc::connection::open(_In_z_ const std::string &connectionString)
+void odbc::connection::open()
+{
+	open(_connectionString);
+}
+
+void odbc::connection::open(_In_ const std::string &connectionString)
 {
 	if (connectionString.empty())
 	{
@@ -116,8 +143,8 @@ void odbc::connection::open(_In_z_ const std::string &connectionString)
 	performanceLogFileName += processId;
 	performanceLogFileName += ".log";
 
-	set_attribute(SQL_COPT_SS_PERF_DATA_LOG, performanceLogFileName.c_str());
-	set_attribute(SQL_COPT_SS_PERF_DATA, (SQLUINTEGER)SQL_PERF_START);
+	set_attribute(SQL_COPT_SS_PERF_DATA_LOG, performanceLogFileName);
+	set_attribute(SQL_COPT_SS_PERF_DATA, (SQLUINTEGER) SQL_PERF_START);
 
 	std::string longRunningQueryLogFileName("c:\\ODBC_LONG_RUNNING_QUERY_");
 	longRunningQueryLogFileName += moduleFileName;
@@ -125,9 +152,9 @@ void odbc::connection::open(_In_z_ const std::string &connectionString)
 	longRunningQueryLogFileName += processId;
 	longRunningQueryLogFileName += ".log";
 
-	set_attribute(SQL_COPT_SS_PERF_QUERY_LOG, longRunningQueryLogFileName.c_str());
-	set_attribute(SQL_COPT_SS_PERF_QUERY_INTERVAL, (SQLUINTEGER)0U);
-	set_attribute(SQL_COPT_SS_PERF_QUERY, (SQLUINTEGER)SQL_PERF_START);
+	set_attribute(SQL_COPT_SS_PERF_QUERY_LOG, longRunningQueryLogFileName);
+	set_attribute(SQL_COPT_SS_PERF_QUERY_INTERVAL, (SQLUINTEGER) 0U);
+	set_attribute(SQL_COPT_SS_PERF_QUERY, (SQLUINTEGER) SQL_PERF_START);
 #endif
 
 	//TODO: allow the isolation level to be configured
@@ -162,7 +189,7 @@ void odbc::connection::set_attribute(_In_ long attribute, _In_ unsigned long val
 	process_return_code(_connection, SQL_HANDLE_DBC, rc, __LOC_A__ "Error while setting connection attribute.");
 }
 
-void odbc::connection::set_attribute(_In_ long attribute, _In_z_ const std::string &value)
+void odbc::connection::set_attribute(_In_ long attribute, _In_ const std::string &value)
 {
 	RETCODE rc = ::SQLSetConnectAttrA(_connection, (SQLINTEGER) attribute, (SQLPOINTER) value.c_str(), SQL_NTS);
 

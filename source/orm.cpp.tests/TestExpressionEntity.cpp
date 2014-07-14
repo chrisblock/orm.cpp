@@ -76,192 +76,192 @@ TestExpressionEntity &TestExpressionEntity::operator =(const TestExpressionEntit
 
 
 
-void TestExpressionEntity::SetterGetterSetter(int32_t field)
+void TestExpressionEntity::SetterGetterSetter(std::int32_t field)
 {
 	_setterGetter = field;
 }
 
-int32_t TestExpressionEntity::SetterGetterGetter()
+std::int32_t TestExpressionEntity::SetterGetterGetter()
 {
 	return _setterGetter;
 }
 
 
 
-void TestExpressionEntity::SetterConstGetterSetter(int32_t field)
+void TestExpressionEntity::SetterConstGetterSetter(std::int32_t field)
 {
 	_setterConstGetter = field;
 }
 
-int32_t TestExpressionEntity::SetterConstGetterGetter() const
+std::int32_t TestExpressionEntity::SetterConstGetterGetter() const
 {
 	return _setterConstGetter;
 }
 
 
 
-void TestExpressionEntity::SetterReferenceGetterSetter(int32_t field)
+void TestExpressionEntity::SetterReferenceGetterSetter(std::int32_t field)
 {
 	_setterReferenceGetter = field;
 }
 
-int32_t &TestExpressionEntity::SetterReferenceGetterGetter()
+std::int32_t &TestExpressionEntity::SetterReferenceGetterGetter()
 {
 	return _setterReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::SetterConstReferenceGetterSetter(int32_t field)
+void TestExpressionEntity::SetterConstReferenceGetterSetter(std::int32_t field)
 {
 	_setterConstReferenceGetter = field;
 }
 
-const int32_t &TestExpressionEntity::SetterConstReferenceGetterGetter() const
+const std::int32_t &TestExpressionEntity::SetterConstReferenceGetterGetter() const
 {
 	return _setterConstReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ConstSetterGetterSetter(const int32_t field)
+void TestExpressionEntity::ConstSetterGetterSetter(const std::int32_t field)
 {
 	_constSetterGetter = field;
 }
 
-int32_t TestExpressionEntity::ConstSetterGetterGetter()
+std::int32_t TestExpressionEntity::ConstSetterGetterGetter()
 {
 	return _constSetterGetter;
 }
 
 
 
-void TestExpressionEntity::ConstSetterConstGetterSetter(const int32_t field)
+void TestExpressionEntity::ConstSetterConstGetterSetter(const std::int32_t field)
 {
 	_constSetterConstGetter = field;
 }
 
-int32_t TestExpressionEntity::ConstSetterConstGetterGetter() const
+std::int32_t TestExpressionEntity::ConstSetterConstGetterGetter() const
 {
 	return _constSetterConstGetter;
 }
 
 
 
-void TestExpressionEntity::ConstSetterReferenceGetterSetter(const int32_t field)
+void TestExpressionEntity::ConstSetterReferenceGetterSetter(const std::int32_t field)
 {
 	_constSetterReferenceGetter = field;
 }
 
-int32_t &TestExpressionEntity::ConstSetterReferenceGetterGetter()
+std::int32_t &TestExpressionEntity::ConstSetterReferenceGetterGetter()
 {
 	return _constSetterReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ConstSetterConstReferenceGetterSetter(const int32_t field)
+void TestExpressionEntity::ConstSetterConstReferenceGetterSetter(const std::int32_t field)
 {
 	_constSetterConstReferenceGetter = field;
 }
 
-const int32_t &TestExpressionEntity::ConstSetterConstReferenceGetterGetter() const
+const std::int32_t &TestExpressionEntity::ConstSetterConstReferenceGetterGetter() const
 {
 	return _constSetterConstReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ReferenceSetterGetterSetter(int32_t &field)
+void TestExpressionEntity::ReferenceSetterGetterSetter(std::int32_t &field)
 {
 	_referenceSetterGetter = field;
 }
 
-int32_t TestExpressionEntity::ReferenceSetterGetterGetter()
+std::int32_t TestExpressionEntity::ReferenceSetterGetterGetter()
 {
 	return _referenceSetterGetter;
 }
 
 
 
-void TestExpressionEntity::ReferenceSetterConstGetterSetter(int32_t &field)
+void TestExpressionEntity::ReferenceSetterConstGetterSetter(std::int32_t &field)
 {
 	_referenceSetterConstGetter = field;
 }
 
-int32_t TestExpressionEntity::ReferenceSetterConstGetterGetter() const
+std::int32_t TestExpressionEntity::ReferenceSetterConstGetterGetter() const
 {
 	return _referenceSetterConstGetter;
 }
 
 
 
-void TestExpressionEntity::ReferenceSetterReferenceGetterSetter(int32_t &field)
+void TestExpressionEntity::ReferenceSetterReferenceGetterSetter(std::int32_t &field)
 {
 	_referenceSetterReferenceGetter = field;
 }
 
-int32_t &TestExpressionEntity::ReferenceSetterReferenceGetterGetter()
+std::int32_t &TestExpressionEntity::ReferenceSetterReferenceGetterGetter()
 {
 	return _referenceSetterReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ReferenceSetterConstReferenceGetterSetter(int32_t &field)
+void TestExpressionEntity::ReferenceSetterConstReferenceGetterSetter(std::int32_t &field)
 {
 	_referenceSetterConstReferenceGetter = field;
 }
 
-const int32_t &TestExpressionEntity::ReferenceSetterConstReferenceGetterGetter() const
+const std::int32_t &TestExpressionEntity::ReferenceSetterConstReferenceGetterGetter() const
 {
 	return _referenceSetterConstReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ConstReferenceSetterGetterSetter(const int32_t &field)
+void TestExpressionEntity::ConstReferenceSetterGetterSetter(const std::int32_t &field)
 {
 	_constReferenceSetterGetter = field;
 }
 
-int32_t TestExpressionEntity::ConstReferenceSetterGetterGetter()
+std::int32_t TestExpressionEntity::ConstReferenceSetterGetterGetter()
 {
 	return _constReferenceSetterGetter;
 }
 
 
 
-void TestExpressionEntity::ConstReferenceSetterConstGetterSetter(const int32_t &field)
+void TestExpressionEntity::ConstReferenceSetterConstGetterSetter(const std::int32_t &field)
 {
 	_constReferenceSetterConstGetter = field;
 }
 
-int32_t TestExpressionEntity::ConstReferenceSetterConstGetterGetter() const
+std::int32_t TestExpressionEntity::ConstReferenceSetterConstGetterGetter() const
 {
 	return _constReferenceSetterConstGetter;
 }
 
 
 
-void TestExpressionEntity::ConstReferenceSetterReferenceGetterSetter(const int32_t &field)
+void TestExpressionEntity::ConstReferenceSetterReferenceGetterSetter(const std::int32_t &field)
 {
 	_constReferenceSetterReferenceGetter = field;
 }
 
-int32_t &TestExpressionEntity::ConstReferenceSetterReferenceGetterGetter()
+std::int32_t &TestExpressionEntity::ConstReferenceSetterReferenceGetterGetter()
 {
 	return _constReferenceSetterReferenceGetter;
 }
 
 
 
-void TestExpressionEntity::ConstReferenceSetterConstReferenceGetterSetter(const int32_t &field)
+void TestExpressionEntity::ConstReferenceSetterConstReferenceGetterSetter(const std::int32_t &field)
 {
 	_constReferenceSetterConstReferenceGetter = field;
 }
 
-const int32_t &TestExpressionEntity::ConstReferenceSetterConstReferenceGetterGetter() const
+const std::int32_t &TestExpressionEntity::ConstReferenceSetterConstReferenceGetterGetter() const
 {
 	return _constReferenceSetterConstReferenceGetter;
 }

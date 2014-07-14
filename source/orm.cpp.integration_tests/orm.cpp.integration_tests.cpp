@@ -1,9 +1,14 @@
 #include "stdafx.h"
 
+#include <cstdint>
 #include <tchar.h>
 
-int _tmain(int32_t argc, TCHAR *argv[])
+#include "TestDatabase.h"
+
+int _tmain(std::int32_t argc, TCHAR *argv[])
 {
+	TestDatabase db("OdbcCppTestDatabase");
+
 	::testing::InitGoogleTest(&argc, argv);
 
 	::testing::GTEST_FLAG(shuffle) = true;
@@ -12,7 +17,7 @@ int _tmain(int32_t argc, TCHAR *argv[])
 
 	bool pause = false;
 
-	for (int32_t i = 1; i < argc; i++)
+	for (std::int32_t i = 1; i < argc; i++)
 	{
 		if (::_tcsicmp(argv[i], PAUSE) == 0)
 		{

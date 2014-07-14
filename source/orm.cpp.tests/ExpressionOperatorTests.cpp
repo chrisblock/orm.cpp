@@ -27,7 +27,7 @@ protected:
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSix = expr == 6;
 
@@ -39,7 +39,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Constant_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToField = expr == &TestExpressionEntity::_field;
 
@@ -51,7 +51,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Field_ReturnsCorrectPre
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterGetter = expr == &TestExpressionEntity::SetterGetterGetter;
 
@@ -63,7 +63,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_Getter_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterConstGetter = expr == &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -75,7 +75,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstGetter_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterReferenceGetter = expr == &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -87,7 +87,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ReferenceGetter_Returns
 
 TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSetterConstReferenceGetter = expr == &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -99,7 +99,7 @@ TEST_F(ExpressionOperatorTests, EqualOperator_Expression_ConstReferenceGetter_Re
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSix = expr != 6;
 
@@ -111,7 +111,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Constant_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToField = expr != &TestExpressionEntity::_field;
 
@@ -123,7 +123,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Field_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterGetter = expr != &TestExpressionEntity::SetterGetterGetter;
 
@@ -135,7 +135,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_Getter_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterConstGetter = expr != &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -147,7 +147,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstGetter_ReturnsC
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterReferenceGetter = expr != &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -159,7 +159,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ReferenceGetter_Retu
 
 TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsNotEqualToSetterConstReferenceGetter = expr != &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -171,7 +171,7 @@ TEST_F(ExpressionOperatorTests, NotEqualOperator_Expression_ConstReferenceGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanSix = expr < 6;
 
@@ -183,7 +183,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Constant_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanField = expr < &TestExpressionEntity::_field;
 
@@ -195,7 +195,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Field_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterGetter = expr < &TestExpressionEntity::SetterGetterGetter;
 
@@ -207,7 +207,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_Getter_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterConstGetter = expr < &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -219,7 +219,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstGetter_ReturnsC
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterReferenceGetter = expr < &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -231,7 +231,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ReferenceGetter_Retu
 
 TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanSetterConstReferenceGetter = expr < &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -243,7 +243,7 @@ TEST_F(ExpressionOperatorTests, LessThanOperator_Expression_ConstReferenceGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSix = expr <= 6;
 
@@ -255,7 +255,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Constant_Re
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToField = expr <= &TestExpressionEntity::_field;
 
@@ -267,7 +267,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Field_Retur
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterGetter = expr <= &TestExpressionEntity::SetterGetterGetter;
 
@@ -279,7 +279,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_Getter_Retu
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterConstGetter = expr <= &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -291,7 +291,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstGetter
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterReferenceGetter = expr <= &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -303,7 +303,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ReferenceGe
 
 TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsLessThanOrEqualToSetterConstReferenceGetter = expr <= &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -315,7 +315,7 @@ TEST_F(ExpressionOperatorTests, LessThanOrEqualToOperator_Expression_ConstRefere
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSix = expr > 6;
 
@@ -327,7 +327,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Constant_ReturnsC
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanField = expr > &TestExpressionEntity::_field;
 
@@ -339,7 +339,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Field_ReturnsCorr
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterGetter = expr > &TestExpressionEntity::SetterGetterGetter;
 
@@ -351,7 +351,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_Getter_ReturnsCor
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterConstGetter = expr > &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -363,7 +363,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstGetter_Retur
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterReferenceGetter = expr > &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -375,7 +375,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ReferenceGetter_R
 
 TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanSetterConstReferenceGetter = expr > &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -387,7 +387,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOperator_Expression_ConstReferenceGet
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSix = expr >= 6;
 
@@ -399,7 +399,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Constant
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Field_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToField = expr >= &TestExpressionEntity::_field;
 
@@ -411,7 +411,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Field_Re
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Getter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterGetter = expr >= &TestExpressionEntity::SetterGetterGetter;
 
@@ -423,7 +423,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Getter_R
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterConstGetter = expr >= &TestExpressionEntity::SetterConstGetterGetter;
 
@@ -435,7 +435,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstGet
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterReferenceGetter = expr >= &TestExpressionEntity::SetterReferenceGetterGetter;
 
@@ -447,7 +447,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_Referenc
 
 TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstReferenceGetter_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsGreaterThanOrEqualToSetterConstReferenceGetter = expr >= &TestExpressionEntity::SetterConstReferenceGetterGetter;
 
@@ -459,7 +459,7 @@ TEST_F(ExpressionOperatorTests, GreaterThanOrEqualToOperator_Expression_ConstRef
 
 TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndTrue = (expr == 6) && true;
 
@@ -471,7 +471,7 @@ TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Constant_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, AndOperator_Constant_Exoression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> falseAndSetterGetterIsEqualToSix = false && (expr == 6);
 
@@ -483,7 +483,7 @@ TEST_F(ExpressionOperatorTests, AndOperator_Constant_Exoression_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Expression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndSetterGetterNotEqualToFortyTwo = (expr == 6) && (expr != 42);
 
@@ -495,7 +495,7 @@ TEST_F(ExpressionOperatorTests, AndOperator_Exoression_Expression_ReturnsCorrect
 
 TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Constant_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSixOrTrue = (expr == 6) || true;
 
@@ -507,7 +507,7 @@ TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Constant_ReturnsCorrectPre
 
 TEST_F(ExpressionOperatorTests, OrOperator_Constant_Exoression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> falsOrSetterGetterIsEqualToSix = false || (expr == 6);
 
@@ -519,7 +519,7 @@ TEST_F(ExpressionOperatorTests, OrOperator_Constant_Exoression_ReturnsCorrectPre
 
 TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Expression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> setterGetterIsEqualToSixAndOrSetterGetterIsNotEqualToFortyTwo = (expr == 6) || (expr != 42);
 
@@ -531,7 +531,7 @@ TEST_F(ExpressionOperatorTests, OrOperator_Exoression_Expression_ReturnsCorrectP
 
 TEST_F(ExpressionOperatorTests, EqualToOperator_null_Expression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (nullptr == expr);
 
@@ -543,7 +543,7 @@ TEST_F(ExpressionOperatorTests, EqualToOperator_null_Expression_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, EqualToOperator_Expression_null_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> nullIsEqualToSetterGetter = (expr == nullptr);
 
@@ -555,7 +555,7 @@ TEST_F(ExpressionOperatorTests, EqualToOperator_Expression_null_ReturnsCorrectPr
 
 TEST_F(ExpressionOperatorTests, NotEqualToOperator_null_Expression_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> nullIsNotEqualToSetterGetter = (nullptr != expr);
 
@@ -567,7 +567,7 @@ TEST_F(ExpressionOperatorTests, NotEqualToOperator_null_Expression_ReturnsCorrec
 
 TEST_F(ExpressionOperatorTests, NotEqualToOperator_Expression_null_ReturnsCorrectPredicate)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	Predicate<TestExpressionEntity> nullIsNotEqualToSetterGetter = (expr != nullptr);
 

@@ -30,9 +30,9 @@ public:
 
 	operator GUID() const;
 
-	uint32_t GetVersion() const;
+	std::uint32_t GetVersion() const;
 	std::string ToString() const;
-	std::unique_ptr<uint8_t[]> ToByteArray() const;
+	std::unique_ptr<std::uint8_t[]> ToByteArray() const;
 
 private:
 	static const char _guidPattern[];

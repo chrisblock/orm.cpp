@@ -122,13 +122,13 @@
 		one.SetId(2); \
 		one.SetColumn(variable3); \
 	\
-		int32_t numberUpdated = 0; \
+		std::int32_t numberUpdated = 0; \
 	\
 		numberUpdated += session.Update(one); \
 	\
 		std::vector<ColumnType ## _ColumnTestsEntity> entities; \
 	\
-		int32_t id = 2; \
+		std::int32_t id = 2; \
 	\
 		session.QueryOver<ColumnType ## _ColumnTestsEntity>() \
 			.Where(::MakeExpression(&ColumnType ## _ColumnTestsEntity::GetId) == id) \
@@ -163,7 +163,7 @@
 	\
 		two.SetId(2); \
 	\
-		int32_t numberDeleted = 0; \
+		std::int32_t numberDeleted = 0; \
 	\
 		numberDeleted += session.Delete(one); \
 		numberDeleted += session.Delete(two); \
@@ -199,7 +199,7 @@ protected:
 	virtual void TearDown();
 
 	virtual Session CreateSession() const;
-	virtual int32_t GetRowCount() const;
+	virtual std::int32_t GetRowCount() const;
 
 	virtual const MappingRegistrar &GetMappingRegistrar() const = 0;
 	virtual std::string GetConnectionString() const = 0;

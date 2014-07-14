@@ -6,7 +6,7 @@
 
 #include "Guid.h"
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const int8_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::int8_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -16,7 +16,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<int8_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::int8_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -26,7 +26,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const uint8_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::uint8_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -36,7 +36,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<uint8_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::uint8_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -46,7 +46,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const int16_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::int16_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -56,7 +56,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<int16_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::int16_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -66,7 +66,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const uint16_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::uint16_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -76,7 +76,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<uint16_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::uint16_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -86,7 +86,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const int32_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::int32_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -96,7 +96,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<int32_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::int32_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -106,7 +106,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const uint32_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::uint32_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -116,7 +116,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<uint32_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::uint32_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -126,7 +126,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const int64_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::int64_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -136,7 +136,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<int64_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::int64_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -146,7 +146,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const uint64_t &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::uint64_t &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -156,7 +156,7 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 	_predicate.AddParameter(parameter);
 }
 
-ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<uint64_t> &value) :
+ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(const std::shared_ptr<std::uint64_t> &value) :
 	  _predicate("?")
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
@@ -298,13 +298,13 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
-	odbc::DateTime dateTime = {};
+	odbc::date_time dateTime = {};
 
-	dateTime.year = (uint16_t) value.tm_year;
-	dateTime.month = (uint16_t) value.tm_mon;
-	dateTime.day = (uint16_t) value.tm_mday;
-	dateTime.hour = (uint16_t) value.tm_hour;
-	dateTime.second = (uint16_t) value.tm_sec;
+	dateTime.year = (std::int16_t) value.tm_year;
+	dateTime.month = (std::uint16_t) value.tm_mon;
+	dateTime.day = (std::uint16_t) value.tm_mday;
+	dateTime.hour = (std::uint16_t) value.tm_hour;
+	dateTime.second = (std::uint16_t) value.tm_sec;
 
 	parameter->set(dateTime);
 
@@ -316,19 +316,19 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
-	std::shared_ptr<odbc::DateTime> dateTime;
+	std::shared_ptr<odbc::date_time> dateTime;
 
 	if (value != nullptr)
 	{
-		odbc::DateTime empty = {};
+		odbc::date_time empty = {};
 
-		dateTime = std::make_shared<odbc::DateTime>(empty);
+		dateTime = std::make_shared<odbc::date_time>(empty);
 
-		dateTime->year = (uint16_t) value->tm_year;
-		dateTime->month = (uint16_t) value->tm_mon;
-		dateTime->day = (uint16_t) value->tm_mday;
-		dateTime->hour = (uint16_t) value->tm_hour;
-		dateTime->second = (uint16_t) value->tm_sec;
+		dateTime->year = (std::int16_t) value->tm_year;
+		dateTime->month = (std::uint16_t) value->tm_mon;
+		dateTime->day = (std::uint16_t) value->tm_mday;
+		dateTime->hour = (std::uint16_t) value->tm_hour;
+		dateTime->second = (std::uint16_t) value->tm_sec;
 	}
 
 	parameter->set(dateTime);

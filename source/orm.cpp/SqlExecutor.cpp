@@ -35,11 +35,11 @@ SqlExecutor &SqlExecutor::operator =(const SqlExecutor &other)
 
 std::shared_ptr<IDataReader> SqlExecutor::ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
 {
-	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString.c_str());
+	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString);
 
 	connection->open();
 
-	std::shared_ptr<odbc::statement> stmt = std::make_shared<odbc::statement>(connection, statement.GetSql().c_str());
+	std::shared_ptr<odbc::statement> stmt = std::make_shared<odbc::statement>(connection, statement.GetSql());
 
 	const std::vector<std::shared_ptr<odbc::parameter>> &parameters = statement.GetParameters();
 
@@ -52,13 +52,13 @@ std::shared_ptr<IDataReader> SqlExecutor::ExecuteReader(const std::shared_ptr<od
 	return reader;
 }
 
-uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
 {
-	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString.c_str());
+	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString);
 
 	connection->open();
 
-	odbc::statement stmt(connection, statement.GetSql().c_str());
+	odbc::statement stmt(connection, statement.GetSql());
 
 	const std::vector<std::shared_ptr<odbc::parameter>> &parameters = statement.GetParameters();
 
@@ -68,7 +68,7 @@ uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &envir
 
 	stmt.execute();
 
-	uint32_t result = stmt.get_rows_affected();
+	std::uint32_t result = stmt.get_rows_affected();
 
 	return result;
 }

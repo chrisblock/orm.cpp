@@ -51,7 +51,7 @@ public:
 	{
 		TProperty value = ((entity).*(_field));
 
-		record.SetColumn(_columnName.c_str(), value);
+		record.SetColumn(_columnName, value);
 	};
 
 protected:

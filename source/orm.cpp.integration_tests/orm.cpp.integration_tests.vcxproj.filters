@@ -7,11 +7,13 @@
     <ClInclude Include="TestColumnEntityMap.h" />
     <ClInclude Include="TestMappingRegistrar.h" />
     <ClInclude Include="TestColumnTestFixture.h" />
+    <ClInclude Include="TestDatabase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="orm.cpp.integration_tests.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="DoubleColumnEntityTests.cpp" />
     <ClCompile Include="TestColumnTestFixture.cpp" />
+    <ClCompile Include="TestDatabase.cpp" />
+    <ClCompile Include="ColumnEntityTests.cpp" />
   </ItemGroup>
 </Project>

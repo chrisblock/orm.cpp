@@ -10,4 +10,7 @@
     <ClCompile Include="insert_tests.cpp" />
     <ClCompile Include="select_tests.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="binary_data.tests.cpp" />
+  </ItemGroup>
 </Project>

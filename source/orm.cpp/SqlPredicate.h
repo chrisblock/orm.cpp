@@ -24,9 +24,9 @@ public:
 	void SetPredicate(const std::string &predicate);
 	std::string GetPredicate() const;
 
-	uint32_t GetNumberOfParameters() const;
+	std::uint32_t GetNumberOfParameters() const;
 	void AddParameter(const std::shared_ptr<odbc::parameter> &parameter);
-	std::shared_ptr<odbc::parameter> GetParameter(const uint32_t index) const;
+	std::shared_ptr<odbc::parameter> GetParameter(const std::uint32_t index) const;
 
 	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator GetBegin() const;
 	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator GetEnd() const;

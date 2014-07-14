@@ -18,20 +18,23 @@ namespace odbc
 	public:
 		parameter();
 		parameter(_In_ const parameter &other);
+		parameter(parameter &&other);
 		virtual ~parameter();
 
-		parameter &operator =(_In_ const parameter &other);
+		parameter &operator =(_In_ parameter other);
+
+		friend void swap(parameter &left, parameter &right);
 
 		std::string get_name() const;
 		void set_name(_In_ const std::string &name);
 
-		int16_t get_type() const;
+		std::int16_t get_type() const;
 
 		void *get_value() const;
 
-		int32_t get_length() const;
+		std::int32_t get_length() const;
 
-		int32_t *get_nullable_indicator();
+		std::int32_t *get_nullable_indicator();
 
 		bool is_null() const;
 
@@ -47,29 +50,29 @@ namespace odbc
 		void set(_In_ const std::shared_ptr<std::wstring> &value);
 		void set(_In_ const std::wstring &value);
 
-		void set(_In_ const std::shared_ptr<int8_t> &value);
-		void set(_In_ const int8_t value);
+		void set(_In_ const std::shared_ptr<std::int8_t> &value);
+		void set(_In_ const std::int8_t value);
 
-		void set(_In_ const std::shared_ptr<uint8_t> &value);
-		void set(_In_ const uint8_t value);
+		void set(_In_ const std::shared_ptr<std::uint8_t> &value);
+		void set(_In_ const std::uint8_t value);
 
-		void set(_In_ const std::shared_ptr<int16_t> &value);
-		void set(_In_ const int16_t value);
+		void set(_In_ const std::shared_ptr<std::int16_t> &value);
+		void set(_In_ const std::int16_t value);
 
-		void set(_In_ const std::shared_ptr<uint16_t> &value);
-		void set(_In_ const uint16_t value);
+		void set(_In_ const std::shared_ptr<std::uint16_t> &value);
+		void set(_In_ const std::uint16_t value);
 
-		void set(_In_ const std::shared_ptr<int32_t> &value);
-		void set(_In_ const int32_t value);
+		void set(_In_ const std::shared_ptr<std::int32_t> &value);
+		void set(_In_ const std::int32_t value);
 
-		void set(_In_ const std::shared_ptr<uint32_t> &value);
-		void set(_In_ const uint32_t value);
+		void set(_In_ const std::shared_ptr<std::uint32_t> &value);
+		void set(_In_ const std::uint32_t value);
 
-		void set(_In_ const std::shared_ptr<int64_t> &value);
-		void set(_In_ const int64_t value);
+		void set(_In_ const std::shared_ptr<std::int64_t> &value);
+		void set(_In_ const std::int64_t value);
 
-		void set(_In_ const std::shared_ptr<uint64_t> &value);
-		void set(_In_ const uint64_t value);
+		void set(_In_ const std::shared_ptr<std::uint64_t> &value);
+		void set(_In_ const std::uint64_t value);
 
 		void set(_In_ const std::shared_ptr<float> &value);
 		void set(_In_ const float value);
@@ -86,14 +89,14 @@ namespace odbc
 		void set(_In_ const std::shared_ptr<odbc::date> &value);
 		void set(_In_ const odbc::date &value);
 
-		void set(_In_ const std::shared_ptr<odbc::Time> &value);
-		void set(_In_ const odbc::Time &value);
+		void set(_In_ const std::shared_ptr<odbc::time> &value);
+		void set(_In_ const odbc::time &value);
 
-		void set(_In_ const std::shared_ptr<odbc::DateTime> &value);
-		void set(_In_ const odbc::DateTime &value);
+		void set(_In_ const std::shared_ptr<odbc::date_time> &value);
+		void set(_In_ const odbc::date_time &value);
 
-		void set(_In_ const std::shared_ptr<odbc::Numeric> &value);
-		void set(_In_ const odbc::Numeric &value);
+		void set(_In_ const std::shared_ptr<odbc::numeric> &value);
+		void set(_In_ const odbc::numeric &value);
 
 		void set(_In_ const std::shared_ptr<GUID> &value);
 		void set(_In_ const GUID &value);
@@ -101,8 +104,7 @@ namespace odbc
 	private:
 		std::string _name;
 		odbc::column _value;
-		int32_t _length;
-
-		void set_null(_In_ int16_t type);
 	};
+
+	void swap(parameter &left, parameter &right);
 };

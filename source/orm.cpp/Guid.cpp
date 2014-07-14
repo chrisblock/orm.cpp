@@ -304,9 +304,9 @@ std::string Guid::ToString() const
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> Guid::ToByteArray() const
+std::unique_ptr<std::uint8_t[]> Guid::ToByteArray() const
 {
-	std::unique_ptr<uint8_t[]> result(new uint8_t[16]);
+	std::unique_ptr<std::uint8_t[]> result = std::make_unique<std::uint8_t[]>(16);
 
 	::memcpy(result.get(), &_guid, sizeof (GUID));
 

@@ -32,7 +32,7 @@ TEST_F(select_tests, test)
 
 	while (stmt.next())
 	{
-		int32_t id = 0;
+		std::int32_t id = 0;
 		stmt.get("Id", id);
 
 		bool bit = false;

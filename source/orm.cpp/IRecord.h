@@ -30,29 +30,29 @@ public:
 	virtual void SetIsIdAssigned(const bool isIdAssigned) = 0;
 	virtual bool IsIdAssigned() const = 0;
 
-	virtual void SetColumn(const std::string &columnName, int8_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<int8_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::int8_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::int8_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, uint8_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<uint8_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::uint8_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::uint8_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, int16_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<int16_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::int16_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::int16_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, uint16_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<uint16_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::uint16_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::uint16_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, int32_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<int32_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::int32_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::int32_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, uint32_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<uint32_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::uint32_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::uint32_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, int64_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<int64_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::int64_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::int64_t> &value) = 0;
 
-	virtual void SetColumn(const std::string &columnName, uint64_t &value) = 0;
-	virtual void SetColumn(const std::string &columnName, std::shared_ptr<uint64_t> &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::uint64_t &value) = 0;
+	virtual void SetColumn(const std::string &columnName, std::shared_ptr<std::uint64_t> &value) = 0;
 
 	virtual void SetColumn(const std::string &columnName, float &value) = 0;
 	virtual void SetColumn(const std::string &columnName, std::shared_ptr<float> &value) = 0;
@@ -82,8 +82,8 @@ public:
 	virtual std::vector<std::shared_ptr<odbc::parameter>> &GetParameters() = 0;
 	virtual const std::vector<std::shared_ptr<odbc::parameter>> &GetParameters() const = 0;
 
-	virtual uint32_t GetNumberOfParameters() const = 0;
+	virtual std::uint32_t GetNumberOfParameters() const = 0;
 
-	virtual std::string GetColumn(const uint32_t index) const = 0;
-	virtual std::shared_ptr<odbc::parameter> GetParameter(const uint32_t index) const = 0;
+	virtual std::string GetColumn(const std::uint32_t index) const = 0;
+	virtual std::shared_ptr<odbc::parameter> GetParameter(const std::uint32_t index) const = 0;
 };

@@ -46,7 +46,7 @@ std::shared_ptr<IDataReader> MockSqlExecutor::ExecuteReader(const std::shared_pt
 	return reader;
 }
 
-uint32_t MockSqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::uint32_t MockSqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
 {
 	environment;
 	connectionString;
@@ -58,7 +58,7 @@ uint32_t MockSqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &e
 	return 0;
 }
 
-void MockSqlExecutor::SetColumnValue(const std::string &column, const int32_t value)
+void MockSqlExecutor::SetColumnValue(const std::string &column, const std::int32_t value)
 {
 	_columnValues[column] = value;
 }

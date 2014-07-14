@@ -68,9 +68,9 @@ TEST_F(ClassMapTests, GetTableName_ReturnsTable)
 
 TEST_F(ClassMapTests, ReadEntityFromDataReader_AllColumnsReadSuccessfully)
 {
-	std::function<int32_t ()> valueGenerator = std::bind(std::uniform_int_distribution<int32_t>(1, 64), std::mt19937());
+	std::function<std::int32_t ()> valueGenerator = std::bind(std::uniform_int_distribution<std::int32_t>(1, 64), std::mt19937());
 
-	std::map<std::string, int32_t> values;
+	std::map<std::string, std::int32_t> values;
 
 	for (auto iter = _columns.cbegin(); iter != _columns.cend(); iter++)
 	{
@@ -115,7 +115,7 @@ TEST_F(ClassMapTests, GetMappedColumn_Field_ReturnsCorrectColumn)
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::_field);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::_field);
 
 	EXPECT_EQ("Field", column.GetColumn());
 }
@@ -126,7 +126,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterGetterGetter_ReturnsCorrectColumn)
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterGetterGetter);
 
 	EXPECT_EQ("SetterGetter", column.GetColumn());
 }
@@ -135,7 +135,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterGetterGetter_ReturnsCorrectColumn)
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterGetterSetter);
 //
 //	EXPECT_EQ("SetterGetter", column.GetColumn());
 //}
@@ -146,7 +146,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterConstGetterGetter_ReturnsCorrectColu
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterConstGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterConstGetterGetter);
 
 	EXPECT_EQ("SetterConstGetter", column.GetColumn());
 }
@@ -155,7 +155,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterConstGetterGetter_ReturnsCorrectColu
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterConstGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterConstGetterSetter);
 //
 //	EXPECT_EQ("SetterConstGetter", column.GetColumn());
 //}
@@ -166,7 +166,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterReferenceGetterGetter_ReturnsCorrect
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterReferenceGetterGetter);
 
 	EXPECT_EQ("SetterReferenceGetter", column.GetColumn());
 }
@@ -175,7 +175,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterReferenceGetterGetter_ReturnsCorrect
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterReferenceGetterSetter);
 //
 //	EXPECT_EQ("SetterReferenceGetter", column.GetColumn());
 //}
@@ -186,7 +186,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterConstReferenceGetterGetter_ReturnsCo
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterConstReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterConstReferenceGetterGetter);
 
 	EXPECT_EQ("SetterConstReferenceGetter", column.GetColumn());
 }
@@ -195,7 +195,7 @@ TEST_F(ClassMapTests, GetMappedColumn_SetterConstReferenceGetterGetter_ReturnsCo
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::SetterConstReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::SetterConstReferenceGetterSetter);
 //
 //	EXPECT_EQ("SetterConstReferenceGetter", column.GetColumn());
 //}
@@ -206,7 +206,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterGetterGetter_ReturnsCorrectColu
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterGetterGetter);
 
 	EXPECT_EQ("ConstSetterGetter", column.GetColumn());
 }
@@ -215,7 +215,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterGetterGetter_ReturnsCorrectColu
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterGetterSetter);
 //
 //	EXPECT_EQ("ConstSetterGetter", column.GetColumn());
 //}
@@ -226,7 +226,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterConstGetterGetter_ReturnsCorrec
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterConstGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterConstGetterGetter);
 
 	EXPECT_EQ("ConstSetterConstGetter", column.GetColumn());
 }
@@ -235,7 +235,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterConstGetterGetter_ReturnsCorrec
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterConstGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterConstGetterSetter);
 //
 //	EXPECT_EQ("ConstSetterConstGetter", column.GetColumn());
 //}
@@ -246,7 +246,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterReferenceGetterGetter_ReturnsCo
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterReferenceGetterGetter);
 
 	EXPECT_EQ("ConstSetterReferenceGetter", column.GetColumn());
 }
@@ -255,7 +255,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterReferenceGetterGetter_ReturnsCo
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterReferenceGetterSetter);
 //
 //	EXPECT_EQ("ConstSetterReferenceGetter", column.GetColumn());
 //}
@@ -266,7 +266,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterConstReferenceGetterGetter_Retu
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterConstReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterConstReferenceGetterGetter);
 
 	EXPECT_EQ("ConstSetterConstReferenceGetter", column.GetColumn());
 }
@@ -275,7 +275,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstSetterConstReferenceGetterGetter_Retu
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstSetterConstReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstSetterConstReferenceGetterSetter);
 //
 //	EXPECT_EQ("ConstSetterConstReferenceGetter", column.GetColumn());
 //}
@@ -286,7 +286,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterGetterGetter_ReturnsCorrect
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterGetterGetter);
 
 	EXPECT_EQ("ReferenceSetterGetter", column.GetColumn());
 }
@@ -295,7 +295,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterGetterSetter_ReturnsCorrect
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterGetterSetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterGetterSetter);
 
 	EXPECT_EQ("ReferenceSetterGetter", column.GetColumn());
 }
@@ -306,7 +306,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterConstGetterGetter_ReturnsCo
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterConstGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterConstGetterGetter);
 
 	EXPECT_EQ("ReferenceSetterConstGetter", column.GetColumn());
 }
@@ -315,7 +315,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterConstGetterSetter_ReturnsCo
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterConstGetterSetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterConstGetterSetter);
 
 	EXPECT_EQ("ReferenceSetterConstGetter", column.GetColumn());
 }
@@ -326,7 +326,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterReferenceGetterGetter_Retur
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterReferenceGetterGetter);
 
 	EXPECT_EQ("ReferenceSetterReferenceGetter", column.GetColumn());
 }
@@ -335,7 +335,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterReferenceGetterSetter_Retur
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterReferenceGetterSetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterReferenceGetterSetter);
 
 	EXPECT_EQ("ReferenceSetterReferenceGetter", column.GetColumn());
 }
@@ -346,7 +346,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterConstReferenceGetterGetter_
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterConstReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterConstReferenceGetterGetter);
 
 	EXPECT_EQ("ReferenceSetterConstReferenceGetter", column.GetColumn());
 }
@@ -355,7 +355,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ReferenceSetterConstReferenceGetterSetter_
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ReferenceSetterConstReferenceGetterSetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ReferenceSetterConstReferenceGetterSetter);
 
 	EXPECT_EQ("ReferenceSetterConstReferenceGetter", column.GetColumn());
 }
@@ -366,7 +366,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterGetterGetter_ReturnsCo
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterGetterGetter);
 
 	EXPECT_EQ("ConstReferenceSetterGetter", column.GetColumn());
 }
@@ -375,7 +375,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterGetterGetter_ReturnsCo
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterGetterSetter);
 //
 //	EXPECT_EQ("ConstReferenceSetterGetter", column.GetColumn());
 //}
@@ -386,7 +386,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterConstGetterGetter_Retu
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterConstGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterConstGetterGetter);
 
 	EXPECT_EQ("ConstReferenceSetterConstGetter", column.GetColumn());
 }
@@ -395,7 +395,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterConstGetterGetter_Retu
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterConstGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterConstGetterSetter);
 //
 //	EXPECT_EQ("ConstReferenceSetterConstGetter", column.GetColumn());
 //}
@@ -406,7 +406,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterReferenceGetterGetter_
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterReferenceGetterGetter);
 
 	EXPECT_EQ("ConstReferenceSetterReferenceGetter", column.GetColumn());
 }
@@ -415,7 +415,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterReferenceGetterGetter_
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterReferenceGetterSetter);
 //
 //	EXPECT_EQ("ConstReferenceSetterReferenceGetter", column.GetColumn());
 //}
@@ -426,7 +426,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterConstReferenceGetterGe
 {
 	TestMappingEntityMap map;
 
-	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter);
+	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter);
 
 	EXPECT_EQ("ConstReferenceSetterConstReferenceGetter", column.GetColumn());
 }
@@ -435,7 +435,7 @@ TEST_F(ClassMapTests, GetMappedColumn_ConstReferenceSetterConstReferenceGetterGe
 //{
 //	TestMappingEntityMap map;
 //
-//	SqlColumn column = map.GetMappedColumn<int32_t>(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter);
+//	SqlColumn column = map.GetMappedColumn<std::int32_t>(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter);
 //
 //	EXPECT_EQ("ConstReferenceSetterConstReferenceGetter", column.GetColumn());
 //}

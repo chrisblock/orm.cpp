@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 
 #define MEMBER_FIELD(T, TProperty, variable)			TProperty (T ## ::* ## variable)
@@ -95,13 +96,13 @@ public:
 	};
 
 private:
-	static std::string to_string(const unsigned char *data, const int32_t length)
+	static std::string to_string(const unsigned char *data, const std::int32_t length)
 	{
 		std::string result;
 
-		for (int32_t i = 0; i < length; i++)
+		for (std::int32_t i = 0; i < length; i++)
 		{
-			int32_t c = data[i];
+			std::int32_t c = data[i];
 			char hex[3] = {};
 
 			::sprintf_s(hex, "%02X", c);

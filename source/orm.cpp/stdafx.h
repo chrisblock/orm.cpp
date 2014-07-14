@@ -2,9 +2,9 @@
 
 #include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN
-
+#include <algorithm>
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>

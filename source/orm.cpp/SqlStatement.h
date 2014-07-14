@@ -22,7 +22,7 @@ public:
 	void SetSql(const std::string &sql);
 	std::string GetSql() const;
 
-	uint32_t GetNumberOfParameters() const;
+	std::uint32_t GetNumberOfParameters() const;
 	void AddParameter(const std::shared_ptr<odbc::parameter> &parameter);
 	std::vector<std::shared_ptr<odbc::parameter>> &GetParameters();
 	const std::vector<std::shared_ptr<odbc::parameter>> &GetParameters() const;

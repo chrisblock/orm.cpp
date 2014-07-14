@@ -10,14 +10,14 @@
 	\
 		ColumnType ## _ColumnTestsEntity &operator =(const ColumnType ## _ColumnTestsEntity &other); \
 	\
-		void SetId(const int32_t id); \
-		int32_t GetId() const; \
+		void SetId(const std::int32_t id); \
+		std::int32_t GetId() const; \
 	\
 		void SetColumn(const ColumnType integer); \
 		ColumnType GetColumn() const; \
 	\
 	private: \
-		int32_t _id; \
+		std::int32_t _id; \
 		ColumnType _column; \
 	};
 
@@ -49,12 +49,12 @@
 		return *this; \
 	} \
 	\
-	void ColumnType ## _ColumnTestsEntity::SetId(const int32_t id) \
+	void ColumnType ## _ColumnTestsEntity::SetId(const std::int32_t id) \
 	{ \
 		_id = id; \
 	} \
 	\
-	int32_t ColumnType ## _ColumnTestsEntity::GetId() const \
+	std::int32_t ColumnType ## _ColumnTestsEntity::GetId() const \
 	{ \
 		return _id; \
 	} \

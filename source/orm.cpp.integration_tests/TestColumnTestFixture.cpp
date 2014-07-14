@@ -30,7 +30,7 @@ void TestColumnTestFixture::TearDown()
 	DropTable();
 }
 
-int32_t TestColumnTestFixture::GetRowCount() const
+std::int32_t TestColumnTestFixture::GetRowCount() const
 {
 	std::string createTableCommand("SELECT COUNT(1) AS [Count] FROM [dbo].[");
 	createTableCommand.append(GetTableName());
@@ -44,7 +44,7 @@ int32_t TestColumnTestFixture::GetRowCount() const
 
 	odbc::statement statement(connection, createTableCommand);
 
-	int32_t result = -1;
+	std::int32_t result = -1;
 
 	if (statement.next())
 	{

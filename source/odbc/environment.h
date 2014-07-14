@@ -8,8 +8,13 @@ namespace odbc
 	{
 	public:
 		environment();
-		environment(const environment &other);
+		environment(const environment &other) = delete;
+		environment(environment &&other);
 		virtual ~environment();
+
+		environment &operator =(environment other);
+
+		friend void swap(environment &left, environment &right);
 
 		_Success_(return != SQL_INVALID_HANDLE)
 		void *get_environment_handle() const;
@@ -18,8 +23,11 @@ namespace odbc
 		void set_attribute(_In_ long attribute, _In_z_ const char *value);
 
 	private:
+		// TODO: make this a shared_ptr and allow copy construction of odbc::environment??
 		void *_environment;
 
 		void set_up_connection_pooling() const;
 	};
+
+	void swap(environment &left, environment &right);
 };

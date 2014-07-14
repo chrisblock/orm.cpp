@@ -10,8 +10,11 @@
 #include <sql.h>
 #include <sqlext.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <cstring>
+#include <functional>
 #include <string>
 #include <vector>
+#include <map>
 #include <memory>

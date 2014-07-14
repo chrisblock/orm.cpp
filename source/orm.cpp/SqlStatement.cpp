@@ -37,7 +37,7 @@ std::string SqlStatement::GetSql() const
 	return _sql;
 }
 
-uint32_t SqlStatement::GetNumberOfParameters() const
+std::uint32_t SqlStatement::GetNumberOfParameters() const
 {
 	return _parameters.size();
 }

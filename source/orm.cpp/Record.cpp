@@ -76,7 +76,7 @@ bool Record::IsIdAssigned() const
 	return _isIdAssigned;
 }
 
-void Record::SetColumn(const std::string &columnName, int8_t &value)
+void Record::SetColumn(const std::string &columnName, std::int8_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -86,7 +86,7 @@ void Record::SetColumn(const std::string &columnName, int8_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<int8_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::int8_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -96,7 +96,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<int8_t> &v
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, uint8_t &value)
+void Record::SetColumn(const std::string &columnName, std::uint8_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -106,7 +106,7 @@ void Record::SetColumn(const std::string &columnName, uint8_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint8_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::uint8_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -116,7 +116,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint8_t> &
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, int16_t &value)
+void Record::SetColumn(const std::string &columnName, std::int16_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -126,7 +126,7 @@ void Record::SetColumn(const std::string &columnName, int16_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<int16_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::int16_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -136,7 +136,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<int16_t> &
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, uint16_t &value)
+void Record::SetColumn(const std::string &columnName, std::uint16_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -146,7 +146,7 @@ void Record::SetColumn(const std::string &columnName, uint16_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint16_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::uint16_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -156,7 +156,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint16_t> 
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, int32_t &value)
+void Record::SetColumn(const std::string &columnName, std::int32_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -166,7 +166,7 @@ void Record::SetColumn(const std::string &columnName, int32_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<int32_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::int32_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -176,7 +176,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<int32_t> &
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, uint32_t &value)
+void Record::SetColumn(const std::string &columnName, std::uint32_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -186,7 +186,7 @@ void Record::SetColumn(const std::string &columnName, uint32_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint32_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::uint32_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -196,7 +196,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint32_t> 
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, int64_t &value)
+void Record::SetColumn(const std::string &columnName, std::int64_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -206,7 +206,7 @@ void Record::SetColumn(const std::string &columnName, int64_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<int64_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::int64_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -216,7 +216,7 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<int64_t> &
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, uint64_t &value)
+void Record::SetColumn(const std::string &columnName, std::uint64_t &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -226,7 +226,7 @@ void Record::SetColumn(const std::string &columnName, uint64_t &value)
 	SetColumn(columnName, parameter);
 }
 
-void Record::SetColumn(const std::string &columnName, std::shared_ptr<uint64_t> &value)
+void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::uint64_t> &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
@@ -367,14 +367,14 @@ void Record::SetColumn(const std::string &columnName, std::tm &value)
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
-	odbc::DateTime dt = {};
+	odbc::date_time dt = {};
 
-	dt.year = (int16_t) value.tm_year;
-	dt.month = (int16_t) value.tm_mon;
-	dt.day = (int16_t) value.tm_mday;
-	dt.hour = (int16_t) value.tm_hour;
-	dt.minute = (int16_t) value.tm_min;
-	dt.second = (int16_t) value.tm_sec;
+	dt.year = (std::int16_t) value.tm_year;
+	dt.month = (std::int16_t) value.tm_mon;
+	dt.day = (std::int16_t) value.tm_mday;
+	dt.hour = (std::int16_t) value.tm_hour;
+	dt.minute = (std::int16_t) value.tm_min;
+	dt.second = (std::int16_t) value.tm_sec;
 
 	parameter->set_name(columnName);
 	parameter->set(dt);
@@ -386,20 +386,20 @@ void Record::SetColumn(const std::string &columnName, std::shared_ptr<std::tm> &
 {
 	std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
-	std::shared_ptr<odbc::DateTime> dt;
+	std::shared_ptr<odbc::date_time> dt;
 
 	if (value != nullptr)
 	{
-		odbc::DateTime empty = {};
+		odbc::date_time empty = {};
 
-		dt = std::make_shared<odbc::DateTime>(empty);
+		dt = std::make_shared<odbc::date_time>(empty);
 
-		dt->year = (int16_t) value->tm_year;
-		dt->month = (int16_t) value->tm_mon;
-		dt->day = (int16_t) value->tm_mday;
-		dt->hour = (int16_t) value->tm_hour;
-		dt->minute = (int16_t) value->tm_min;
-		dt->second = (int16_t) value->tm_sec;
+		dt->year = (std::int16_t) value->tm_year;
+		dt->month = (std::int16_t) value->tm_mon;
+		dt->day = (std::int16_t) value->tm_mday;
+		dt->hour = (std::int16_t) value->tm_hour;
+		dt->minute = (std::int16_t) value->tm_min;
+		dt->second = (std::int16_t) value->tm_sec;
 	}
 
 	parameter->set_name(columnName);
@@ -437,14 +437,14 @@ const std::vector<std::shared_ptr<odbc::parameter>> &Record::GetParameters() con
 	return _parameters;
 }
 
-uint32_t Record::GetNumberOfParameters() const
+std::uint32_t Record::GetNumberOfParameters() const
 {
-	uint32_t result = _parameters.size();
+	std::uint32_t result = _parameters.size();
 
 	return result;
 }
 
-std::string Record::GetColumn(uint32_t index) const
+std::string Record::GetColumn(std::uint32_t index) const
 {
 	std::string result;
 
@@ -458,7 +458,7 @@ std::string Record::GetColumn(uint32_t index) const
 	return result;
 }
 
-std::shared_ptr<odbc::parameter> Record::GetParameter(uint32_t index) const
+std::shared_ptr<odbc::parameter> Record::GetParameter(std::uint32_t index) const
 {
 	std::shared_ptr<odbc::parameter> result;
 	

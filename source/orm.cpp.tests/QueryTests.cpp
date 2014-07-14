@@ -99,7 +99,7 @@ TEST_F(QueryTests, Execute_IdLessThanColumn2AndColumn1IsNotEqualTo42_StatementWi
 
 	Predicate<TestSessionEntity> predicate = ::MakeExpression(&TestSessionEntity::_id) < &TestSessionEntity::_column2;
 
-	int8_t fortyTwo = 42;
+	std::int8_t fortyTwo = 42;
 
 	Query<TestSessionEntity> q = query.Where(predicate)
 		.Where(::MakeExpression(&TestSessionEntity::_column1) != fortyTwo);

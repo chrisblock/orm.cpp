@@ -2,6 +2,13 @@
 
 #include "environment.h"
 
+void odbc::swap(odbc::environment &left, odbc::environment &right)
+{
+	using std::swap;
+
+	swap(left._environment, right._environment);
+}
+
 odbc::environment::environment() :
 	  _environment(nullptr)
 {
@@ -16,6 +23,12 @@ odbc::environment::environment() :
 	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while setting the ODBC version number of the environment.");
 }
 
+odbc::environment::environment(odbc::environment &&other) :
+	  odbc::environment()
+{
+	swap(*this, other);
+}
+
 odbc::environment::~environment()
 {
 	if (_environment != nullptr)
@@ -24,6 +37,13 @@ odbc::environment::~environment()
 
 		_environment = nullptr;
 	}
+}
+
+odbc::environment &odbc::environment::operator =(odbc::environment other)
+{
+	swap(*this, other);
+
+	return *this;
 }
 
 void odbc::environment::set_up_connection_pooling() const

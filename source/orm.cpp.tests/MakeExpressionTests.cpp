@@ -23,7 +23,7 @@ protected:
 /*
 TEST_F(MakeExpressionTests, MakeExpression_Constant)
 {
-	Expression<int32_t> expr = ::MakeExpression(7);
+	Expression<std::int32_t> expr = ::MakeExpression(7);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 
@@ -34,7 +34,7 @@ TEST_F(MakeExpressionTests, MakeExpression_Constant)
 
 TEST_F(MakeExpressionTests, MakeExpression_Field)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::_field);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::_field);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 
@@ -44,7 +44,7 @@ TEST_F(MakeExpressionTests, MakeExpression_Field)
 
 TEST_F(MakeExpressionTests, MakeExpression_SetterGetterGetter)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterGetterGetter);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 
@@ -54,7 +54,7 @@ TEST_F(MakeExpressionTests, MakeExpression_SetterGetterGetter)
 
 TEST_F(MakeExpressionTests, MakeExpression_SetterConstGetterGetter)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterConstGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterConstGetterGetter);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 
@@ -64,7 +64,7 @@ TEST_F(MakeExpressionTests, MakeExpression_SetterConstGetterGetter)
 
 TEST_F(MakeExpressionTests, MakeExpression_SetterReferenceGetterGetter)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterReferenceGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterReferenceGetterGetter);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 
@@ -74,7 +74,7 @@ TEST_F(MakeExpressionTests, MakeExpression_SetterReferenceGetterGetter)
 
 TEST_F(MakeExpressionTests, MakeExpression_SetterConstReferenceGetterGetter)
 {
-	Expression<TestExpressionEntity, int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterConstReferenceGetterGetter);
+	Expression<TestExpressionEntity, std::int32_t> expr = ::MakeExpression(&TestExpressionEntity::SetterConstReferenceGetterGetter);
 
 	SqlPredicate predicate = expr.GetSqlPredicate(_registry);
 

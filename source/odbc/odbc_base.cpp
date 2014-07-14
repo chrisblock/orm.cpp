@@ -52,7 +52,7 @@ std::wstring odbc::odbc_base::convert_to_wstring(_In_z_ const wchar_t *str) cons
 	return result;
 }
 
-bool odbc::odbc_base::are_types_convertible(const int16_t parameterCType, const int16_t sqlDataType) const
+bool odbc::odbc_base::are_types_convertible(const std::int16_t parameterCType, const std::int16_t sqlDataType) const
 {
 	bool result = false;
 
@@ -170,9 +170,9 @@ bool odbc::odbc_base::are_types_convertible(const int16_t parameterCType, const 
 	return result;
 }
 
-int16_t odbc::odbc_base::get_c_type(const int16_t sqlType) const
+std::int16_t odbc::odbc_base::get_c_type(const std::int16_t sqlType) const
 {
-	int16_t result = 0;
+	std::int16_t result = 0;
 
 	switch (sqlType)
 	{
@@ -252,7 +252,98 @@ int16_t odbc::odbc_base::get_c_type(const int16_t sqlType) const
 	return result;
 }
 
-void odbc::odbc_base::process_return_code(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode, _In_z_ const char *errorMessage) const
+std::string odbc::odbc_base::get_c_type_name(const std::int16_t type)
+{
+#define SQL_C_TYPE_NAME_CASE(Variable, TypeName)		case TypeName: Variable = #TypeName; break
+
+	std::string result;
+
+	switch (type)
+	{
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_BIT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_CHAR);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_WCHAR);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_UTINYINT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_STINYINT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_USHORT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_SSHORT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_ULONG);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_SLONG);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_UBIGINT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_SBIGINT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_FLOAT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_DOUBLE);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TINYINT);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_BINARY);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_DATE);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TYPE_DATE);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TIME);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TYPE_TIME);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TIMESTAMP);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_TYPE_TIMESTAMP);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_NUMERIC);
+		SQL_C_TYPE_NAME_CASE(result, SQL_C_GUID);
+	default:
+		break;
+	}
+
+	return result;
+}
+
+std::string odbc::odbc_base::get_sql_type_name(const std::int16_t type)
+{
+#define SQL_TYPE_NAME_CASE(Variable, TypeName)		case TypeName: Variable = #TypeName; break
+
+	std::string result;
+
+	switch (type)
+	{
+		SQL_TYPE_NAME_CASE(result, SQL_CHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_VARCHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_LONGVARCHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_WCHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_WVARCHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_WLONGVARCHAR);
+		SQL_TYPE_NAME_CASE(result, SQL_DECIMAL);
+		SQL_TYPE_NAME_CASE(result, SQL_NUMERIC);
+		SQL_TYPE_NAME_CASE(result, SQL_SMALLINT);
+		SQL_TYPE_NAME_CASE(result, SQL_INTEGER);
+		SQL_TYPE_NAME_CASE(result, SQL_REAL);
+		SQL_TYPE_NAME_CASE(result, SQL_FLOAT);
+		SQL_TYPE_NAME_CASE(result, SQL_DOUBLE);
+		SQL_TYPE_NAME_CASE(result, SQL_BIT);
+		SQL_TYPE_NAME_CASE(result, SQL_TINYINT);
+		SQL_TYPE_NAME_CASE(result, SQL_BIGINT);
+		SQL_TYPE_NAME_CASE(result, SQL_BINARY);
+		SQL_TYPE_NAME_CASE(result, SQL_VARBINARY);
+		SQL_TYPE_NAME_CASE(result, SQL_LONGVARBINARY);
+		SQL_TYPE_NAME_CASE(result, SQL_TYPE_DATE);
+		SQL_TYPE_NAME_CASE(result, SQL_TYPE_TIME);
+		SQL_TYPE_NAME_CASE(result, SQL_TYPE_TIMESTAMP);
+		//SQL_TYPE_NAME_CASE(result, SQL_TYPE_UTCDATETIME);
+		//SQL_TYPE_NAME_CASE(result, SQL_TYPE_UTCTIME);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_MONTH);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_YEAR);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_YEAR_TO_MONTH);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_DAY);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_HOUR);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_MINUTE);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_SECOND);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_DAY_TO_HOUR);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_DAY_TO_MINUTE);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_DAY_TO_SECOND);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_HOUR_TO_MINUTE);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_HOUR_TO_SECOND);
+		SQL_TYPE_NAME_CASE(result, SQL_INTERVAL_MINUTE_TO_SECOND);
+		SQL_TYPE_NAME_CASE(result, SQL_GUID);
+	default:
+		break;
+	}
+
+	return result;
+}
+
+void odbc::odbc_base::process_return_code(_In_opt_ void *handle, _In_ std::int16_t handleType, _In_ std::int16_t returnCode, _In_z_ const char *errorMessage) const
 {
 	switch (returnCode)
 	{
@@ -283,14 +374,14 @@ void odbc::odbc_base::process_return_code(_In_opt_ void *handle, _In_ int16_t ha
 	}
 }
 
-void odbc::odbc_base::trace(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode) const
+void odbc::odbc_base::trace(_In_opt_ void *handle, _In_ std::int16_t handleType, _In_ std::int16_t returnCode) const
 {
 	std::string diagnostic = read_diagnostic_record(handle, handleType, returnCode);
 
 	::OutputDebugStringA(diagnostic.c_str());
 }
 
-void odbc::odbc_base::trace_and_throw(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode, _In_z_ const char *errorMessage) const
+void odbc::odbc_base::trace_and_throw(_In_opt_ void *handle, _In_ std::int16_t handleType, _In_ std::int16_t returnCode, _In_z_ const char *errorMessage) const
 {
 	std::string diagnostic = read_diagnostic_record(handle, handleType, returnCode);
 
@@ -305,7 +396,7 @@ void odbc::odbc_base::trace_and_throw(_In_opt_ void *handle, _In_ int16_t handle
 	throw e;
 }
 
-void odbc::odbc_base::throw_unknown_return_code(_In_ int16_t returnCode, _In_z_ const char *errorMessage) const
+void odbc::odbc_base::throw_unknown_return_code(_In_ std::int16_t returnCode, _In_z_ const char *errorMessage) const
 {
 	std::string message("Unknown SQL return code: ");
 
@@ -320,7 +411,7 @@ void odbc::odbc_base::throw_unknown_return_code(_In_ int16_t returnCode, _In_z_ 
 	throw e;
 }
 
-std::string odbc::odbc_base::read_diagnostic_record(_In_opt_ void *handle, _In_ int16_t handleType, _In_ int16_t returnCode) const
+std::string odbc::odbc_base::read_diagnostic_record(_In_opt_ void *handle, _In_ std::int16_t handleType, _In_ std::int16_t returnCode) const
 {
 	std::string result;
 	SQLSMALLINT record = 0;

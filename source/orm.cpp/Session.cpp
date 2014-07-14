@@ -44,9 +44,9 @@ Session &Session::operator =(const Session &other)
 	return *this;
 }
 
-uint32_t Session::ExecuteSql(const SqlStatement &statement) const
+std::uint32_t Session::ExecuteSql(const SqlStatement &statement) const
 {
-	uint32_t result = _executor->ExecuteSql(_environment, _connectionString, statement);
+	std::uint32_t result = _executor->ExecuteSql(_environment, _connectionString, statement);
 
 	return result;
 }

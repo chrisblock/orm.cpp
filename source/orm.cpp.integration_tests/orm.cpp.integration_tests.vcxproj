@@ -70,7 +70,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)\orm.cpp;$(SolutionDir)\gtest</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\odbc;$(SolutionDir)\orm.cpp;$(SolutionDir)\gtest</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,16 +85,18 @@
     <ClInclude Include="TestColumnEntity.h" />
     <ClInclude Include="TestColumnEntityMap.h" />
     <ClInclude Include="TestColumnTestFixture.h" />
+    <ClInclude Include="TestDatabase.h" />
     <ClInclude Include="TestMappingRegistrar.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DoubleColumnEntityTests.cpp" />
+    <ClCompile Include="ColumnEntityTests.cpp" />
     <ClCompile Include="orm.cpp.integration_tests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestColumnTestFixture.cpp" />
+    <ClCompile Include="TestDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\gtest\gtest.vcxproj">

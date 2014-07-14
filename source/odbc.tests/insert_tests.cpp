@@ -84,7 +84,7 @@ TEST_F(insert_tests, insert_with_parameters_inserts_integers_successfully)
 
 	std::shared_ptr<odbc::parameter> parameter2 = std::make_shared<odbc::parameter>();
 
-	int8_t two = 8;
+	std::int8_t two = 8;
 
 	parameter2->set_name("TinyIntColumn");
 	parameter2->set(two);
@@ -93,7 +93,7 @@ TEST_F(insert_tests, insert_with_parameters_inserts_integers_successfully)
 
 	std::shared_ptr<odbc::parameter> parameter3 = std::make_shared<odbc::parameter>();
 
-	int16_t three = 16;
+	std::int16_t three = 16;
 
 	parameter3->set_name("SmallIntColumn");
 	parameter3->set(three);
@@ -102,7 +102,7 @@ TEST_F(insert_tests, insert_with_parameters_inserts_integers_successfully)
 
 	std::shared_ptr<odbc::parameter> parameter4 = std::make_shared<odbc::parameter>();
 
-	int32_t four = 32;
+	std::int32_t four = 32;
 
 	parameter4->set_name("IntColumn");
 	parameter4->set(four);
@@ -111,7 +111,7 @@ TEST_F(insert_tests, insert_with_parameters_inserts_integers_successfully)
 
 	std::shared_ptr<odbc::parameter> parameter5 = std::make_shared<odbc::parameter>();
 
-	int64_t five = 64;
+	std::int64_t five = 64;
 
 	parameter5->set_name("BigIntColumn");
 	parameter5->set(five);

@@ -24,142 +24,142 @@ bool DataReader::Read()
 	return result;
 }
 
-void DataReader::Get(const std::string &columnName, int8_t &value) const
+void DataReader::Get(const std::string &columnName, std::int8_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<int8_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::int8_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, uint8_t &value) const
+void DataReader::Get(const std::string &columnName, std::uint8_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<uint8_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::uint8_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, int16_t &value) const
+void DataReader::Get(const std::string &columnName, std::int16_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<int16_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::int16_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, uint16_t &value) const
+void DataReader::Get(const std::string &columnName, std::uint16_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<uint16_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::uint16_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, int32_t &value) const
+void DataReader::Get(const std::string &columnName, std::int32_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<int32_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::int32_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, uint32_t &value) const
+void DataReader::Get(const std::string &columnName, std::uint32_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<uint32_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::uint32_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, int64_t &value) const
+void DataReader::Get(const std::string &columnName, std::int64_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<int64_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::int64_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, uint64_t &value) const
+void DataReader::Get(const std::string &columnName, std::uint64_t &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
-void DataReader::Get(const std::string &columnName, std::shared_ptr<uint64_t> &value) const
+void DataReader::Get(const std::string &columnName, std::shared_ptr<std::uint64_t> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, float &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<float> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, double &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<double> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, bool &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<bool> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::string &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<std::string> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 
 }
 
 void DataReader::Get(const std::string &columnName, std::wstring &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<std::wstring> &value) const
 {
-	_statement->get(columnName.c_str(), value);
+	_statement->get(columnName, value);
 }
 
 void DataReader::Get(const std::string &columnName, Guid &value) const
 {
 	GUID v = {};
 
-	_statement->get(columnName.c_str(), v);
+	_statement->get(columnName, v);
 
 	value = v;
 }
@@ -172,7 +172,7 @@ void DataReader::Get(const std::string &columnName, std::shared_ptr<Guid> &value
 
 	value.reset();
 
-	_statement->get(columnName.c_str(), v);
+	_statement->get(columnName, v);
 
 	if (v != nullptr)
 	{
@@ -182,9 +182,9 @@ void DataReader::Get(const std::string &columnName, std::shared_ptr<Guid> &value
 
 void DataReader::Get(const std::string &columnName, std::tm &value) const
 {
-	odbc::DateTime v = {};
+	odbc::date_time v = {};
 
-	_statement->get(columnName.c_str(), v);
+	_statement->get(columnName, v);
 
 	std::tm t = {};
 
@@ -201,16 +201,16 @@ void DataReader::Get(const std::string &columnName, std::tm &value) const
 
 void DataReader::Get(const std::string &columnName, std::shared_ptr<std::tm> &value) const
 {
-	odbc::DateTime empty = {};
-	std::shared_ptr<odbc::DateTime> v = std::make_shared<odbc::DateTime>(empty);
+	odbc::date_time empty = {};
+	std::shared_ptr<odbc::date_time> v = std::make_shared<odbc::date_time>(empty);
 
 	value.reset();
 
-	_statement->get(columnName.c_str(), v);
+	_statement->get(columnName, v);
 
 	if (v != nullptr)
 	{
-		odbc::DateTime r = *v;
+		odbc::date_time r = *v;
 
 		value = std::make_shared<struct std::tm>();
 

@@ -50,7 +50,7 @@ std::string SqlPredicate::GetPredicate() const
 	return _predicate;
 }
 
-uint32_t SqlPredicate::GetNumberOfParameters() const
+std::uint32_t SqlPredicate::GetNumberOfParameters() const
 {
 	return _parameters.size();
 }
@@ -60,7 +60,7 @@ void SqlPredicate::AddParameter(const std::shared_ptr<odbc::parameter> &paramete
 	_parameters.push_back(parameter);
 }
 
-std::shared_ptr<odbc::parameter> SqlPredicate::GetParameter(const uint32_t index) const
+std::shared_ptr<odbc::parameter> SqlPredicate::GetParameter(const std::uint32_t index) const
 {
 	return _parameters.at(index);
 }

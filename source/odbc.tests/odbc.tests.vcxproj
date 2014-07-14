@@ -100,6 +100,9 @@
       <Project>{9c0cc620-c4e7-47e8-b2be-d86865f16837}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="binary_data.tests.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

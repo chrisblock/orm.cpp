@@ -7,87 +7,22 @@
 #include "connection.h"
 #include "parameter.h"
 
-
-std::string GetSqlTypeName(const short type)
+void odbc::swap(odbc::statement &left, odbc::statement &right)
 {
-	std::string result;
+	using std::swap;
 
-	switch (type)
-	{
-	case SQL_CHAR:
-		result = "SQL_CHAR";
-		break;
-	case SQL_VARCHAR:
-		result = "SQL_VARCHAR";
-		break;
-	case SQL_LONGVARCHAR:
-		result = "SQL_LONGVARCHAR";
-		break;
-	case SQL_WCHAR:
-		result = "SQL_WCHAR";
-		break;
-	case SQL_WVARCHAR:
-		result = "SQL_WVARCHAR";
-		break;
-	case SQL_WLONGVARCHAR:
-		result = "SQL_WLONGVARCHAR";
-		break;
-	case SQL_SMALLINT:
-		result = "SQL_SMALLINT";
-		break;
-	case SQL_INTEGER:
-		result = "SQL_INTEGER";
-		break;
-	case SQL_REAL:
-		result = "SQL_REAL";
-		break;
-	case SQL_DOUBLE:
-		result = "SQL_DOUBLE";
-		break;
-	case SQL_BIT:
-		result = "SQL_BIT";
-		break;
-	case SQL_TINYINT:
-		result = "SQL_TINYINT";
-		break;
-	case SQL_BIGINT:
-		result = "SQL_BIGINT";
-		break;
-	case SQL_BINARY:
-		result = "SQL_BINARY";
-		break;
-	case SQL_VARBINARY:
-		result = "SQL_VARBINARY";
-		break;
-	case SQL_C_DATE:
-		result = "SQL_C_DATE";
-		break;
-	case SQL_C_TYPE_DATE:
-		result = "SQL_C_TYPE_DATE";
-		break;
-	case SQL_C_TIME:
-		result = "SQL_C_TIME";
-		break;
-	case SQL_C_TYPE_TIME:
-		result = "SQL_C_TYPE_TIME";
-		break;
-	case SQL_C_TIMESTAMP:
-		result = "SQL_C_TIMESTAMP";
-		break;
-	case SQL_C_TYPE_TIMESTAMP:
-		result = "SQL_C_TYPE_TIMESTAMP";
-		break;
-	case SQL_NUMERIC:
-		result = "SQL_NUMERIC";
-		break;
-	case SQL_GUID:
-		result = "SQL_GUID";
-		break;
-	default:
-		break;
-	}
+	swap(left._columnBindings, right._columnBindings);
+	swap(left._commandText, right._commandText);
+	swap(left._connection, right._connection);
+	swap(left._nameToIndex, right._nameToIndex);
+	swap(left._numberOfColumns, right._numberOfColumns);
+	swap(left._parameters, right._parameters);
+	swap(left._statement, right._statement);
+}
 
-	return result;
+odbc::statement::statement() :
+	  _statement(nullptr)
+{
 }
 
 odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection) :
@@ -110,6 +45,12 @@ odbc::statement::statement(const odbc::statement &other) :
 {
 }
 
+odbc::statement::statement(odbc::statement &&other) :
+	  odbc::statement()
+{
+	swap(*this, other);
+}
+
 odbc::statement::~statement()
 {
 	_nameToIndex.clear();
@@ -125,29 +66,11 @@ odbc::statement::~statement()
 
 		_statement = nullptr;
 	}
-
-	for (short i = 0; i < _numberOfColumns; i++)
-	{
-		odbc::column &c = _columnBindings[i];
-
-		if ((c.type == SQL_CHAR) || (c.type == SQL_VARCHAR) || (c.type == SQL_LONGVARCHAR) || (c.type == SQL_BINARY) || (c.type == SQL_VARBINARY) || (c.type == SQL_LONGVARBINARY))
-		{
-			::free(c.data.UnsignedAnsiString);
-		}
-		else if ((c.type == SQL_WCHAR) || (c.type == SQL_WVARCHAR) || (c.type == SQL_WLONGVARCHAR))
-		{
-			::free(c.data.UnicodeString);
-		}
-	}
 }
 
-odbc::statement &odbc::statement::operator =(const odbc::statement &other)
+odbc::statement &odbc::statement::operator =(odbc::statement other)
 {
-	if (this != &other)
-	{
-		_connection = other._connection;
-		_commandText = other._commandText;
-	}
+	swap(*this, other);
 
 	return *this;
 }
@@ -157,7 +80,7 @@ void odbc::statement::add_parameter(const std::shared_ptr<odbc::parameter> &para
 	_parameters.push_back(parameter);
 }
 
-std::string odbc::statement::get_command_text() const
+const std::string &odbc::statement::get_command_text() const
 {
 	return _commandText;
 }
@@ -209,9 +132,9 @@ bool odbc::statement::next()
 	return result;
 }
 
-uint32_t odbc::statement::get_rows_affected() const
+std::uint32_t odbc::statement::get_rows_affected() const
 {
-	uint32_t result = 0;
+	std::uint32_t result = 0;
 
 	if (_statement != nullptr)
 	{
@@ -227,9 +150,9 @@ uint32_t odbc::statement::get_rows_affected() const
 	return result;
 }
 
-uint32_t odbc::statement::get_number_of_columns() const
+std::uint32_t odbc::statement::get_number_of_columns() const
 {
-	uint32_t result = 0;
+	std::uint32_t result = 0;
 
 	if (_statement != nullptr)
 	{
@@ -240,1055 +163,595 @@ uint32_t odbc::statement::get_number_of_columns() const
 }
 
 
+
 bool odbc::statement::is_column_null(const std::string &columnName) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	bool result = is_column_null(columnIndex);
 
 	return result;
 }
 
-bool odbc::statement::is_column_null(const uint32_t columnIndex) const
+bool odbc::statement::is_column_null(const std::uint32_t columnIndex) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	bool result = (column.indicator == SQL_NULL_DATA);
+	bool result = column.is_null();
 
 	return result;
 }
 
 
 
-void odbc::statement::get(const char *columnName, std::string &value) const
+void odbc::statement::get(const std::string &columnName, std::string &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<std::string> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::string> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::string &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::string &value) const
 {
-	std::shared_ptr<std::string> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<std::string> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::string> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if ((column.c_type != SQL_C_CHAR) && (column.c_type != SQL_C_WCHAR))
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		std::shared_ptr<std::string> result = std::make_shared<std::string>();
-
-		if (column.c_type == SQL_C_WCHAR)
-		{
-			*result = convert_to_string((const wchar_t *) column.data.UnicodeString);
-		}
-		else
-		{
-			*result = convert_to_string((const char *)column.data.UnsignedAnsiString);
-		}
-
-		value = result;
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, std::wstring &value) const
+void odbc::statement::get(const std::string &columnName, std::wstring &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<std::wstring> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::wstring> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::wstring &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::wstring &value) const
 {
-	std::shared_ptr<std::wstring> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<std::wstring> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::wstring> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if ((column.c_type != SQL_C_CHAR) && (column.c_type != SQL_C_WCHAR))
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		std::shared_ptr<std::wstring> result = std::make_shared<std::wstring>();
-
-		if (column.c_type == SQL_C_WCHAR)
-		{
-			*result = convert_to_wstring((const wchar_t *) column.data.UnicodeString);
-		}
-		else
-		{
-			*result = convert_to_wstring((const char *) column.data.UnsignedAnsiString);
-		}
-
-		value = result;
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, bool &value) const
+void odbc::statement::get(const std::string &columnName, bool &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<bool> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<bool> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, bool &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, bool &value) const
 {
-	std::shared_ptr<bool> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<bool> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<bool> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_BIT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		bool result = (column.data.UnsignedCharacter != '\0');
-
-		value = std::make_shared<bool>(result);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, int8_t &value) const
+void odbc::statement::get(const std::string &columnName, std::int8_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<int8_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::int8_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, int8_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::int8_t &value) const
 {
-	std::shared_ptr<int8_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<int8_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::int8_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_STINYINT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<int8_t>(column.data.Character);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, uint8_t &value) const
+void odbc::statement::get(const std::string &columnName, std::uint8_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<uint8_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::uint8_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, uint8_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::uint8_t &value) const
 {
-	std::shared_ptr<uint8_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<uint8_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::uint8_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_UTINYINT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<uint8_t>(column.data.UnsignedCharacter);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, int16_t &value) const
+void odbc::statement::get(const std::string &columnName, std::int16_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<int16_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::int16_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, int16_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::int16_t &value) const
 {
-	std::shared_ptr<int16_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<int16_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::int16_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_SSHORT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<int16_t>(column.data.Short);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, uint16_t &value) const
+void odbc::statement::get(const std::string &columnName, std::uint16_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<uint16_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::uint16_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, uint16_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::uint16_t &value) const
 {
-	std::shared_ptr<uint16_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<uint16_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::uint16_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_USHORT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<uint16_t>(column.data.UnsignedShort);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, int32_t &value) const
+void odbc::statement::get(const std::string &columnName, std::int32_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<int32_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::int32_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, int32_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::int32_t &value) const
 {
-	std::shared_ptr<int32_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<int32_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::int32_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_SLONG)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<int32_t>(column.data.Long);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, uint32_t &value) const
+void odbc::statement::get(const std::string &columnName, std::uint32_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<uint32_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::uint32_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, uint32_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::uint32_t &value) const
 {
-	std::shared_ptr<uint32_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<uint32_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::uint32_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_ULONG)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<uint32_t>(column.data.UnsignedLong);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, int64_t &value) const
+void odbc::statement::get(const std::string &columnName, std::int64_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<int64_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::int64_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, int64_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::int64_t &value) const
 {
-	std::shared_ptr<int64_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<int64_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::int64_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_SBIGINT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<int64_t>(column.data.Int64Value);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, uint64_t &value) const
+void odbc::statement::get(const std::string &columnName, std::uint64_t &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<uint64_t> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<std::uint64_t> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, uint64_t &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::uint64_t &value) const
 {
-	std::shared_ptr<uint64_t> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<uint64_t> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::uint64_t> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	// TODO: this type is not a SQL data type, so data read by the ODBC driver will never be of this type
-	if (column.c_type != SQL_C_UBIGINT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<uint64_t>(column.data.UnsignedLong);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, float &value) const
+void odbc::statement::get(const std::string &columnName, float &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<float> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<float> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, float &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, float &value) const
 {
-	std::shared_ptr<float> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<float> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<float> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_FLOAT)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<float>(column.data.Float);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, double &value) const
+void odbc::statement::get(const std::string &columnName, double &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<double> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<double> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, double &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, double &value) const
 {
-	std::shared_ptr<double> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<double> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<double> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_DOUBLE)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<double>(column.data.Double);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, odbc::binary_data &value) const
+void odbc::statement::get(const std::string &columnName, odbc::binary_data &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<odbc::binary_data> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<odbc::binary_data> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, odbc::binary_data &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, odbc::binary_data &value) const
 {
-	std::shared_ptr<odbc::binary_data> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<odbc::binary_data> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<odbc::binary_data> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_BINARY)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<odbc::binary_data>(column.data.UnsignedAnsiString, column.indicator);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, odbc::date &value) const
+void odbc::statement::get(const std::string &columnName, odbc::date &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<odbc::date> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<odbc::date> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, odbc::date &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, odbc::date &value) const
 {
-	std::shared_ptr<odbc::date> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<odbc::date> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<odbc::date> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_TYPE_DATE)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<odbc::date>(column.data.Date);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, odbc::Time &value) const
+void odbc::statement::get(const std::string &columnName, odbc::time &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<odbc::Time> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<odbc::time> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, odbc::Time &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, odbc::time &value) const
 {
-	std::shared_ptr<odbc::Time> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<odbc::Time> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<odbc::time> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_TYPE_TIME)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<odbc::Time>(column.data.Time);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, odbc::DateTime &value) const
+void odbc::statement::get(const std::string &columnName, odbc::date_time &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<odbc::DateTime> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<odbc::date_time> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, odbc::DateTime &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, odbc::date_time &value) const
 {
-	std::shared_ptr<odbc::DateTime> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<odbc::DateTime> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<odbc::date_time> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_TYPE_TIMESTAMP)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<odbc::DateTime>(column.data.DateTime);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, odbc::Numeric &value) const
+void odbc::statement::get(const std::string &columnName, odbc::numeric &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<odbc::Numeric> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<odbc::numeric> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, odbc::Numeric &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, odbc::numeric &value) const
 {
-	std::shared_ptr<odbc::Numeric> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<odbc::Numeric> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<odbc::numeric> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_NUMERIC)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<odbc::Numeric>(column.data.Numeric);
-	}
+	value = column;
 }
 
 
 
-void odbc::statement::get(const char *columnName, GUID &value) const
+void odbc::statement::get(const std::string &columnName, GUID &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const char *columnName, std::shared_ptr<GUID> &value) const
+void odbc::statement::get(const std::string &columnName, std::shared_ptr<GUID> &value) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
 	get(columnIndex, value);
 }
 
-void odbc::statement::get(const uint32_t columnIndex, GUID &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, GUID &value) const
 {
-	std::shared_ptr<GUID> v;
+	const odbc::column &column = get_column(columnIndex);
 
-	get(columnIndex, v);
-
-	if (v == nullptr)
-	{
-		std::exception e(__LOC_A__ "Column value was NULL when a non-Nullable value type was specified.");
-
-		throw e;
-	}
-	else
-	{
-		value = *v;
-	}
+	value = column;
 }
 
-void odbc::statement::get(const uint32_t columnIndex, std::shared_ptr<GUID> &value) const
+void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<GUID> &value) const
 {
-	odbc::column &column = get_column(columnIndex);
+	const odbc::column &column = get_column(columnIndex);
 
-	if (column.c_type != SQL_C_GUID)
-	{
-		std::exception e(__LOC_A__ "Column is not of the type specified.");
-
-		throw e;
-	}
-
-	value.reset();
-
-	if (column.indicator != SQL_NULL_DATA)
-	{
-		value = std::make_shared<GUID>(column.data.Guid);
-	}
+	value = column;
 }
+
 
 
 void odbc::statement::prepare()
@@ -1300,27 +763,27 @@ void odbc::statement::prepare()
 
 void odbc::statement::bind_parameters()
 {
-	int16_t numberOfParameters = 0;
+	std::int16_t numberOfParameters = 0;
 
 	RETCODE rc = ::SQLNumParams(_statement, &numberOfParameters);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading number of parameters.");
 
-	if ((numberOfParameters > 0) && ((uint16_t) numberOfParameters > _parameters.size()))
+	if ((numberOfParameters > 0) && ((std::uint16_t) numberOfParameters > _parameters.size()))
 	{
 		std::exception e(__LOC_A__ "Too few parameters supplied to statement.");
 
 		throw e;
 	}
 
-	for (int16_t i = 0; i < numberOfParameters; i++)
+	for (std::int16_t i = 0; i < numberOfParameters; i++)
 	{
 		const std::shared_ptr<odbc::parameter> &p = _parameters[i];
 
-		int16_t sqlDataType = 0;
+		std::int16_t sqlDataType = 0;
 		SQLUINTEGER parameterSize = 0;
-		int16_t decimalDigits = 0;
-		int16_t nullableIndicator = 0;
+		std::int16_t decimalDigits = 0;
+		std::int16_t nullableIndicator = 0;
 		// nullableIndicator is in (SQL_NO_NULLS, SQL_NULLABLE, SQL_NULLABLE_UNKNOWN)
 
 		rc = ::SQLDescribeParam(_statement, i + 1, &sqlDataType, &parameterSize, &decimalDigits, &nullableIndicator);
@@ -1343,7 +806,7 @@ void odbc::statement::bind_parameters()
 			message += " named '";
 			message += p->get_name();
 			message += "' is not convertible to the expected SQL type (";
-			message += GetSqlTypeName(sqlDataType);
+			message += get_sql_type_name(sqlDataType);
 			message += ").";
 
 			std::exception e(message.c_str());
@@ -1376,17 +839,13 @@ void odbc::statement::read_number_of_columns()
 
 void odbc::statement::process_columns()
 {
-	_columnBindings.reset(new odbc::column[_numberOfColumns]);
+	_columnBindings = std::make_unique<odbc::column[]>(_numberOfColumns);
 
-	::memset(_columnBindings.get(), 0x00000000, sizeof (odbc::column) * _numberOfColumns);
-
-	for (SQLUSMALLINT i = 0; i < _numberOfColumns; i++)
+	for (std::uint16_t i = 0; i < _numberOfColumns; i++)
 	{
-		_columnBindings[i].index = i + 1;
+		read_column_type(i + 1, _columnBindings[i]);
 
-		read_column_type(_columnBindings[i]);
-
-		std::string name = read_column_name(i);
+		std::string name = read_column_name(i + 1);
 
 		//std::string hi = GetSqlTypeName(_columnBindings[i].type);
 
@@ -1394,37 +853,29 @@ void odbc::statement::process_columns()
 
 		_nameToIndex[name] = i;
 
-		bind_column(_columnBindings[i]);
+		bind_column(i + 1, _columnBindings[i]);
 	}
 }
 
-void odbc::statement::read_column_type(odbc::column &column)
+void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &column)
 {
-	RETCODE rc = ::SQLColAttributeA(_statement, column.index, SQL_DESC_CONCISE_TYPE, nullptr, 0, nullptr, &column.type);
+	std::int32_t type = 0;
+	std::int32_t width = 0;
+
+	RETCODE rc = ::SQLColAttributeA(_statement, index, SQL_DESC_CONCISE_TYPE, nullptr, 0, nullptr, &type);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column type.");
 
-	column.c_type = get_c_type(column.type);
+	column.set_type((std::int16_t) type);
 
-	rc = ::SQLColAttributeA(_statement, column.index, SQL_DESC_LENGTH, nullptr, 0, nullptr, &column.width);
+	rc = ::SQLColAttributeA(_statement, index, SQL_DESC_LENGTH, nullptr, 0, nullptr, &width);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column width.");
+
+	column.set_width(width);
 }
 
-/*
-SQLUSMALLINT GetMaxColumnNameLength(const shared_ptr<OdbcConnection> &connection)
-{
-	SQLUSMALLINT result = 0;
-
-	RETCODE rc = ::SQLGetInfo(connection->GetConnectionHandle(), SQL_MAXIMUM_COLUMN_NAME_LENGTH, &result, sizeof (SQLUSMALLINT), nullptr);
-
-	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading max column name length.");
-
-	return result;
-}
-*/
-
-std::string odbc::statement::read_column_name(SQLUSMALLINT columnIndex)
+std::string odbc::statement::read_column_name(const std::uint16_t columnIndex)
 {
 	// static const SQLUSMALLINT bufferLength = GetMaxColumnNameLength(_connection);
 
@@ -1434,7 +885,7 @@ std::string odbc::statement::read_column_name(SQLUSMALLINT columnIndex)
 	//unique_ptr<TCHAR[]> buffer(new TCHAR[bufferLength]);
 	char buffer[bufferLength] = {};
 
-	RETCODE rc = ::SQLColAttributeA(_statement, columnIndex + 1, SQL_DESC_NAME, (SQLPOINTER) buffer, bufferLength, NULL, NULL);
+	RETCODE rc = ::SQLColAttributeA(_statement, columnIndex, SQL_DESC_NAME, (SQLPOINTER) buffer, bufferLength, nullptr, nullptr);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column name.");
 
@@ -1443,46 +894,18 @@ std::string odbc::statement::read_column_name(SQLUSMALLINT columnIndex)
 	return result;
 }
 
-void odbc::statement::bind_column(odbc::column &c)
+void odbc::statement::bind_column(const std::uint16_t index, odbc::column &c)
 {
-	c.bound = true;
-
-	SQLPOINTER buffer = (SQLPOINTER) &c.data;
-	SQLINTEGER bufferLength = sizeof (odbc::column_data);
-
-	// TODO: i hate the way this function is structured; i need to split it out into tinier functions
-
-	if ((c.c_type == SQL_C_CHAR) || (c.c_type == SQL_C_WCHAR) || (c.c_type == SQL_C_BINARY))
+	std::function<bool (const std::int16_t, void *, const std::int32_t, std::int32_t &)> binder = [=] (const std::int16_t type, void *buffer, const std::int32_t length, std::int32_t &indicator)
 	{
-		if ((c.width == 0) && ((c.type == SQL_VARCHAR) || (c.type == SQL_WVARCHAR) || (c.type == SQL_LONGVARCHAR) || (c.type == SQL_WLONGVARCHAR) || (c.type == SQL_VARBINARY) || (c.type == SQL_LONGVARBINARY)))
-		{
-			c.bound = false;
-		}
-		else
-		{
-			c.width += 1; // include space for the null terminator
-
-			if (c.c_type == SQL_C_WCHAR)
-			{
-				bufferLength = c.width * sizeof (wchar_t);
-				buffer = (wchar_t *) ::calloc(c.width, sizeof (wchar_t));
-				c.data.UnicodeString = (wchar_t *) buffer;
-			}
-			else
-			{
-				bufferLength = c.width * sizeof (unsigned char);
-				buffer = (unsigned char *) ::calloc(c.width, sizeof (unsigned char));
-				c.data.UnsignedAnsiString = (unsigned char *) buffer;
-			}
-		}
-	}
-
-	if (c.bound == true)
-	{
-		RETCODE rc = ::SQLBindCol(_statement, c.index, c.c_type, buffer, bufferLength, (SQLINTEGER *) &c.indicator);
+		RETCODE rc = ::SQLBindCol(_statement, index, type, buffer, length, (SQLINTEGER *)&indicator);
 
 		process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error binding column.");
-	}
+
+		return true;
+	};
+
+	c.bind(binder);
 }
 
 void odbc::statement::fetch_unbound_column_data()
@@ -1491,146 +914,82 @@ void odbc::statement::fetch_unbound_column_data()
 	{
 		odbc::column &c = _columnBindings[i];
 
-		if (c.bound == false)
+		if (c.is_bound() == false)
 		{
-			reset_column(c);
-			fetch_unbound_column_data(c);
+			c.reset();
+
+			fetch_unbound_column_data(i + 1, c);
 		}
 	}
 }
 
-void odbc::statement::reset_column(odbc::column &column)
-{
-	if ((column.c_type == SQL_C_CHAR) || (column.c_type == SQL_C_BINARY))
-	{
-		::free(column.data.UnsignedAnsiString);
-	}
-	else if (column.c_type == SQL_C_WCHAR)
-	{
-		::free(column.data.UnicodeString);
-	}
-
-	::memset(&column.data, 0x00000000, sizeof (odbc::column_data));
-
-	column.width = 1;
-}
-
-//template <typename T>
-//T *FetchUnboundData(void *statement, Column &column, size_t (*len)(const T *, size_t), errno_t (*cat)(T *, rsize_t, const T *))
-//{
-//	const int numberOfCharactersToFetch = 1000;
-//
-//	T *result = nullptr;
-//
-//	T buf[numberOfCharactersToFetch] = {};
-//
-//	RETCODE rc;
-//
-//	do
-//	{
-//		rc = ::SQLGetData(statement, column.index, SQL_C_WCHAR, buf, numberOfCharactersToFetch, &column.indicator);
-//
-//		process_return_code(statement, SQL_HANDLE_STMT, rc, __LOC__ _T("Error reading unbound LOB column data."));
-//
-//		if (column.indicator != SQL_NULL_DATA)
-//		{
-//			column.width += (*len)(buf, numberOfCharactersToFetch);
-//
-//			if (result == nullptr)
-//			{
-//				result = (T *) ::calloc(column.width, sizeof (T));
-//			}
-//
-//			// TODO: i don't know if the size argument wcscat_s wants bytes or characters...for now, i assume characters
-//			(*cat)(result, column.width, buf);
-//		}
-//	}
-//	while (rc == SQL_SUCCESS_WITH_INFO);
-//
-//	return result;
-//}
-
-void odbc::statement::fetch_unbound_column_data(odbc::column &column)
+void odbc::statement::fetch_unbound_column_data(const std::uint16_t index, odbc::column &column)
 {
 	const int numberOfCharactersToFetch = 1000;
 
-	RETCODE rc = 0;
+	RETCODE rc = SQL_SUCCESS;
 
-	if (column.c_type == SQL_C_WCHAR)
+	if (column.get_c_type() == SQL_C_WCHAR)
 	{
-		//column.data.UnicodeString = FetchUnboundData(_statement, column, &::wcsnlen_s, &::wcscat_s);
-
 		wchar_t buf[numberOfCharactersToFetch] = {};
+
+		std::int32_t indicator = 0;
+
+		std::shared_ptr<std::wstring> str;
 
 		do
 		{
-			rc = ::SQLGetData(_statement, column.index, SQL_C_WCHAR, buf, numberOfCharactersToFetch, (SQLINTEGER *) &column.indicator);
+			rc = ::SQLGetData(_statement, index, SQL_C_WCHAR, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
 
 			process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading unbound LOB column data.");
 
-			if (column.indicator != SQL_NULL_DATA)
+			if (indicator != SQL_NULL_DATA)
 			{
-				column.width += ::wcsnlen_s(buf, numberOfCharactersToFetch);
-
-				if (column.data.UnsignedAnsiString == nullptr)
+				if (str == nullptr)
 				{
-					column.data.UnsignedAnsiString = (unsigned char *) ::calloc(column.width, sizeof (unsigned char));
-				}
-				else
-				{
-					wchar_t *tmp = (wchar_t *) ::realloc(column.data.UnicodeString, column.width * sizeof (wchar_t));
-
-					if (tmp != nullptr)
-					{
-						column.data.UnicodeString = tmp;
-					}
+					str = std::make_shared<std::wstring>();
 				}
 
-				::wcscat_s(column.data.UnicodeString, column.width, buf);
+				str->append(buf, numberOfCharactersToFetch);
 			}
 		}
 		while (rc == SQL_SUCCESS_WITH_INFO);
+
+		column = str;
 	}
 	else
 	{
-		//column.data.UnsignedAnsiString = (UCHAR *) FetchUnboundData(_statement, column, &::strnlen_s, &::strcat_s);
-
 		char buf[numberOfCharactersToFetch] = {};
+
+		std::int32_t indicator = 0;
+
+		std::shared_ptr<std::string> str;
 
 		do
 		{
-			rc = ::SQLGetData(_statement, column.index, SQL_C_CHAR, buf, numberOfCharactersToFetch, (SQLINTEGER *) &column.indicator);
+			rc = ::SQLGetData(_statement, index, SQL_C_CHAR, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
 
 			process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading unbound LOB column data.");
 
-			if (column.indicator != SQL_NULL_DATA)
+			if (column.get_indicator() != SQL_NULL_DATA)
 			{
-				column.width += ::strnlen_s(buf, numberOfCharactersToFetch);
-
-				if (column.data.UnsignedAnsiString == nullptr)
+				if (str == nullptr)
 				{
-					column.data.UnsignedAnsiString = (unsigned char *) ::calloc(column.width, sizeof (unsigned char));
-				}
-				else
-				{
-					unsigned char *tmp = (unsigned char *) ::realloc(column.data.UnsignedAnsiString, column.width * sizeof (unsigned char));
-
-					if (tmp != nullptr)
-					{
-						column.data.UnsignedAnsiString = tmp;
-					}
+					str = std::make_shared<std::string>();
 				}
 
-				::strcat_s((CHAR *) column.data.UnsignedAnsiString, column.width, buf);
+				str->append(buf, numberOfCharactersToFetch);
 			}
 		}
 		while (rc == SQL_SUCCESS_WITH_INFO);
+
+		column = str;
 	}
 }
 
-uint32_t odbc::statement::get_column_index(const std::string &columnName) const
+std::uint32_t odbc::statement::get_column_index(const std::string &columnName) const
 {
-	std::map<std::string, uint32_t, case_insensitive_less>::const_iterator indexPair = _nameToIndex.find(columnName);
+	std::map<std::string, std::uint32_t, case_insensitive::less>::const_iterator indexPair = _nameToIndex.find(columnName);
 
 	if (indexPair == _nameToIndex.end())
 	{
@@ -1645,21 +1004,21 @@ uint32_t odbc::statement::get_column_index(const std::string &columnName) const
 		throw e;
 	}
 
-	uint32_t columnIndex = indexPair->second;
+	std::uint32_t columnIndex = indexPair->second;
 
 	return columnIndex;
 }
 
-odbc::column &odbc::statement::get_column(const std::string &columnName) const
+const odbc::column &odbc::statement::get_column(const std::string &columnName) const
 {
-	uint32_t columnIndex = get_column_index(columnName);
+	std::uint32_t columnIndex = get_column_index(columnName);
 
-	odbc::column &result = get_column(columnIndex);
+	const odbc::column &result = get_column(columnIndex);
 
 	return result;
 }
 
-odbc::column &odbc::statement::get_column(const uint32_t columnIndex) const
+const odbc::column &odbc::statement::get_column(const std::uint32_t columnIndex) const
 {
 	if (columnIndex >= _numberOfColumns)
 	{
