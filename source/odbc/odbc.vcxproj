@@ -80,6 +80,9 @@
     <ClInclude Include="case_insensitive.h" />
     <ClInclude Include="odbc_base.h" />
     <ClInclude Include="parameter.h" />
+    <ClInclude Include="sql_c_type.h" />
+    <ClInclude Include="sql_indicator.h" />
+    <ClInclude Include="sql_type.h" />
     <ClInclude Include="statement.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -93,6 +96,9 @@
     <ClCompile Include="environment.cpp" />
     <ClCompile Include="odbc_base.cpp" />
     <ClCompile Include="parameter.cpp" />
+    <ClCompile Include="sql_c_type.cpp" />
+    <ClCompile Include="sql_indicator.cpp" />
+    <ClCompile Include="sql_type.cpp" />
     <ClCompile Include="statement.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -7,6 +7,9 @@
 #include <locale>
 #include <map>
 
+#include "sql_c_type.h"
+#include "sql_type.h"
+
 odbc::odbc_base::odbc_base()
 {
 }
@@ -170,77 +173,77 @@ bool odbc::odbc_base::are_types_convertible(const std::int16_t parameterCType, c
 	return result;
 }
 
-std::int16_t odbc::odbc_base::get_c_type(const std::int16_t sqlType) const
+odbc::sql_c_type odbc::odbc_base::get_c_type(const odbc::sql_type &sqlType) const
 {
-	std::int16_t result = 0;
+	odbc::sql_c_type result = odbc::sql_c_type::sql_c_slong;
 
 	switch (sqlType)
 	{
 	case SQL_CHAR:
-		result = SQL_C_CHAR;
+		result = odbc::sql_c_type::sql_c_char;
 		break;
 	case SQL_VARCHAR:
-		result = SQL_C_CHAR;
+		result = odbc::sql_c_type::sql_c_char;
 		break;
 	case SQL_LONGVARCHAR:
-		result = SQL_C_CHAR;
+		result = odbc::sql_c_type::sql_c_char;
 		break;
 	case SQL_WCHAR:
-		result = SQL_C_WCHAR;
+		result = odbc::sql_c_type::sql_c_wchar;
 		break;
 	case SQL_WVARCHAR:
-		result = SQL_C_WCHAR;
+		result = odbc::sql_c_type::sql_c_wchar;
 		break;
 	case SQL_WLONGVARCHAR:
-		result = SQL_C_WCHAR;
+		result = odbc::sql_c_type::sql_c_wchar;
 		break;
 	case SQL_BIT:
-		result = SQL_C_BIT;
+		result = odbc::sql_c_type::sql_c_bit;
 		break;
 	case SQL_TINYINT:
-		result = SQL_C_STINYINT;
+		result = odbc::sql_c_type::sql_c_stinyint;
 		break;
 	case SQL_SMALLINT:
-		result = SQL_C_SSHORT;
+		result = odbc::sql_c_type::sql_c_sshort;
 		break;
 	case SQL_INTEGER:
-		result = SQL_C_SLONG;
+		result = odbc::sql_c_type::sql_c_slong;
 		break;
 	case SQL_BIGINT:
-		result = SQL_C_SBIGINT;
+		result = odbc::sql_c_type::sql_c_sbigint;
 		break;
 	case SQL_REAL:
-		result = SQL_C_FLOAT;
+		result = odbc::sql_c_type::sql_c_float;
 		break;
 	case SQL_FLOAT:
-		result = SQL_C_DOUBLE;
+		result = odbc::sql_c_type::sql_c_double;
 		break;
 	case SQL_DOUBLE:
-		result = SQL_C_DOUBLE;
+		result = odbc::sql_c_type::sql_c_double;
 		break;
 	case SQL_DECIMAL:
-		result = SQL_C_DOUBLE;
+		result = odbc::sql_c_type::sql_c_double;
 		break;
 	case SQL_BINARY:
-		result = SQL_C_BINARY;
+		result = odbc::sql_c_type::sql_c_binary;
 		break;
 	case SQL_VARBINARY:
-		result = SQL_C_BINARY;
+		result = odbc::sql_c_type::sql_c_binary;
 		break;
 	case SQL_TYPE_DATE:
-		result = SQL_C_TYPE_DATE;
+		result = odbc::sql_c_type::sql_c_date;
 		break;
 	case SQL_TYPE_TIME:
-		result = SQL_C_TYPE_TIME;
+		result = odbc::sql_c_type::sql_c_time;
 		break;
 	case SQL_TYPE_TIMESTAMP:
-		result = SQL_C_TYPE_TIMESTAMP;
+		result = odbc::sql_c_type::sql_c_datetime;
 		break;
 	case SQL_NUMERIC:
-		result = SQL_C_NUMERIC;
+		result = odbc::sql_c_type::sql_c_numeric;
 		break;
 	case SQL_GUID:
-		result = SQL_C_GUID;
+		result = odbc::sql_c_type::sql_c_guid;
 		break;
 	default:
 		std::exception e("Sql type out of range.");

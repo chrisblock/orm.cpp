@@ -798,14 +798,14 @@ void odbc::statement::bind_parameters()
 		}
 
 		// TODO: this will fail if p->is_null()
-		if (are_types_convertible(p->get_type(), sqlDataType) == false)
+		if (are_types_convertible(p->get_c_type(), sqlDataType) == false)
 		{
 			std::string message(__LOC_A__ "Supplied value for parameter (#");
 
 			message += std::to_string(i);
 			message += " named '";
 			message += p->get_name();
-			message += "' is not convertible to the expected SQL type (";
+			message += "') is not convertible to the expected SQL type (";
 			message += get_sql_type_name(sqlDataType);
 			message += ").";
 
@@ -814,13 +814,32 @@ void odbc::statement::bind_parameters()
 			throw e;
 		}
 
-		SQLINTEGER *value = (SQLINTEGER *) p->get_nullable_indicator();
+		SQLINTEGER *indicator = reinterpret_cast<SQLINTEGER *>(&p->get_nullable_indicator());
 		// this needs to be a certain value depending on the value of the parameter:
 		//   SQL_NULL_DATA if the parameter is null
 		//   SQL_NTS if the parameter value is a null terminated string
 		//   the length of the parameter otherwise...which is complicated
 
-		rc = ::SQLBindParameter(_statement, i + 1, SQL_PARAM_INPUT, p->get_type(), sqlDataType, parameterSize, decimalDigits, p->get_value(), p->get_length(), value);
+		/*
+		std::function<bool (const std::int16_t, void *, const std::int32_t, std::int32_t &)> binder = [=] (const std::int16_t type, void *buffer, const std::int32_t length, std::int32_t &indicator)
+		{
+			RETCODE rc = ::SQLBindParameter(_statement, i + 1, SQL_PARAM_INPUT, c_type, type, parameterSize, decimalDegits, p->get_value(), p->);
+
+			process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error binding column.");
+
+			return true;
+		};
+		*/
+
+		std::string parameterTypeName = odbc_base::get_sql_type_name(sqlDataType);
+		std::string typeName = odbc_base::get_sql_type_name(p->get_type());
+		std::string cTypeName = odbc::odbc_base::get_c_type_name(p->get_c_type());
+
+		parameterTypeName;
+		typeName;
+		cTypeName;
+
+		rc = ::SQLBindParameter(_statement, i + 1, SQL_PARAM_INPUT, p->get_c_type(), sqlDataType, parameterSize, decimalDigits, p->get_value(), p->get_length(), indicator);
 
 		process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error binding parameter.");
 	}
@@ -857,7 +876,7 @@ void odbc::statement::process_columns()
 	}
 }
 
-void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &column)
+void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &column) const
 {
 	std::int32_t type = 0;
 	std::int32_t width = 0;
@@ -868,6 +887,8 @@ void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &
 
 	column.set_type((std::int16_t) type);
 
+	column.set_c_type(odbc_base::get_c_type((std::int16_t) type));
+
 	rc = ::SQLColAttributeA(_statement, index, SQL_DESC_LENGTH, nullptr, 0, nullptr, &width);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column width.");
@@ -875,7 +896,7 @@ void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &
 	column.set_width(width);
 }
 
-std::string odbc::statement::read_column_name(const std::uint16_t columnIndex)
+std::string odbc::statement::read_column_name(const std::uint16_t columnIndex) const
 {
 	// static const SQLUSMALLINT bufferLength = GetMaxColumnNameLength(_connection);
 
@@ -929,7 +950,7 @@ void odbc::statement::fetch_unbound_column_data(const std::uint16_t index, odbc:
 
 	RETCODE rc = SQL_SUCCESS;
 
-	if (column.get_c_type() == SQL_C_WCHAR)
+	if (column.get_c_type() == odbc::sql_c_type::sql_c_wchar)
 	{
 		wchar_t buf[numberOfCharactersToFetch] = {};
 
@@ -939,7 +960,7 @@ void odbc::statement::fetch_unbound_column_data(const std::uint16_t index, odbc:
 
 		do
 		{
-			rc = ::SQLGetData(_statement, index, SQL_C_WCHAR, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
+			rc = ::SQLGetData(_statement, index, odbc::sql_c_type::sql_c_wchar, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
 
 			process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading unbound LOB column data.");
 
@@ -967,11 +988,11 @@ void odbc::statement::fetch_unbound_column_data(const std::uint16_t index, odbc:
 
 		do
 		{
-			rc = ::SQLGetData(_statement, index, SQL_C_CHAR, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
+			rc = ::SQLGetData(_statement, index, odbc::sql_c_type::sql_c_char, buf, numberOfCharactersToFetch, reinterpret_cast<SQLINTEGER *>(&indicator));
 
 			process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading unbound LOB column data.");
 
-			if (column.get_indicator() != SQL_NULL_DATA)
+			if (column.get_indicator() != odbc::sql_indicator::sql_null_data)
 			{
 				if (str == nullptr)
 				{

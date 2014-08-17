@@ -84,9 +84,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="insert_tests.cpp" />
+    <ClCompile Include="column_tests.cpp" />
     <ClCompile Include="odbc.tests.cpp" />
-    <ClCompile Include="select_tests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -101,7 +100,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="binary_data.tests.cpp" />
+    <ClCompile Include="binary_data_tests.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

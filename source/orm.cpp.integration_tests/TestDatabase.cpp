@@ -20,9 +20,9 @@ TestDatabase::TestDatabase()
 TestDatabase::TestDatabase(const std::string &name) :
 	  _name(name)
 {
-	DropDatabase();
+	DropDatabase(_name);
 
-	CreateDatabase();
+	CreateDatabase(_name);
 }
 
 TestDatabase::TestDatabase(TestDatabase &&other) :
@@ -33,12 +33,12 @@ TestDatabase::TestDatabase(TestDatabase &&other) :
 
 TestDatabase::~TestDatabase()
 {
-	DropDatabase();
+	DropDatabase(_name);
 }
 
-void TestDatabase::CreateDatabase() const
+void TestDatabase::CreateDatabase(const std::string &name)
 {
-	if (_name.empty() == false)
+	if (name.empty() == false)
 	{
 		std::shared_ptr<odbc::environment> e = std::make_shared<odbc::environment>();
 
@@ -47,9 +47,9 @@ void TestDatabase::CreateDatabase() const
 		c->open("Driver={SQL Server Native Client 11.0}; Server=(local); Trusted_Connection=Yes;");
 
 		std::string command("CREATE DATABASE [");
-		command.append(_name);
+		command.append(name);
 		command.append("]; ALTER DATABASE [");
-		command.append(_name);
+		command.append(name);
 		command.append("] SET RECOVERY SIMPLE;");
 
 		odbc::statement s(c, command);
@@ -60,9 +60,9 @@ void TestDatabase::CreateDatabase() const
 	}
 }
 
-void TestDatabase::DropDatabase() const
+void TestDatabase::DropDatabase(const std::string &name)
 {
-	if (_name.empty() == false)
+	if (name.empty() == false)
 	{
 		std::shared_ptr<odbc::environment> e = std::make_shared<odbc::environment>();
 
@@ -71,9 +71,9 @@ void TestDatabase::DropDatabase() const
 		c->open("Driver={SQL Server Native Client 11.0}; Server=(local); Trusted_Connection=Yes;");
 
 		std::string command("IF EXISTS (SELECT TOP 1 NULL FROM [sys].[databases] WHERE [name] = '");
-		command.append(_name);
+		command.append(name);
 		command.append("') DROP DATABASE [");
-		command.append(_name);
+		command.append(name);
 		command.append("];");
 
 		odbc::statement s(c, command);

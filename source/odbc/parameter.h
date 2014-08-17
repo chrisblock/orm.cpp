@@ -30,11 +30,13 @@ namespace odbc
 
 		std::int16_t get_type() const;
 
+		std::int16_t get_c_type() const;
+
 		void *get_value() const;
 
 		std::int32_t get_length() const;
 
-		std::int32_t *get_nullable_indicator();
+		std::int32_t &get_nullable_indicator();
 
 		bool is_null() const;
 

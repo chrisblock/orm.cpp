@@ -11,6 +11,7 @@ void odbc::swap(odbc::column &left, odbc::column &right)
 	using std::swap;
 
 	swap(left._bound, right._bound);
+	swap(left._c_type, right._c_type);
 	swap(left._data, right._data);
 	swap(left._indicator, right._indicator);
 	swap(left._type, right._type);
@@ -18,22 +19,22 @@ void odbc::swap(odbc::column &left, odbc::column &right)
 }
 
 odbc::column::column() :
-	  _data(empty_column_data)
+	  _bound(false)
+	, _c_type(odbc::sql_c_type::sql_c_slong)
+	, _data(empty_column_data)
+	, _indicator(odbc::sql_indicator::sql_null_data)
+	, _type(odbc::sql_type::sql_integer)
 	, _width(0)
-	, _indicator(SQL_NULL_DATA)
-	//, _index(0)
-	, _type(0)
-	, _bound(false)
 {
 }
 
 odbc::column::column(const odbc::column &other) :
-	  _data(other._data)
-	, _width(other._width)
+	  _bound(other._bound)
+	, _c_type(other._c_type)
+	, _data(other._data)
 	, _indicator(other._indicator)
-	//, _index(other._index)
 	, _type(other._type)
-	, _bound(other._bound)
+	, _width(other._width)
 {
 }
 
@@ -45,11 +46,11 @@ odbc::column::column(odbc::column &&other) :
 
 odbc::column::~column()
 {
-	if ((get_type() == SQL_CHAR) || (get_type() == SQL_VARCHAR) || (get_type() == SQL_LONGVARCHAR) || (get_type() == SQL_BINARY) || (get_type() == SQL_VARBINARY) || (get_type() == SQL_LONGVARBINARY))
+	if ((get_type() == odbc::sql_type::sql_char) || (get_type() == odbc::sql_type::sql_varchar) || (get_type() == odbc::sql_type::sql_longvarchar) || (get_type() == odbc::sql_type::sql_binary) || (get_type() == odbc::sql_type::sql_varbinary) || (get_type() == odbc::sql_type::sql_longvarbinary))
 	{
 		::free(_data.UnsignedAnsiString);
 	}
-	else if ((get_type() == SQL_WCHAR) || (get_type() == SQL_WVARCHAR) || (get_type() == SQL_WLONGVARCHAR))
+	else if ((get_type() == odbc::sql_type::sql_wchar) || (get_type() == odbc::sql_type::sql_wvarchar) || (get_type() == odbc::sql_type::sql_wlongvarchar))
 	{
 		::free(_data.UnicodeString);
 	}
@@ -67,40 +68,20 @@ odbc::column &odbc::column::operator =(bool value)
 	_data.UnsignedCharacter = value
 		? 0xFF
 		: 0x00;
-	_type = SQL_C_BIT;
+	_type = odbc::sql_type::sql_bit;
+	_c_type = odbc::sql_c_type::sql_c_bit;
 	_indicator = sizeof (std::uint8_t);
 	_width = sizeof (std::uint8_t);
 
 	return *this;
 }
 
-//odbc::column &odbc::column::operator =(char value)
-//{
-//	const char v[2] = { value, '\0' };
-//
-//	std::string s(v);
-//
-//	*this = s;
-//
-//	return *this;
-//}
-
-//odbc::column &odbc::column::operator =(wchar_t value)
-//{
-//	const wchar_t v[2] = { value, L'\0' };
-//
-//	std::wstring s(v);
-//
-//	*this = s;
-//
-//	return *this;
-//}
-
 odbc::column &odbc::column::operator =(float value)
 {
 	_data.Float = value;
-	_type = SQL_C_FLOAT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_float;
+	_c_type = odbc::sql_c_type::sql_c_float;
+	_indicator = sizeof (float);
 	_width = sizeof (value);
 
 	return *this;
@@ -109,8 +90,9 @@ odbc::column &odbc::column::operator =(float value)
 odbc::column &odbc::column::operator =(double value)
 {
 	_data.Double = value;
-	_type = SQL_C_DOUBLE;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_double;
+	_c_type = odbc::sql_c_type::sql_c_double;
+	_indicator = sizeof (double);
 	_width = sizeof (value);
 
 	return *this;
@@ -119,8 +101,9 @@ odbc::column &odbc::column::operator =(double value)
 odbc::column &odbc::column::operator =(std::int8_t value)
 {
 	_data.Character = value;
-	_type = SQL_C_STINYINT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_tinyint;
+	_c_type = odbc::sql_c_type::sql_c_stinyint;
+	_indicator = sizeof (std::int8_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -129,8 +112,9 @@ odbc::column &odbc::column::operator =(std::int8_t value)
 odbc::column &odbc::column::operator =(std::uint8_t value)
 {
 	_data.UnsignedCharacter = value;
-	_type = SQL_C_UTINYINT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_tinyint;
+	_c_type = odbc::sql_c_type::sql_c_utinyint;
+	_indicator = sizeof (std::uint8_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -139,8 +123,9 @@ odbc::column &odbc::column::operator =(std::uint8_t value)
 odbc::column &odbc::column::operator =(std::int16_t value)
 {
 	_data.Short = value;
-	_type = SQL_C_SSHORT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_smallint;
+	_c_type = odbc::sql_c_type::sql_c_sshort;
+	_indicator = sizeof (std::int16_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -149,8 +134,9 @@ odbc::column &odbc::column::operator =(std::int16_t value)
 odbc::column &odbc::column::operator =(std::uint16_t value)
 {
 	_data.UnsignedShort = value;
-	_type = SQL_C_USHORT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_smallint;
+	_c_type = odbc::sql_c_type::sql_c_ushort;
+	_indicator = sizeof (std::uint16_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -159,8 +145,9 @@ odbc::column &odbc::column::operator =(std::uint16_t value)
 odbc::column &odbc::column::operator =(std::int32_t value)
 {
 	_data.Long = value;
-	_type = SQL_C_SLONG;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_integer;
+	_c_type = odbc::sql_c_type::sql_c_slong;
+	_indicator = sizeof (std::int32_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -169,8 +156,9 @@ odbc::column &odbc::column::operator =(std::int32_t value)
 odbc::column &odbc::column::operator =(std::uint32_t value)
 {
 	_data.UnsignedLong = value;
-	_type = SQL_C_ULONG;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_integer;
+	_c_type = odbc::sql_c_type::sql_c_ulong;
+	_indicator = sizeof (::uint32_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -179,8 +167,9 @@ odbc::column &odbc::column::operator =(std::uint32_t value)
 odbc::column &odbc::column::operator =(std::int64_t value)
 {
 	_data.Int64Value = value;
-	_type = SQL_C_SBIGINT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_bigint;
+	_c_type = odbc::sql_c_type::sql_c_sbigint;
+	_indicator = sizeof (std::int64_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -189,8 +178,9 @@ odbc::column &odbc::column::operator =(std::int64_t value)
 odbc::column &odbc::column::operator =(std::uint64_t value)
 {
 	_data.UnsignedInt64Value = value;
-	_type = SQL_C_UBIGINT;
-	_indicator = sizeof (value);
+	_type = odbc::sql_type::sql_bigint;
+	_c_type = odbc::sql_c_type::sql_c_ubigint;
+	_indicator = sizeof (std::uint64_t);
 	_width = sizeof (value);
 
 	return *this;
@@ -198,37 +188,40 @@ odbc::column &odbc::column::operator =(std::uint64_t value)
 
 odbc::column &odbc::column::operator =(std::string value)
 {
-	_data.UnsignedAnsiString = reinterpret_cast<unsigned char *>(::calloc(value.length() + 1, sizeof (unsigned char)));
+	_data.UnsignedAnsiString = static_cast<unsigned char *>(::calloc(value.length() + 1, sizeof (unsigned char)));
 
 	::memcpy_s(_data.UnsignedAnsiString, value.length() + 1, value.c_str(), value.length() + 1);
 
-	_type = SQL_C_CHAR;
-	_indicator = SQL_NTS;
-	_width = (value.length() + 1) * sizeof (unsigned char);
+	_type = odbc::sql_type::sql_char;
+	_c_type = odbc::sql_c_type::sql_c_char;
+	_indicator = odbc::sql_indicator::sql_nts;
+	_width = (value.length() + 1) * sizeof (std::string::value_type);
 
 	return *this;
 }
 
 odbc::column &odbc::column::operator =(std::wstring value)
 {
-	_data.UnicodeString = reinterpret_cast<wchar_t *>(::calloc(value.length() + 1, sizeof (wchar_t)));
+	_data.UnicodeString = static_cast<wchar_t *>(::calloc(value.length() + 1, sizeof(wchar_t)));
 
 	::memcpy_s(_data.UnicodeString, (value.length() + 1) * sizeof (wchar_t), value.c_str(), (value.length() + 1) * sizeof (wchar_t));
 
-	_type = SQL_C_WCHAR;
-	_indicator = SQL_NTS;
-	_width = (value.length() + 1) * sizeof (wchar_t);
+	_type = odbc::sql_type::sql_wchar;
+	_c_type = odbc::sql_c_type::sql_c_wchar;
+	_indicator = odbc::sql_indicator::sql_nts;
+	_width = (value.length() + 1) * sizeof (std::wstring::value_type);
 
 	return *this;
 }
 
 odbc::column &odbc::column::operator =(odbc::binary_data value)
 {
-	_data.UnsignedAnsiString = reinterpret_cast<std::uint8_t *>(::calloc(value.length(), sizeof (std::uint8_t)));
+	_data.UnsignedAnsiString = static_cast<std::uint8_t *>(::calloc(value.length(), sizeof(std::uint8_t)));
 
 	::memcpy_s(_data.UnsignedAnsiString, value.length(), value.data(), value.length());
 
-	_type = SQL_C_BINARY;
+	_type = odbc::sql_type::sql_binary;
+	_c_type = odbc::sql_c_type::sql_c_binary;
 	_indicator = value.length();
 	_width = value.length();
 
@@ -238,9 +231,11 @@ odbc::column &odbc::column::operator =(odbc::binary_data value)
 odbc::column &odbc::column::operator =(odbc::date_time value)
 {
 	_data.DateTime = value;
-	_type = SQL_C_TYPE_TIMESTAMP;
-	_indicator = sizeof (TIMESTAMP_STRUCT);
-	_width = sizeof (TIMESTAMP_STRUCT);
+
+	_type = odbc::sql_type::sql_datetime;
+	_c_type = odbc::sql_c_type::sql_c_datetime;
+	_indicator = sizeof (odbc::date_time);
+	_width = sizeof (odbc::date_time);
 
 	return *this;
 }
@@ -248,9 +243,11 @@ odbc::column &odbc::column::operator =(odbc::date_time value)
 odbc::column &odbc::column::operator =(odbc::date value)
 {
 	_data.Date = value;
-	_type = SQL_C_TYPE_DATE;
-	_indicator = sizeof (DATE_STRUCT);
-	_width = sizeof (DATE_STRUCT);
+
+	_type = odbc::sql_type::sql_date;
+	_c_type = odbc::sql_c_type::sql_c_date;
+	_indicator = sizeof (odbc::date);
+	_width = sizeof (odbc::date);
 
 	return *this;
 }
@@ -258,9 +255,11 @@ odbc::column &odbc::column::operator =(odbc::date value)
 odbc::column &odbc::column::operator =(odbc::time value)
 {
 	_data.Time = value;
-	_type = SQL_C_TYPE_TIME;
-	_indicator = sizeof (TIME_STRUCT);
-	_width = sizeof (TIME_STRUCT);
+
+	_type = odbc::sql_type::sql_time;
+	_c_type = odbc::sql_c_type::sql_c_time;
+	_indicator = sizeof (odbc::time);
+	_width = sizeof (odbc::time);
 
 	return *this;
 }
@@ -269,7 +268,8 @@ odbc::column &odbc::column::operator =(odbc::guid value)
 {
 	_data.Guid = value;
 
-	_type = SQL_C_GUID;
+	_type = odbc::sql_type::sql_guid;
+	_c_type = odbc::sql_c_type::sql_c_guid;
 	_indicator = sizeof (odbc::guid);
 	_width = sizeof (odbc::guid);
 
@@ -280,7 +280,8 @@ odbc::column &odbc::column::operator =(odbc::numeric value)
 {
 	_data.Numeric = value;
 
-	_type = SQL_C_NUMERIC;
+	_type = odbc::sql_type::sql_numeric;
+	_c_type = odbc::sql_c_type::sql_c_numeric;
 	_indicator = sizeof (odbc::numeric);
 	_width = sizeof (odbc::numeric);
 
@@ -291,7 +292,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<bool> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_BIT);
+		set_null(odbc::sql_type::sql_bit, odbc::sql_c_type::sql_c_bit);
 	}
 	else
 	{
@@ -301,39 +302,11 @@ odbc::column &odbc::column::operator =(std::shared_ptr<bool> value)
 	return *this;
 }
 
-//odbc::column &odbc::column::operator =(std::shared_ptr<char> value)
-//{
-//	if (value == nullptr)
-//	{
-//		set_null(SQL_C_CHAR);
-//	}
-//	else
-//	{
-//		*this = *value;
-//	}
-//
-//	return *this;
-//}
-
-//odbc::column &odbc::column::operator =(std::shared_ptr<wchar_t> value)
-//{
-//	if (value == nullptr)
-//	{
-//		set_null(SQL_C_WCHAR);
-//	}
-//	else
-//	{
-//		*this = *value;
-//	}
-//
-//	return *this;
-//}
-
 odbc::column &odbc::column::operator =(std::shared_ptr<float> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_FLOAT);
+		set_null(odbc::sql_type::sql_float, odbc::sql_c_type::sql_c_float);
 	}
 	else
 	{
@@ -347,7 +320,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<double> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_DOUBLE);
+		set_null(odbc::sql_type::sql_double, odbc::sql_c_type::sql_c_double);
 	}
 	else
 	{
@@ -361,7 +334,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::int8_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_STINYINT);
+		set_null(odbc::sql_type::sql_tinyint, odbc::sql_c_type::sql_c_stinyint);
 	}
 	else
 	{
@@ -375,7 +348,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::uint8_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_UTINYINT);
+		set_null(odbc::sql_type::sql_tinyint, odbc::sql_c_type::sql_c_utinyint);
 	}
 	else
 	{
@@ -389,7 +362,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::int16_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_SSHORT);
+		set_null(odbc::sql_type::sql_smallint, odbc::sql_c_type::sql_c_sshort);
 	}
 	else
 	{
@@ -403,7 +376,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::uint16_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_USHORT);
+		set_null(odbc::sql_type::sql_smallint, odbc::sql_c_type::sql_c_ushort);
 	}
 	else
 	{
@@ -417,7 +390,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::int32_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_SLONG);
+		set_null(odbc::sql_type::sql_integer, odbc::sql_c_type::sql_c_slong);
 	}
 	else
 	{
@@ -431,7 +404,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::uint32_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_ULONG);
+		set_null(odbc::sql_type::sql_integer, odbc::sql_c_type::sql_c_ulong);
 	}
 	else
 	{
@@ -445,7 +418,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::int64_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_SBIGINT);
+		set_null(odbc::sql_type::sql_bigint, odbc::sql_c_type::sql_c_sbigint);
 	}
 	else
 	{
@@ -459,7 +432,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::uint64_t> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_UBIGINT);
+		set_null(odbc::sql_type::sql_bigint, odbc::sql_c_type::sql_c_ubigint);
 	}
 	else
 	{
@@ -473,7 +446,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::string> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_CHAR);
+		set_null(odbc::sql_type::sql_char, odbc::sql_c_type::sql_c_char);
 	}
 	else
 	{
@@ -487,7 +460,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<std::wstring> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_WCHAR);
+		set_null(odbc::sql_type::sql_wchar, odbc::sql_c_type::sql_c_wchar);
 	}
 	else
 	{
@@ -501,7 +474,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::binary_data> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_BINARY);
+		set_null(odbc::sql_type::sql_binary, odbc::sql_c_type::sql_c_binary);
 	}
 	else
 	{
@@ -515,7 +488,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::date_time> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_TIMESTAMP);
+		set_null(odbc::sql_type::sql_datetime, odbc::sql_c_type::sql_c_datetime);
 	}
 	else
 	{
@@ -529,7 +502,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::date> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_DATE);
+		set_null(odbc::sql_type::sql_date, odbc::sql_c_type::sql_c_date);
 	}
 	else
 	{
@@ -543,7 +516,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::time> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_TIME);
+		set_null(odbc::sql_type::sql_time, odbc::sql_c_type::sql_c_time);
 	}
 	else
 	{
@@ -557,7 +530,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::guid> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_GUID);
+		set_null(odbc::sql_type::sql_guid, odbc::sql_c_type::sql_c_guid);
 	}
 	else
 	{
@@ -571,7 +544,7 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::numeric> value)
 {
 	if (value == nullptr)
 	{
-		set_null(SQL_C_NUMERIC);
+		set_null(odbc::sql_type::sql_numeric, odbc::sql_c_type::sql_c_numeric);
 	}
 	else
 	{
@@ -948,7 +921,7 @@ odbc::column::operator std::shared_ptr<bool>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_BIT)
+		if (_c_type == odbc::sql_c_type::sql_c_bit)
 		{
 			result = std::make_shared<bool>((_data.UnsignedCharacter != '\0'));
 		}
@@ -969,7 +942,7 @@ odbc::column::operator std::shared_ptr<float>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_FLOAT)
+		if (_c_type == odbc::sql_c_type::sql_c_float)
 		{
 			result = std::make_shared<float>(_data.Float);
 		}
@@ -990,7 +963,7 @@ odbc::column::operator std::shared_ptr<double>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_DOUBLE)
+		if (_c_type == odbc::sql_c_type::sql_c_double)
 		{
 			result = std::make_shared<double>(_data.Double);
 		}
@@ -1011,7 +984,7 @@ odbc::column::operator std::shared_ptr<std::int8_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_STINYINT)
+		if (_c_type == odbc::sql_c_type::sql_c_stinyint)
 		{
 			result = std::make_shared<std::int8_t>(_data.Character);
 		}
@@ -1032,7 +1005,7 @@ odbc::column::operator std::shared_ptr<std::uint8_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_UTINYINT)
+		if (_c_type == odbc::sql_c_type::sql_c_utinyint)
 		{
 			result = std::make_shared<std::uint8_t>(_data.UnsignedCharacter);
 		}
@@ -1053,7 +1026,7 @@ odbc::column::operator std::shared_ptr<std::int16_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_SSHORT)
+		if (_c_type == odbc::sql_c_type::sql_c_sshort)
 		{
 			result = std::make_shared<std::int16_t>(_data.Short);
 		}
@@ -1074,7 +1047,7 @@ odbc::column::operator std::shared_ptr<std::uint16_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_USHORT)
+		if (_c_type == odbc::sql_c_type::sql_c_ushort)
 		{
 			result = std::make_shared<std::uint16_t>(_data.UnsignedShort);
 		}
@@ -1095,7 +1068,7 @@ odbc::column::operator std::shared_ptr<std::int32_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_SLONG)
+		if (_c_type == odbc::sql_c_type::sql_c_slong)
 		{
 			result = std::make_shared<::std::int32_t>(_data.Long);
 		}
@@ -1116,7 +1089,7 @@ odbc::column::operator std::shared_ptr<std::uint32_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_ULONG)
+		if (_c_type == odbc::sql_c_type::sql_c_ulong)
 		{
 			result = std::make_shared<std::uint32_t>(_data.UnsignedLong);
 		}
@@ -1137,7 +1110,7 @@ odbc::column::operator std::shared_ptr<std::int64_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_SBIGINT)
+		if (_c_type == odbc::sql_c_type::sql_c_sbigint)
 		{
 			result = std::make_shared<std::int64_t>(_data.Int64Value);
 		}
@@ -1158,7 +1131,7 @@ odbc::column::operator std::shared_ptr<std::uint64_t>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_UBIGINT)
+		if (_c_type == odbc::sql_c_type::sql_c_ubigint)
 		{
 			result = std::make_shared<std::uint64_t>(_data.UnsignedInt64Value);
 		}
@@ -1179,11 +1152,11 @@ odbc::column::operator std::shared_ptr<std::string>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_CHAR)
+		if (_c_type == odbc::sql_c_type::sql_c_char)
 		{
 			result = std::make_shared<std::string>(convert_to_string(reinterpret_cast<const char *>(_data.UnsignedAnsiString)));
 		}
-		else if (get_c_type() == SQL_C_WCHAR)
+		else if (_c_type == odbc::sql_c_type::sql_c_wchar)
 		{
 			result = std::make_shared<std::string>(convert_to_string(_data.UnicodeString));
 		}
@@ -1204,11 +1177,11 @@ odbc::column::operator std::shared_ptr<std::wstring>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_WCHAR)
+		if (_c_type == odbc::sql_c_type::sql_c_wchar)
 		{
 			result = std::make_shared<std::wstring>(convert_to_wstring(_data.UnicodeString));
 		}
-		else if (get_c_type() == SQL_C_CHAR)
+		else if (_c_type == odbc::sql_c_type::sql_c_char)
 		{
 			result = std::make_shared<std::wstring>(convert_to_wstring(reinterpret_cast<const char *>(_data.UnsignedAnsiString)));
 		}
@@ -1229,7 +1202,7 @@ odbc::column::operator std::shared_ptr<odbc::binary_data>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_BINARY)
+		if (_c_type == odbc::sql_c_type::sql_c_binary)
 		{
 			result = std::make_shared<odbc::binary_data>(_data.UnsignedAnsiString, _indicator);
 		}
@@ -1250,7 +1223,7 @@ odbc::column::operator std::shared_ptr<odbc::date_time>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_TYPE_TIMESTAMP)
+		if (_c_type == odbc::sql_c_type::sql_c_datetime)
 		{
 			result = std::make_shared<odbc::date_time>(_data.DateTime);
 		}
@@ -1271,7 +1244,7 @@ odbc::column::operator std::shared_ptr<odbc::date>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_TYPE_DATE)
+		if (_c_type == odbc::sql_c_type::sql_c_date)
 		{
 			result = std::make_shared<odbc::date>(_data.Date);
 		}
@@ -1292,7 +1265,7 @@ odbc::column::operator std::shared_ptr<odbc::time>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_TYPE_TIME)
+		if (_c_type == odbc::sql_c_type::sql_c_time)
 		{
 			result = std::make_shared<odbc::time>(_data.Time);
 		}
@@ -1313,7 +1286,7 @@ odbc::column::operator std::shared_ptr<GUID>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_GUID)
+		if (_c_type == odbc::sql_c_type::sql_c_guid)
 		{
 			result = std::make_shared<GUID>(_data.Guid);
 		}
@@ -1334,7 +1307,7 @@ odbc::column::operator std::shared_ptr<odbc::numeric>() const
 
 	if (is_null() == false)
 	{
-		if (get_c_type() == SQL_C_NUMERIC)
+		if (_c_type == odbc::sql_c_type::sql_c_numeric)
 		{
 			result = std::make_shared<odbc::numeric>(_data.Numeric);
 		}
@@ -1371,39 +1344,44 @@ void odbc::column::set_width(const std::int32_t width)
 
 bool odbc::column::is_null() const
 {
-	bool result = (_indicator == SQL_NULL_DATA);
+	bool result = (_indicator == odbc::sql_indicator::sql_null_data);
 
 	return result;
 }
 
-std::int32_t &odbc::column::get_indicator()
+odbc::sql_indicator &odbc::column::get_indicator()
 {
 	return _indicator;
 }
 
-const std::int32_t &odbc::column::get_indicator() const
+const odbc::sql_indicator &odbc::column::get_indicator() const
 {
 	return _indicator;
 }
 
-void odbc::column::set_indicator(const std::int32_t indicator)
+void odbc::column::set_indicator(const odbc::sql_indicator indicator)
 {
 	_indicator = indicator;
 }
 
-std::int16_t odbc::column::get_type() const
+const odbc::sql_type &odbc::column::get_type() const
 {
 	return _type;
 }
 
-void odbc::column::set_type(const std::int16_t type)
+void odbc::column::set_type(const odbc::sql_type &type)
 {
 	_type = type;
 }
 
-std::int16_t odbc::column::get_c_type() const
+const odbc::sql_c_type &odbc::column::get_c_type() const
 {
-	return odbc_base::get_c_type(_type);
+	return _c_type;
+}
+
+void odbc::column::set_c_type(const odbc::sql_c_type &type)
+{
+	_c_type = type;
 }
 
 bool odbc::column::bind(const std::function<bool (const std::int16_t, void *, const std::int32_t, std::int32_t &)> &binder)
@@ -1411,7 +1389,7 @@ bool odbc::column::bind(const std::function<bool (const std::int16_t, void *, co
 	void *buffer = &_data;
 	std::int32_t length = sizeof (odbc::column_data);
 
-	bool is_char_or_binary_type = ((get_c_type() == SQL_C_CHAR) || (get_c_type() == SQL_C_WCHAR) || (get_c_type() == SQL_C_BINARY));
+	bool is_char_or_binary_type = ((_c_type == odbc::sql_c_type::sql_c_char) || (_c_type == odbc::sql_c_type::sql_c_wchar) || (_c_type == odbc::sql_c_type::sql_c_binary));
 	bool do_not_bind = ((get_width() == 0) && is_char_or_binary_type);
 
 	set_is_bound(do_not_bind == false);
@@ -1422,21 +1400,21 @@ bool odbc::column::bind(const std::function<bool (const std::int16_t, void *, co
 		{
 			_width += 1; // include space for the null terminator
 
-			if (get_c_type() == SQL_C_WCHAR)
+			if (_c_type == odbc::sql_c_type::sql_c_wchar)
 			{
 				length = get_width() * sizeof (wchar_t);
 				buffer = ::calloc(get_width(), sizeof (wchar_t));
-				_data.UnicodeString = reinterpret_cast<wchar_t *>(buffer);
+				_data.UnicodeString = static_cast<wchar_t *>(buffer);
 			}
 			else
 			{
 				length = get_width() * sizeof (unsigned char);
 				buffer = ::calloc(get_width(), sizeof (unsigned char));
-				_data.UnsignedAnsiString = reinterpret_cast<unsigned char *>(buffer);
+				_data.UnsignedAnsiString = static_cast<unsigned char *>(buffer);
 			}
 		}
 
-		binder(get_c_type(), buffer, length, _indicator);
+		binder(_c_type, buffer, length, _indicator);
 	}
 
 	return (do_not_bind == false);
@@ -1444,11 +1422,11 @@ bool odbc::column::bind(const std::function<bool (const std::int16_t, void *, co
 
 void odbc::column::reset()
 {
-	if ((get_c_type() == SQL_C_CHAR) || (get_c_type() == SQL_C_BINARY))
+	if ((_c_type == odbc::sql_c_type::sql_c_char) || (_c_type == odbc::sql_c_type::sql_c_binary))
 	{
 		::free(_data.UnsignedAnsiString);
 	}
-	else if (get_c_type() == SQL_C_WCHAR)
+	else if (_c_type == odbc::sql_c_type::sql_c_wchar)
 	{
 		::free(_data.UnicodeString);
 	}
@@ -1468,20 +1446,23 @@ void odbc::column::set_is_bound(const bool bound)
 	_bound = bound;
 }
 
-void odbc::column::set_null(const std::int16_t type)
+void odbc::column::set_null(const odbc::sql_type &type, const odbc::sql_c_type &c_type)
 {
-	if ((get_c_type() == SQL_C_CHAR) || (get_c_type() == SQL_C_BINARY))
+	if ((_c_type == odbc::sql_c_type::sql_c_char) || (_c_type == odbc::sql_c_type::sql_c_binary))
 	{
 		::free(_data.UnsignedAnsiString);
 	}
-	else if (get_c_type() == SQL_C_WCHAR)
+	else if (_c_type == odbc::sql_c_type::sql_c_wchar)
 	{
 		::free(_data.UnicodeString);
 	}
 
-	::memset(&_data, 0x00000000, sizeof (odbc::column_data));
+	_data = empty_column_data;
+
+	//::memset(&_data, 0x00000000, sizeof (odbc::column_data));
 
 	_type = type;
-	_indicator = SQL_NULL_DATA;
+	_c_type = c_type;
+	_indicator = odbc::sql_indicator::sql_null_data;
 	_width = 0;
 }

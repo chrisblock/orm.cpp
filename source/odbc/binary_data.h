@@ -22,7 +22,7 @@ namespace odbc
 
 	private:
 		// TODO: use a smart pointer to store this, like std::unique_ptr<std::uint8_t[]>
-		std::uint8_t *_data;
+		std::unique_ptr<std::uint8_t[]>_data;
 		std::uint32_t _length;
 	};
 

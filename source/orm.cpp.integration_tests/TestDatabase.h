@@ -16,8 +16,8 @@ public:
 private:
 	std::string _name;
 
-	void CreateDatabase() const;
-	void DropDatabase() const;
+	static void CreateDatabase(const std::string &name);
+	static void DropDatabase(const std::string &name);
 };
 
 void swap(TestDatabase &left, TestDatabase &right);

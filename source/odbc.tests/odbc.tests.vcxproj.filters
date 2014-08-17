@@ -7,10 +7,7 @@
   <ItemGroup>
     <ClCompile Include="odbc.tests.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="insert_tests.cpp" />
-    <ClCompile Include="select_tests.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="binary_data.tests.cpp" />
+    <ClCompile Include="binary_data_tests.cpp" />
+    <ClCompile Include="column_tests.cpp" />
   </ItemGroup>
 </Project>

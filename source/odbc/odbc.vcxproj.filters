@@ -12,6 +12,9 @@
     <ClInclude Include="odbc_base.h" />
     <ClInclude Include="column.h" />
     <ClInclude Include="case_insensitive.h" />
+    <ClInclude Include="sql_type.h" />
+    <ClInclude Include="sql_c_type.h" />
+    <ClInclude Include="sql_indicator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -23,5 +26,8 @@
     <ClCompile Include="odbc_base.cpp" />
     <ClCompile Include="column.cpp" />
     <ClCompile Include="case_insensitive.cpp" />
+    <ClCompile Include="sql_type.cpp" />
+    <ClCompile Include="sql_c_type.cpp" />
+    <ClCompile Include="sql_indicator.cpp" />
   </ItemGroup>
 </Project>

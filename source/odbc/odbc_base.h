@@ -5,6 +5,12 @@
 
 namespace odbc
 {
+	class sql_c_type;
+	class sql_type;
+};
+
+namespace odbc
+{
 	class odbc_base
 	{
 	public:
@@ -19,7 +25,7 @@ namespace odbc
 		std::wstring convert_to_wstring(_In_z_ const wchar_t *str) const;
 
 		bool are_types_convertible(const std::int16_t left, const std::int16_t right) const;
-		std::int16_t get_c_type(const std::int16_t type) const;
+		odbc::sql_c_type get_c_type(const odbc::sql_type &type) const;
 		std::string get_c_type_name(const std::int16_t type);
 		std::string get_sql_type_name(const std::int16_t type);
 

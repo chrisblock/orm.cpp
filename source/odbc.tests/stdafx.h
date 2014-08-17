@@ -7,7 +7,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <map>
 #include <memory>
-#include <iostream>
 
 #include <gtest.h>

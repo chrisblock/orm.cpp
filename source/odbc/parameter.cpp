@@ -55,23 +55,28 @@ std::int16_t odbc::parameter::get_type() const
 	return _value.get_type();
 }
 
+std::int16_t odbc::parameter::get_c_type() const
+{
+	return _value.get_c_type();
+}
+
 void *odbc::parameter::get_value() const
 {
 	const odbc::column_data &data = _value.get_data();
 
 	void *result = nullptr;
 
-	if ((_value.get_type() == SQL_C_CHAR) || (_value.get_type() == SQL_C_BINARY))
+	if ((_value.get_c_type() == odbc::sql_c_type::sql_c_char) || (_value.get_c_type() == odbc::sql_c_type::sql_c_binary))
 	{
 		result = data.UnsignedAnsiString;
 	}
-	else if (_value.get_type() == SQL_C_WCHAR)
+	else if (_value.get_c_type() == odbc::sql_c_type::sql_c_wchar)
 	{
 		result = data.UnicodeString;
 	}
 	else
 	{
-		result = (SQLPOINTER) &data;
+		result = const_cast<odbc::column_data *>(&data);
 	}
 
 	return result;
@@ -82,9 +87,9 @@ std::int32_t odbc::parameter::get_length() const
 	return _value.get_width();
 }
 
-std::int32_t *odbc::parameter::get_nullable_indicator()
+std::int32_t &odbc::parameter::get_nullable_indicator()
 {
-	return &_value.get_indicator();
+	return _value.get_indicator();
 }
 
 bool odbc::parameter::is_null() const

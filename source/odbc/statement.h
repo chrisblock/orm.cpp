@@ -137,10 +137,10 @@ namespace odbc
 		void get(const std::uint32_t columnIndex, odbc::numeric &value) const;
 		void get(const std::uint32_t columnIndex, std::shared_ptr<odbc::numeric> &value) const;
 
-		void get(const std::string &columnName, GUID &value) const;
-		void get(const std::string &columnName, std::shared_ptr<GUID> &value) const;
-		void get(const std::uint32_t columnIndex, GUID &value) const;
-		void get(const std::uint32_t columnIndex, std::shared_ptr<GUID> &value) const;
+		void get(const std::string &columnName, odbc::guid &value) const;
+		void get(const std::string &columnName, std::shared_ptr<odbc::guid> &value) const;
+		void get(const std::uint32_t columnIndex, odbc::guid &value) const;
+		void get(const std::uint32_t columnIndex, std::shared_ptr<odbc::guid> &value) const;
 
 	private:
 		void *_statement;
@@ -157,8 +157,8 @@ namespace odbc
 		void bind_parameters();
 		void read_number_of_columns();
 		void process_columns();
-		std::string read_column_name(const std::uint16_t columnIndex);
-		void read_column_type(const std::uint16_t index, odbc::column &column);
+		std::string read_column_name(const std::uint16_t columnIndex) const;
+		void read_column_type(const std::uint16_t index, odbc::column &column) const;
 		void bind_column(const std::uint16_t index, odbc::column &column);
 		void fetch_unbound_column_data();
 		void fetch_unbound_column_data(const std::uint16_t index, odbc::column &column);

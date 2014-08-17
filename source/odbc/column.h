@@ -7,6 +7,10 @@
 #include <guiddef.h>
 #include <memory>
 
+#include "sql_c_type.h"
+#include "sql_type.h"
+#include "sql_indicator.h"
+
 namespace odbc
 {
 	class binary_data;
@@ -69,18 +73,6 @@ namespace odbc
 		guid Guid;
 	} column_data;
 
-	/*
-	typedef struct tagColumn {
-		column_data data;
-		std::int32_t width;
-		std::int32_t indicator;
-		std::uint16_t index;
-		std::int16_t type;
-		std::int16_t c_type;
-		bool bound;
-	} column;
-	*/
-
 	class column : public odbc::odbc_base
 	{
 	public:
@@ -92,8 +84,6 @@ namespace odbc
 		column &operator =(column other);
 
 		column &operator =(bool value);
-		//column &operator =(char value);
-		//column &operator =(wchar_t value);
 		column &operator =(float value);
 		column &operator =(double value);
 		column &operator =(std::int8_t value);
@@ -115,8 +105,6 @@ namespace odbc
 		column &operator =(odbc::numeric value);
 
 		column &operator =(std::shared_ptr<bool> value);
-		//column &operator =(std::shared_ptr<char> value);
-		//column &operator =(std::shared_ptr<wchar_t> value);
 		column &operator =(std::shared_ptr<float> value);
 		column &operator =(std::shared_ptr<double> value);
 		column &operator =(std::shared_ptr<std::int8_t> value);
@@ -188,14 +176,15 @@ namespace odbc
 		void set_width(const std::int32_t width);
 
 		bool is_null() const;
-		std::int32_t &get_indicator();
-		const std::int32_t &get_indicator() const;
-		void set_indicator(const std::int32_t indicator);
+		sql_indicator &get_indicator();
+		const sql_indicator &get_indicator() const;
+		void set_indicator(const sql_indicator indicator);
 
-		std::int16_t get_type() const;
-		void set_type(const std::int16_t type);
+		const sql_type &get_type() const;
+		void set_type(const sql_type &type);
 
-		std::int16_t get_c_type() const;
+		const sql_c_type &get_c_type() const;
+		void set_c_type(const sql_c_type &type);
 
 		bool bind(const std::function<bool (const std::int16_t, void *, const std::int32_t, std::int32_t &)> &binder);
 
@@ -207,12 +196,13 @@ namespace odbc
 	private:
 		static column_data empty_column_data;
 
-		void set_null(const std::int16_t type);
+		void set_null(const sql_type &type, const sql_c_type &c_type);
 
 		column_data _data;
 		std::int32_t _width;
-		std::int32_t _indicator;
-		std::int16_t _type;
+		sql_indicator _indicator;
+		sql_type _type;
+		sql_c_type _c_type;
 		bool _bound;
 	};
 
