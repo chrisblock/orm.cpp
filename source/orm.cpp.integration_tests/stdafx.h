@@ -2,11 +2,9 @@
 
 #include "targetver.h"
 
-#include <cstdio>
-
-#include <string>
 #include <map>
-#include <vector>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <gtest.h>

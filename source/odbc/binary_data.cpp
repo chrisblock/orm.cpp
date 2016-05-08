@@ -3,9 +3,8 @@
 #include "binary_data.h"
 
 #include <algorithm>
-#include <cstdlib>
 
-void odbc::swap(odbc::binary_data &left, odbc::binary_data &right)
+void odbc::swap(_Inout_ odbc::binary_data &left, _Inout_ odbc::binary_data &right)
 {
 	using std::swap;
 
@@ -18,9 +17,8 @@ odbc::binary_data::binary_data() :
 {
 }
 
-odbc::binary_data::binary_data(_In_ std::uint8_t *data, _In_ const std::uint32_t length) :
-	  _data(nullptr)
-	, _length(length)
+odbc::binary_data::binary_data(_In_reads_(length) std::uint8_t *data, _In_ const std::uint32_t length) :
+	  _length(length)
 {
 	_data = std::make_unique<std::uint8_t[]>(_length);
 
@@ -28,8 +26,7 @@ odbc::binary_data::binary_data(_In_ std::uint8_t *data, _In_ const std::uint32_t
 }
 
 odbc::binary_data::binary_data(_In_ const odbc::binary_data &other) :
-	  _data(nullptr)
-	, _length(other._length)
+	  _length(other._length)
 {
 	_data = std::make_unique<std::uint8_t[]>(_length);
 
@@ -53,6 +50,7 @@ odbc::binary_data &odbc::binary_data::operator =(_In_ odbc::binary_data other)
 	return *this;
 }
 
+_Ret_bytecount_(_length)
 std::uint8_t *odbc::binary_data::data() const
 {
 	return _data.get();

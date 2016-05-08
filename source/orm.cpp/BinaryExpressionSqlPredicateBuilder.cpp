@@ -44,15 +44,13 @@ SqlPredicate BinaryExpressionSqlPredicateBuilder::Build(const MappingRegistry &r
 	SqlPredicate leftPredicate = _left->Build(registry);
 	SqlPredicate rightPredicate = _right->Build(registry);
 
-	for (auto iter = leftPredicate.GetBegin(); iter != leftPredicate.GetEnd(); iter++)
+	for (std::shared_ptr<odbc::parameter> p : leftPredicate)
 	{
-		std::shared_ptr<odbc::parameter> p = *iter;
 		result.AddParameter(p);
 	}
 
-	for (auto iter = rightPredicate.GetBegin(); iter != rightPredicate.GetEnd(); iter++)
+	for (std::shared_ptr<odbc::parameter> p : rightPredicate)
 	{
-		std::shared_ptr<odbc::parameter> p = *iter;
 		result.AddParameter(p);
 	}
 

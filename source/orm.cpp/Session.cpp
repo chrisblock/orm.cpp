@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "Session.h"
+#include "session.h"
 
 #include <algorithm>
 #include <functional>
@@ -8,7 +8,22 @@
 #include <connection.h>
 #include <statement.h>
 
-Session::Session(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const std::shared_ptr<ISqlDialect> &dialect, const std::shared_ptr<ISqlExecutor> &executor, const MappingRegistry &registry) :
+void orm::swap(orm::session &left, orm::session &right)
+{
+	using std::swap;
+
+	swap(left._connectionString, right._connectionString);
+	swap(left._dialect, right._dialect);
+	swap(left._environment, right._environment);
+	swap(left._executor, right._executor);
+	swap(left._registry, right._registry);
+}
+
+orm::session::session()
+{
+}
+
+orm::session::session(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const std::shared_ptr<ISqlDialect> &dialect, const std::shared_ptr<ISqlExecutor> &executor, const MappingRegistry &registry) :
 	  _environment(environment)
 	, _connectionString(connectionString)
 	, _dialect(dialect)
@@ -17,7 +32,7 @@ Session::Session(const std::shared_ptr<odbc::environment> &environment, const st
 {
 }
 
-Session::Session(const Session &other) :
+orm::session::session(const orm::session &other) :
 	  _environment(other._environment)
 	, _connectionString(other._connectionString)
 	, _dialect(other._dialect)
@@ -26,25 +41,24 @@ Session::Session(const Session &other) :
 {
 }
 
-Session::~Session()
+orm::session::session(orm::session &&other) :
+	  orm::session()
+{
+	swap(*this, other);
+}
+
+orm::session::~session()
 {
 }
 
-Session &Session::operator =(const Session &other)
+orm::session &orm::session::operator =(orm::session other)
 {
-	if (this != &other)
-	{
-		_environment = other._environment;
-		_connectionString = other._connectionString;
-		_dialect = other._dialect;
-		_executor = other._executor;
-		_registry = other._registry;
-	}
+	swap(*this, other);
 
 	return *this;
 }
 
-std::uint32_t Session::ExecuteSql(const SqlStatement &statement) const
+std::uint32_t orm::session::ExecuteSql(const orm::sql::statement &statement) const
 {
 	std::uint32_t result = _executor->ExecuteSql(_environment, _connectionString, statement);
 

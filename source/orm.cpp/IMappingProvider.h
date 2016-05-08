@@ -11,6 +11,8 @@ public:
 
 	IMappingProvider &operator =(const IMappingProvider &other);
 
+	friend void swap(IMappingProvider &left, IMappingProvider &right);
+
 	virtual std::string GetMappedType() const = 0;
 	virtual std::string GetSchema() const;
 	virtual std::string GetTable() const;

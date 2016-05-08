@@ -2,6 +2,13 @@
 
 #include "MappingRegistry.h"
 
+void swap(MappingRegistry &left, MappingRegistry &right)
+{
+	using std::swap;
+
+	swap(left._mapCreators, right._mapCreators);
+}
+
 MappingRegistry::MappingRegistry()
 {
 }
@@ -11,16 +18,19 @@ MappingRegistry::MappingRegistry(const MappingRegistry &other) :
 {
 }
 
+MappingRegistry::MappingRegistry(MappingRegistry &&other) :
+	  MappingRegistry()
+{
+	swap(*this, other);
+}
+
 MappingRegistry::~MappingRegistry()
 {
 }
 
-MappingRegistry &MappingRegistry::operator =(const MappingRegistry &other)
+MappingRegistry &MappingRegistry::operator =(MappingRegistry other)
 {
-	if (this != &other)
-	{
-		_mapCreators = other._mapCreators;
-	}
+	swap(*this, other);
 
 	return *this;
 }

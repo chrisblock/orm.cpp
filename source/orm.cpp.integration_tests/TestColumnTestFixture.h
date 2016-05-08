@@ -14,7 +14,7 @@
 #include <Guid.h>
 #include <MakeExpression.h>
 #include <MappingRegistrar.h>
-#include <Session.h>
+#include <session.h>
 
 #include "TestColumnEntity.h"
 #include "TestColumnEntityMap.h"
@@ -24,28 +24,28 @@
 	class ColumnType ## _ColumnTests : public TestColumnTestFixture \
 	{ \
 	protected: \
-		virtual std::string GetConnectionString() const \
+		virtual std::string GetConnectionString() const override \
 		{ \
 			std::string connectionString("Driver={SQL Server Native Client 11.0}; Server=(local); Database=OdbcCppTestDatabase; Trusted_Connection=Yes;"); \
 	\
 			return connectionString; \
 		}; \
 	\
-		virtual std::string GetTableName() const \
+		virtual std::string GetTableName() const override \
 		{ \
 			std::string tableName(#ColumnType "_ColumnTestsEntityTable"); \
 	\
 			return tableName; \
 		}; \
 	\
-		virtual std::string GetColumnType() const \
+		virtual std::string GetColumnType() const override \
 		{ \
 			std::string columnType(ColumnSqlType); \
 	\
 			return columnType; \
 		}; \
 	\
-		virtual const MappingRegistrar &GetMappingRegistrar() const \
+		virtual const MappingRegistrar &GetMappingRegistrar() const override \
 		{ \
 			return _registrar; \
 		}; \
@@ -65,7 +65,7 @@
 	\
 		InsertTestRecords<ColumnType>(values); \
 	\
-		Session session = CreateSession(); \
+		orm::session session = CreateSession(); \
 	\
 		std::vector<ColumnType ## _ColumnTestsEntity> entities; \
 	\
@@ -93,7 +93,7 @@
 #define IMPLEMENT_INSERT_TEST(ColumnType, TestValue1) \
 	TEST_F(ColumnType ## _ColumnTests, Insert) \
 	{ \
-		Session session = CreateSession(); \
+		orm::session session = CreateSession(); \
 	\
 		ColumnType ## _ColumnTestsEntity entity; \
 	\
@@ -115,7 +115,7 @@
 	\
 		InsertTestRecords<ColumnType>(values); \
 	\
-		Session session = CreateSession(); \
+		orm::session session = CreateSession(); \
 	\
 		ColumnType ## _ColumnTestsEntity one; \
 	\
@@ -153,7 +153,7 @@
 	\
 		InsertTestRecords<ColumnType>(values); \
 	\
-		Session session = CreateSession(); \
+		orm::session session = CreateSession(); \
 	\
 		ColumnType ## _ColumnTestsEntity one; \
 	\
@@ -186,7 +186,6 @@
 	IMPEMENT_DELETE_TEST(ColumnType, TestValue1, TestValue2, TestValue3)
 
 class MappingRegistrar;
-class Session;
 
 class TestColumnTestFixture : public testing::Test
 {
@@ -198,7 +197,7 @@ protected:
 	virtual void SetUp();
 	virtual void TearDown();
 
-	virtual Session CreateSession() const;
+	virtual orm::session CreateSession() const;
 	virtual std::int32_t GetRowCount() const;
 
 	virtual const MappingRegistrar &GetMappingRegistrar() const = 0;
@@ -213,12 +212,12 @@ protected:
 
 		std::vector<std::shared_ptr<odbc::parameter>> parameters;
 
-		for (std::vector<T>::const_iterator iter = values.cbegin(); iter != values.cend(); iter++)
+		for (const auto &value : values)
 		{
 			std::shared_ptr<odbc::parameter> parameter = std::make_shared<odbc::parameter>();
 
 			parameter->set_name("TestColumn");
-			parameter->set(*iter);
+			parameter->set(value);
 
 			parameters.push_back(parameter);
 
@@ -235,9 +234,9 @@ protected:
 
 		odbc::statement statement(connection, command);
 
-		for (std::vector<std::shared_ptr<odbc::parameter>>::const_iterator iter = parameters.cbegin(); iter != parameters.cend(); iter++)
+		for (const auto &parameter : parameters)
 		{
-			statement.add_parameter(*iter);
+			statement.add_parameter(parameter);
 		}
 
 		statement.execute();

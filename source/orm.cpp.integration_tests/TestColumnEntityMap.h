@@ -19,10 +19,10 @@
 		Schema("dbo"); \
 		Table(#ColumnType "_ColumnTestsEntityTable"); \
 	\
-		Id(&ColumnType ## _ColumnTestsEntity::SetId, &ColumnType ## _ColumnTestsEntity::GetId, "Id") \
+		Id(&ColumnType ## _ColumnTestsEntity::GetId, &ColumnType ## _ColumnTestsEntity::SetId, "Id") \
 			.GeneratedBy(GenerationStrategy::Identity); \
 	\
-		Map(&ColumnType ## _ColumnTestsEntity::SetColumn, &ColumnType ## _ColumnTestsEntity::GetColumn, "TestColumn"); \
+		Map(&ColumnType ## _ColumnTestsEntity::GetColumn, &ColumnType ## _ColumnTestsEntity::SetColumn, "TestColumn"); \
 	} \
 	\
 	ColumnType ## _ColumnTestsEntityMap::ColumnType ## _ColumnTestsEntityMap(const ColumnType ## _ColumnTestsEntityMap &other) : \

@@ -5,6 +5,13 @@
 //#include "IMappingProvider.h"
 #include "MappingRegistry.h"
 
+void swap(MappingRegistrar &left, MappingRegistrar &right)
+{
+	using std::swap;
+
+	swap(left._mappings, right._mappings);
+}
+
 MappingRegistrar::MappingRegistrar()
 {
 }
@@ -14,24 +21,27 @@ MappingRegistrar::MappingRegistrar(const MappingRegistrar &other) :
 {
 }
 
+MappingRegistrar::MappingRegistrar(MappingRegistrar &&other) :
+	  MappingRegistrar()
+{
+	swap(*this, other);
+}
+
 MappingRegistrar::~MappingRegistrar()
 {
 	_mappings.clear();
 }
 
-MappingRegistrar &MappingRegistrar::operator =(const MappingRegistrar &other)
+MappingRegistrar &MappingRegistrar::operator =(MappingRegistrar other)
 {
-	if (this != &other)
-	{
-		_mappings = other._mappings;
-	}
+	swap(*this, other);
 
 	return *this;
 }
 
 void MappingRegistrar::Register(MappingRegistry &registry) const
 {
-	for (auto iter = _mappings.cbegin(); iter != _mappings.cend(); iter++)
+	for (auto iter = _mappings.cbegin(); iter != _mappings.cend(); ++iter)
 	{
 		registry.Register(iter->first, iter->second);
 	}

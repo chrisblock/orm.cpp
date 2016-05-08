@@ -8,5 +8,5 @@ class TestExpressionEntityMap : public ClassMap<TestExpressionEntity>
 {
 public:
 	TestExpressionEntityMap();
-	virtual ~TestExpressionEntityMap();
+	virtual ~TestExpressionEntityMap() = default;
 };

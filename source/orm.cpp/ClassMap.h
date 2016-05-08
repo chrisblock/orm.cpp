@@ -7,26 +7,14 @@
 #include <string>
 #include <vector>
 
-#include "member_types.h"
 #include "IdColumnBuilder.h"
 #include "IdColumnSpecification.h"
 #include "IRecord.h"
 #include "IColumnMapper.h"
 #include "FieldColumnMapper.h"
-#include "ConstReferenceSetterGetterColumnMapper.h"
-#include "ConstReferenceSetterConstGetterColumnMapper.h"
-#include "ConstReferenceSetterReferenceGetterColumnMapper.h"
-#include "ConstReferenceSetterConstReferenceGetterColumnMapper.h"
-#include "ConstSetterGetterColumnMapper.h"
-#include "ConstSetterConstGetterColumnMapper.h"
-#include "ConstSetterReferenceGetterColumnMapper.h"
-#include "ConstSetterConstReferenceGetterColumnMapper.h"
-#include "ReferenceSetterGetterColumnMapper.h"
-#include "ReferenceSetterConstGetterColumnMapper.h"
-#include "ReferenceSetterReferenceGetterColumnMapper.h"
-#include "ReferenceSetterConstReferenceGetterColumnMapper.h"
-#include "SqlColumn.h"
-#include "SqlProjection.h"
+#include "GetterSetterColumnMapper.h"
+#include "sql_column.h"
+#include "projection.h"
 
 // TODO: perhaps write a method that verifies some basic things about this mapping, and call it upon registration (could prevent some classes of error)
 
@@ -63,20 +51,20 @@ public:
 		return *this;
 	};
 
-	virtual std::string GetMappedType() const
+	virtual std::string GetMappedType() const override
 	{
 		std::string result = typeid (TEntity).name();
 
 		return result;
 	};
 
-	SqlProjection GetProjection() const
+	orm::sql::projection GetProjection() const
 	{
-		SqlProjection result;
+		orm::sql::projection result;
 
 		std::function<void (const std::shared_ptr<IColumnMapper<TEntity>> &)> addColumnToProjection = [this, &result] (const std::shared_ptr<IColumnMapper<TEntity>> &column)
 		{
-			SqlColumn col;
+			orm::sql::sql_column col;
 
 			col.SetTable(GetTable());
 			col.SetColumn(column->GetColumnName());
@@ -98,217 +86,41 @@ public:
 		return result;
 	};
 
-	template <typename TProperty>
-	SqlColumn GetMappedColumn(typename member_types<TEntity, TProperty>::field field) const
+	template <typename TMember>
+	orm::sql::sql_column GetMappedColumn(TMember member) const
 	{
-		std::string columnName;
+		std::string column;
 
 		if (_idColumnSpecification.IsSpecified())
 		{
 			std::shared_ptr<IColumnMapper<TEntity>> columnMapper = _idColumnSpecification.GetColumnMapper();
 
-			if (columnMapper->IsForMember<TProperty>(field))
+			if (columnMapper->IsForMember(member))
 			{
-				columnName = columnMapper->GetColumnName();
+				column = columnMapper->GetColumnName();
 			}
 		}
 
-		for (auto iter = _columnMappers.cbegin(); (iter != _columnMappers.cend()) && columnName.empty(); iter++)
+		for (const auto &mapper : _columnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(field))
+			if (mapper->IsForMember(member))
 			{
-				columnName = columnMapper->GetColumnName();
+				column = mapper->GetColumnName();
 			}
 		}
 
-		for (auto iter = _lobColumnMappers.cbegin(); (iter != _lobColumnMappers.cend()) && columnName.empty(); iter++)
+		for (const auto &mapper : _lobColumnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(field))
+			if (mapper->IsForMember(member))
 			{
-				columnName = columnMapper->GetColumnName();
+				column = mapper->GetColumnName();
 			}
 		}
 
-		SqlColumn result;
+		orm::sql::sql_column result;
 
 		result.SetTable(GetTable());
-		result.SetColumn(columnName);
-
-		return result;
-	};
-
-	template <typename TProperty>
-	SqlColumn GetMappedColumn(typename member_types<TEntity, TProperty>::getter getter) const
-	{
-		std::string columnName;
-
-		if (_idColumnSpecification.IsSpecified())
-		{
-			std::shared_ptr<IColumnMapper<TEntity>> columnMapper = _idColumnSpecification.GetColumnMapper();
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _columnMappers.cbegin(); (iter != _columnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _lobColumnMappers.cbegin(); (iter != _lobColumnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		SqlColumn result;
-
-		result.SetTable(GetTable());
-		result.SetColumn(columnName);
-
-		return result;
-	};
-
-	template <typename TProperty>
-	SqlColumn GetMappedColumn(typename member_types<TEntity, TProperty>::const_getter getter) const
-	{
-		std::string columnName;
-
-		if (_idColumnSpecification.IsSpecified())
-		{
-			std::shared_ptr<IColumnMapper<TEntity>> columnMapper = _idColumnSpecification.GetColumnMapper();
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _columnMappers.cbegin(); (iter != _columnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _lobColumnMappers.cbegin(); (iter != _lobColumnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		SqlColumn result;
-
-		result.SetTable(GetTable());
-		result.SetColumn(columnName);
-
-		return result;
-	};
-
-	template <typename TProperty>
-	SqlColumn GetMappedColumn(typename member_types<TEntity, TProperty>::reference_getter getter) const
-	{
-		std::string columnName;
-
-		if (_idColumnSpecification.IsSpecified())
-		{
-			std::shared_ptr<IColumnMapper<TEntity>> columnMapper = _idColumnSpecification.GetColumnMapper();
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _columnMappers.cbegin(); (iter != _columnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _lobColumnMappers.cbegin(); (iter != _lobColumnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		SqlColumn result;
-
-		result.SetTable(GetTable());
-		result.SetColumn(columnName);
-
-		return result;
-	};
-
-	template <typename TProperty>
-	SqlColumn GetMappedColumn(typename member_types<TEntity, TProperty>::const_reference_getter getter) const
-	{
-		std::string columnName;
-
-		if (_idColumnSpecification.IsSpecified())
-		{
-			std::shared_ptr<IColumnMapper<TEntity>> columnMapper = _idColumnSpecification.GetColumnMapper();
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _columnMappers.cbegin(); (iter != _columnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		for (auto iter = _lobColumnMappers.cbegin(); (iter != _lobColumnMappers.cend()) && columnName.empty(); iter++)
-		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &columnMapper = *iter;
-
-			if (columnMapper->IsForMember<TProperty>(getter))
-			{
-				columnName = columnMapper->GetColumnName();
-			}
-		}
-
-		SqlColumn result;
-
-		result.SetTable(GetTable());
-		result.SetColumn(columnName);
+		result.SetColumn(column);
 
 		return result;
 	};
@@ -327,17 +139,13 @@ public:
 			idMapper->ReadPropertyValueFromDataReader(entity, reader);
 		}
 
-		for (auto iter = _columnMappers.cbegin(); iter != _columnMappers.cend(); iter++)
+		for (const std::shared_ptr<IColumnMapper<TEntity>> &mapper : _columnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &mapper = *iter;
-
 			mapper->ReadPropertyValueFromDataReader(entity, reader);
 		}
 
-		for (auto iter = _lobColumnMappers.cbegin(); iter != _lobColumnMappers.cend(); iter++)
+		for (const std::shared_ptr<IColumnMapper<TEntity>> &mapper : _lobColumnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &mapper = *iter;
-
 			mapper->ReadPropertyValueFromDataReader(entity, reader);
 		}
 	};
@@ -359,26 +167,26 @@ public:
 
 		record.AddIdColumn(idColumnName);
 
-		for (auto iter = _columnMappers.cbegin(); iter != _columnMappers.cend(); iter++)
+		for (const std::shared_ptr<IColumnMapper<TEntity>> &mapper : _columnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &mapper = *iter;
-
 			mapper->WritePropertyValueToRecord(entity, record);
 		}
 
-		for (auto iter = _lobColumnMappers.cbegin(); iter != _lobColumnMappers.cend(); iter++)
+		for (const std::shared_ptr<IColumnMapper<TEntity>> &mapper : _lobColumnMappers)
 		{
-			const std::shared_ptr<IColumnMapper<TEntity>> &mapper = *iter;
-
 			mapper->WritePropertyValueToRecord(entity, record);
 		}
 	};
 
 protected:
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(TProperty (TEntity::*field), const std::string &columnName)
+	template <typename TField>
+	IdColumnBuilder<TEntity> Id(TField field, const std::string &column)
 	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<FieldColumnMapper<TEntity, TProperty>>(field, columnName);
+		static_assert(std::is_member_pointer<TField>::value, "field must be a member pointer.");
+		static_assert(std::is_member_function_pointer<TField>::value == false, "field must not be a member function pointer.");
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TField)>::type::entity_type>::value, "field must be a member of the TEntity type.");
+
+		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<FieldColumnMapper<TEntity, TField>>(field, column);
 
 		_idColumnSpecification.SetColumnMapper(columnMapper);
 
@@ -387,10 +195,22 @@ protected:
 		return idColumnBuilder;
 	};
 
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty), TProperty (TEntity::*getter)(), const std::string &columnName)
+	template <typename TGetter, typename TSetter>
+	IdColumnBuilder<TEntity> Id(TGetter getter, TSetter setter, const std::string &column)
 	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
+		static_assert(std::is_member_function_pointer<TGetter>::value, "getter must be a member function pointer.");
+		static_assert(std::is_member_function_pointer<TSetter>::value, "setter must be a member function pointer.");
+
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TGetter)>::type::entity_type>::value, "getter must be a member of the TEntity type.");
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TSetter)>::type::entity_type>::value, "setter must be a member of the TEntity type.");
+
+		static_assert(std::is_same<
+				  typename std::result_of<member_types::decomposer (TGetter)>::type::property_type
+				, typename std::result_of<member_types::decomposer (TSetter)>::type::property_type
+			>::value
+			, "getter and setter must operate on the same property type.");
+
+		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<GetterSetterColumnMapper<TEntity, TGetter, TSetter>>(getter, setter, column);
 
 		_idColumnSpecification.SetColumnMapper(columnMapper);
 
@@ -399,270 +219,34 @@ protected:
 		return idColumnBuilder;
 	};
 
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty), TProperty (TEntity::*getter)() const, const std::string &columnName)
+	template <typename TField>
+	void Map(TField field, const std::string &column, bool isLobField = false)
 	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
+		static_assert(std::is_member_pointer<TField>::value, "field must be a member pointer.");
+		static_assert(std::is_member_function_pointer<TField>::value == false, "field must not be a member function pointer.");
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TField)>::type::entity_type>::value, "field must be a member of the TEntity type.");
 
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty), TProperty &(TEntity::*getter)(), const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty), const TProperty &(TEntity::*getter)() const, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	/*
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::getter getter, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ReferenceSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::const_getter getter, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ReferenceSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::reference_getter getter, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ReferenceSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::const_reference_getter getter, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ReferenceSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-	*/
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty &), TProperty (TEntity::*getter)(), const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty &), TProperty (TEntity::*getter)() const, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty &), TProperty &(TEntity::*getter)(), const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	IdColumnBuilder<TEntity> Id(void (TEntity::*setter)(const TProperty &), const TProperty &(TEntity::*getter)() const, const std::string &columnName)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		_idColumnSpecification.SetColumnMapper(columnMapper);
-
-		IdColumnBuilder<TEntity> idColumnBuilder(_idColumnSpecification);
-
-		return idColumnBuilder;
-	};
-
-	template <typename TProperty>
-	void Map(TProperty (TEntity::*field), const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<FieldColumnMapper<TEntity, TProperty>>(field, columnName);
+		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<FieldColumnMapper<TEntity, TField>>(field, column);
 
 		Map(columnMapper, isLobField);
 	};
 
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty), TProperty (TEntity::*getter)(), const std::string &columnName, bool isLobField = false)
+	template <typename TGetter, typename TSetter>
+	void Map(TGetter getter, TSetter setter, const std::string &column, bool isLobField = false)
 	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
+		static_assert(std::is_member_function_pointer<TGetter>::value, "getter must be a member function pointer.");
+		static_assert(std::is_member_function_pointer<TSetter>::value, "setter must be a member function pointer.");
 
-		Map(columnMapper, isLobField);
-	};
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TGetter)>::type::entity_type>::value, "getter must be a member of the TEntity type.");
+		static_assert(std::is_same<TEntity, typename std::result_of<member_types::decomposer (TSetter)>::type::entity_type>::value, "setter must be a member of the TEntity type.");
 
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty), TProperty (TEntity::*getter)() const, const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
+		static_assert(std::is_same<
+				  typename std::result_of<member_types::decomposer (TGetter)>::type::property_type
+				, typename std::result_of<member_types::decomposer (TSetter)>::type::property_type
+			>::value
+			, "getter and setter must operate on the same property type.");
 
-		Map(columnMapper, isLobField);
-	};
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty), TProperty &(TEntity::*getter)(), const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		Map(columnMapper, isLobField);
-	};
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty), const TProperty &(TEntity::*getter)() const, const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		Map(columnMapper, isLobField);
-	};
-
-	/*
-	template <typename TProperty>
-	void Map(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::getter getter, const std::string &columnName, bool isLobField = false)
-	{
-		auto columnMapper = std::make_shared<ReferenceSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		if (isLobField == false)
-		{
-			_columnMappers.push_back(columnMapper);
-		}
-		else
-		{
-			_lobColumnMappers.push_back(columnMapper);
-		}
-	};
-
-	template <typename TProperty>
-	void Map(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::const_getter getter, const std::string &columnName, bool isLobField = false)
-	{
-		auto columnMapper = std::make_shared<ReferenceSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		if (isLobField == false)
-		{
-			_columnMappers.push_back(columnMapper);
-		}
-		else
-		{
-			_lobColumnMappers.push_back(columnMapper);
-		}
-	};
-
-	template <typename TProperty>
-	void Map(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::reference_getter getter, const std::string &columnName, bool isLobField = false)
-	{
-		auto columnMapper = std::make_shared<ReferenceSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		if (isLobField == false)
-		{
-			_columnMappers.push_back(columnMapper);
-		}
-		else
-		{
-			_lobColumnMappers.push_back(columnMapper);
-		}
-	};
-
-	template <typename TProperty>
-	void Map(typename member_types<TEntity, TProperty>::reference_setter setter, typename member_types<TEntity, TProperty>::const_reference_getter getter, const std::string &columnName, bool isLobField = false)
-	{
-		auto columnMapper = std::make_shared<ReferenceSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		if (isLobField == false)
-		{
-			_columnMappers.push_back(columnMapper);
-		}
-		else
-		{
-			_lobColumnMappers.push_back(columnMapper);
-		}
-	};
-	*/
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty &), TProperty (TEntity::*getter)(), const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		Map(columnMapper, isLobField);
-	};
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty &), TProperty (TEntity::*getter)() const, const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterConstGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		Map(columnMapper, isLobField);
-	};
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty &), TProperty &(TEntity::*getter)(), const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
-
-		Map(columnMapper, isLobField);
-	};
-
-	template <typename TProperty>
-	void Map(void (TEntity::*setter)(const TProperty &), const TProperty &(TEntity::*getter)() const, const std::string &columnName, bool isLobField = false)
-	{
-		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<ConstReferenceSetterConstReferenceGetterColumnMapper<TEntity, TProperty>>(setter, getter, columnName);
+		std::shared_ptr<IColumnMapper<TEntity>> columnMapper = std::make_shared<GetterSetterColumnMapper<TEntity, TGetter, TSetter>>(getter, setter, column);
 
 		Map(columnMapper, isLobField);
 	};

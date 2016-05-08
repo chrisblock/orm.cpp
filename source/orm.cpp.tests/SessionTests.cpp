@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include <Session.h>
+#include <session.h>
 #include <SqlServerDialect.h>
 
 #include "MockSqlExecutor.h"
@@ -34,9 +34,9 @@ TEST_F(SessionTests, QueryOver)
 	executor->SetColumnValue("Column1", 2);
 	executor->SetColumnValue("Column2", 3);
 
-	Session session(environment, connectionString, dialect, executor, _registry);
+	orm::session session(environment, connectionString, dialect, executor, _registry);
 
-	Query<TestSessionEntity> query = session.QueryOver<TestSessionEntity>();
+	orm::query<TestSessionEntity> query = session.QueryOver<TestSessionEntity>();
 
 	std::vector<TestSessionEntity> entities;
 
@@ -44,7 +44,7 @@ TEST_F(SessionTests, QueryOver)
 
 	TestSessionEntity first = entities.front();
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
 
@@ -62,7 +62,7 @@ TEST_F(SessionTests, Insert_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Session session(environment, connectionString, dialect, executor, _registry);
+	orm::session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 
@@ -72,7 +72,7 @@ TEST_F(SessionTests, Insert_FilledEntity_GeneratesCorrectSql)
 
 	session.Insert(entity);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ("INSERT INTO dbo.TestSessionTable (Id, Column1, Column2) VALUES (?, ?, ?)", statement.GetSql());
 }
@@ -84,7 +84,7 @@ TEST_F(SessionTests, Update_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Session session(environment, connectionString, dialect, executor, _registry);
+	orm::session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 
@@ -94,7 +94,7 @@ TEST_F(SessionTests, Update_FilledEntity_GeneratesCorrectSql)
 
 	session.Update(entity);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ("UPDATE dbo.TestSessionTable SET Column1 = ?, Column2 = ? WHERE Id = ?", statement.GetSql());
 }
@@ -106,7 +106,7 @@ TEST_F(SessionTests, Delete_FilledEntity_GeneratesCorrectSql)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Session session(environment, connectionString, dialect, executor, _registry);
+	orm::session session(environment, connectionString, dialect, executor, _registry);
 
 	TestSessionEntity entity;
 
@@ -116,7 +116,7 @@ TEST_F(SessionTests, Delete_FilledEntity_GeneratesCorrectSql)
 
 	session.Delete(entity);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ("DELETE FROM dbo.TestSessionTable WHERE Id = ?", statement.GetSql());
 }

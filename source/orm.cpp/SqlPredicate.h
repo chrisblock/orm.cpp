@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
@@ -15,9 +16,13 @@ public:
 	SqlPredicate();
 	SqlPredicate(const std::string &predicate);
 	SqlPredicate(const std::string &predicate, const std::vector<std::shared_ptr<odbc::parameter>> &parameters);
+	SqlPredicate(const SqlPredicate &other);
+	SqlPredicate(SqlPredicate &&other);
 	virtual ~SqlPredicate();
 
-	SqlPredicate &operator =(const SqlPredicate &other);
+	SqlPredicate &operator =(SqlPredicate other);
+
+	friend void swap(SqlPredicate &left, SqlPredicate &right);
 
 	bool IsEmpty() const;
 
@@ -28,11 +33,15 @@ public:
 	void AddParameter(const std::shared_ptr<odbc::parameter> &parameter);
 	std::shared_ptr<odbc::parameter> GetParameter(const std::uint32_t index) const;
 
-	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator GetBegin() const;
-	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator GetEnd() const;
+	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator begin() const;
+	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator cbegin() const;
+
+	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator end() const;
+	std::vector<std::shared_ptr<odbc::parameter>>::const_iterator cend() const;
 
 private:
-	std::string _tableName;
 	std::string _predicate;
 	std::vector<std::shared_ptr<odbc::parameter>> _parameters;
 };
+
+void swap(SqlPredicate &left, SqlPredicate &right);

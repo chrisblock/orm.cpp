@@ -300,11 +300,11 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 
 	odbc::date_time dateTime = {};
 
-	dateTime.year = (std::int16_t) value.tm_year;
-	dateTime.month = (std::uint16_t) value.tm_mon;
-	dateTime.day = (std::uint16_t) value.tm_mday;
-	dateTime.hour = (std::uint16_t) value.tm_hour;
-	dateTime.second = (std::uint16_t) value.tm_sec;
+	dateTime.year = static_cast<std::int16_t>(value.tm_year);
+	dateTime.month = static_cast<std::uint16_t>(value.tm_mon);
+	dateTime.day = static_cast<std::uint16_t>(value.tm_mday);
+	dateTime.hour = static_cast<std::uint16_t>(value.tm_hour);
+	dateTime.second = static_cast<std::uint16_t>(value.tm_sec);
 
 	parameter->set(dateTime);
 
@@ -324,11 +324,11 @@ ConstantExpressionSqlPredicateBuilder::ConstantExpressionSqlPredicateBuilder(con
 
 		dateTime = std::make_shared<odbc::date_time>(empty);
 
-		dateTime->year = (std::int16_t) value->tm_year;
-		dateTime->month = (std::uint16_t) value->tm_mon;
-		dateTime->day = (std::uint16_t) value->tm_mday;
-		dateTime->hour = (std::uint16_t) value->tm_hour;
-		dateTime->second = (std::uint16_t) value->tm_sec;
+		dateTime->year = static_cast<std::int16_t>(value->tm_year);
+		dateTime->month = static_cast<std::uint16_t>(value->tm_mon);
+		dateTime->day = static_cast<std::uint16_t>(value->tm_mday);
+		dateTime->hour = static_cast<std::uint16_t>(value->tm_hour);
+		dateTime->second = static_cast<std::uint16_t>(value->tm_sec);
 	}
 
 	parameter->set(dateTime);

@@ -13,7 +13,7 @@
 		void SetId(const std::int32_t id); \
 		std::int32_t GetId() const; \
 	\
-		void SetColumn(const ColumnType integer); \
+		void SetColumn(const ColumnType column); \
 		ColumnType GetColumn() const; \
 	\
 	private: \

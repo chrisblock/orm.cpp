@@ -34,6 +34,7 @@ namespace odbc
 
 		friend void swap(statement &left, statement &right);
 
+		const std::vector<std::shared_ptr<odbc::parameter>> &get_parameters() const;
 		void add_parameter(const std::shared_ptr<odbc::parameter> &parameter);
 
 		const std::string &get_command_text() const;

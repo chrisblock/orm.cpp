@@ -24,7 +24,7 @@ IdSetterGetterTestMappingEntityMap::~IdSetterGetterTestMappingEntityMap()
 
 IdSetterConstGetterTestMappingEntityMap::IdSetterConstGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::SetterConstGetterSetter, &TestMappingEntity::SetterConstGetterGetter, "IdSetterConstGetter")
+	Id(&TestMappingEntity::SetterConstGetterGetter, &TestMappingEntity::SetterConstGetterSetter, "IdSetterConstGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -34,7 +34,7 @@ IdSetterConstGetterTestMappingEntityMap::~IdSetterConstGetterTestMappingEntityMa
 
 IdSetterReferenceGetterTestMappingEntityMap::IdSetterReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::SetterReferenceGetterSetter, &TestMappingEntity::SetterReferenceGetterGetter, "IdSetterReferenceGetter")
+	Id(&TestMappingEntity::SetterReferenceGetterGetter, &TestMappingEntity::SetterReferenceGetterSetter, "IdSetterReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -44,7 +44,7 @@ IdSetterReferenceGetterTestMappingEntityMap::~IdSetterReferenceGetterTestMapping
 
 IdSetterConstReferenceGetterTestMappingEntityMap::IdSetterConstReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::SetterConstReferenceGetterSetter, &TestMappingEntity::SetterConstReferenceGetterGetter, "IdSetterConstReferenceGetter")
+	Id(&TestMappingEntity::SetterConstReferenceGetterGetter, &TestMappingEntity::SetterConstReferenceGetterSetter, "IdSetterConstReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -54,7 +54,7 @@ IdSetterConstReferenceGetterTestMappingEntityMap::~IdSetterConstReferenceGetterT
 
 IdConstSetterGetterTestMappingEntityMap::IdConstSetterGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstSetterGetterSetter, &TestMappingEntity::ConstSetterGetterGetter, "IdConstSetterGetter")
+	Id(&TestMappingEntity::ConstSetterGetterGetter, &TestMappingEntity::ConstSetterGetterSetter, "IdConstSetterGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -64,7 +64,7 @@ IdConstSetterGetterTestMappingEntityMap::~IdConstSetterGetterTestMappingEntityMa
 
 IdConstSetterConstGetterTestMappingEntityMap::IdConstSetterConstGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstSetterConstGetterSetter, &TestMappingEntity::ConstSetterConstGetterGetter, "IdConstSetterConstGetter")
+	Id(&TestMappingEntity::ConstSetterConstGetterGetter, &TestMappingEntity::ConstSetterConstGetterSetter, "IdConstSetterConstGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -74,7 +74,7 @@ IdConstSetterConstGetterTestMappingEntityMap::~IdConstSetterConstGetterTestMappi
 
 IdConstSetterReferenceGetterTestMappingEntityMap::IdConstSetterReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstSetterReferenceGetterSetter, &TestMappingEntity::ConstSetterReferenceGetterGetter, "IdConstSetterReferenceGetter")
+	Id(&TestMappingEntity::ConstSetterReferenceGetterGetter, &TestMappingEntity::ConstSetterReferenceGetterSetter, "IdConstSetterReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -84,7 +84,7 @@ IdConstSetterReferenceGetterTestMappingEntityMap::~IdConstSetterReferenceGetterT
 
 IdConstSetterConstReferenceGetterTestMappingEntityMap::IdConstSetterConstReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstSetterConstReferenceGetterSetter, &TestMappingEntity::ConstSetterConstReferenceGetterGetter, "IdConstSetterConstReferenceGetter")
+	Id(&TestMappingEntity::ConstSetterConstReferenceGetterGetter, &TestMappingEntity::ConstSetterConstReferenceGetterSetter, "IdConstSetterConstReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -94,7 +94,7 @@ IdConstSetterConstReferenceGetterTestMappingEntityMap::~IdConstSetterConstRefere
 
 IdConstReferenceSetterGetterTestMappingEntityMap::IdConstReferenceSetterGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstReferenceSetterGetterSetter, &TestMappingEntity::ConstReferenceSetterGetterGetter, "IdConstReferenceSetterGetter")
+	Id(&TestMappingEntity::ConstReferenceSetterGetterGetter, &TestMappingEntity::ConstReferenceSetterGetterSetter, "IdConstReferenceSetterGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -104,7 +104,7 @@ IdConstReferenceSetterGetterTestMappingEntityMap::~IdConstReferenceSetterGetterT
 
 IdConstReferenceSetterConstGetterTestMappingEntityMap::IdConstReferenceSetterConstGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstReferenceSetterConstGetterSetter, &TestMappingEntity::ConstReferenceSetterConstGetterGetter, "IdConstReferenceSetterConstGetter")
+	Id(&TestMappingEntity::ConstReferenceSetterConstGetterGetter, &TestMappingEntity::ConstReferenceSetterConstGetterSetter, "IdConstReferenceSetterConstGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -114,7 +114,7 @@ IdConstReferenceSetterConstGetterTestMappingEntityMap::~IdConstReferenceSetterCo
 
 IdConstReferenceSetterReferenceGetterTestMappingEntityMap::IdConstReferenceSetterReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstReferenceSetterReferenceGetterSetter, &TestMappingEntity::ConstReferenceSetterReferenceGetterGetter, "IdConstReferenceSetterReferenceGetter")
+	Id(&TestMappingEntity::ConstReferenceSetterReferenceGetterGetter, &TestMappingEntity::ConstReferenceSetterReferenceGetterSetter, "IdConstReferenceSetterReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 
@@ -124,7 +124,7 @@ IdConstReferenceSetterReferenceGetterTestMappingEntityMap::~IdConstReferenceSett
 
 IdConstReferenceSetterConstReferenceGetterTestMappingEntityMap::IdConstReferenceSetterConstReferenceGetterTestMappingEntityMap()
 {
-	Id(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter, &TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter, "IdConstReferenceSetterConstReferenceGetter")
+	Id(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter, &TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter, "IdConstReferenceSetterConstReferenceGetter")
 		.GeneratedBy(GenerationStrategy::Assigned);
 }
 

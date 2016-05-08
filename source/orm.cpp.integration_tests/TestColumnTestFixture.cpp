@@ -6,7 +6,7 @@
 #include <connection.h>
 #include <statement.h>
 
-#include <Session.h>
+#include <session.h>
 #include <SessionFactory.h>
 #include <SessionFactoryBuilder.h>
 
@@ -56,11 +56,11 @@ std::int32_t TestColumnTestFixture::GetRowCount() const
 	return result;
 }
 
-Session TestColumnTestFixture::CreateSession() const
+orm::session TestColumnTestFixture::CreateSession() const
 {
-	SessionFactoryBuilder builder;
+	orm::SessionFactoryBuilder builder;
 
-	SessionFactory factory = builder.Build([this](SessionFactoryConfiguration &configuration)
+	orm::SessionFactory factory = builder.Build([this] (SessionFactoryConfiguration &configuration)
 	{
 		configuration.SetDriver("SQL Server Native Client 11.0");
 		configuration.SetServer("(local)");
@@ -69,7 +69,7 @@ Session TestColumnTestFixture::CreateSession() const
 		configuration.ConfigureMappingRegistry(GetMappingRegistrar());
 	});
 
-	Session result = factory.Open();
+	orm::session result = factory.Open();
 
 	return result;
 };

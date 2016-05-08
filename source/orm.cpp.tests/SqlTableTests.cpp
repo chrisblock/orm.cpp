@@ -1,50 +1,50 @@
 #include "stdafx.h"
 
-#include <SqlTable.h>
+#include <sql_table.h>
 
 TEST(SqlTableTests, DefaultConstructor_SetsSchemaToEmptyString)
 {
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	EXPECT_EQ("", table.GetSchema());
 }
 
 TEST(SqlTableTests, DefaultConstructor_SetsTableToEmptyString)
 {
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	EXPECT_EQ("", table.GetTable());
 }
 
 TEST(SqlTableTests, CopyConstructor_CopiesSchema)
 {
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	expected.SetSchema("Schema");
 
-	SqlTable actual(expected);
+	orm::sql::sql_table actual(expected);
 
 	EXPECT_EQ(expected.GetSchema(), actual.GetSchema());
 }
 
 TEST(SqlTableTests, CopyConstructor_CopiesTable)
 {
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	expected.SetTable("Table");
 
-	SqlTable actual(expected);
+	orm::sql::sql_table actual(expected);
 
 	EXPECT_EQ(expected.GetTable(), actual.GetTable());
 }
 
 TEST(SqlTableTests, AssignmentOperator_AssignsSchema)
 {
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	expected.SetSchema("Schema");
 
-	SqlTable actual;
+	orm::sql::sql_table actual;
 
 	actual = expected;
 
@@ -53,11 +53,11 @@ TEST(SqlTableTests, AssignmentOperator_AssignsSchema)
 
 TEST(SqlTableTests, AssignmentOperator_AssignsTable)
 {
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	expected.SetTable("Table");
 
-	SqlTable actual;
+	orm::sql::sql_table actual;
 
 	actual = expected;
 
@@ -66,12 +66,12 @@ TEST(SqlTableTests, AssignmentOperator_AssignsTable)
 
 TEST(SqlTableTests, EqualsOperator_SchemaAndTableAreEqual_ReturnsTrue)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("Schema");
 	right.SetTable("Table");
@@ -81,12 +81,12 @@ TEST(SqlTableTests, EqualsOperator_SchemaAndTableAreEqual_ReturnsTrue)
 
 TEST(SqlTableTests, EqualsOperator_SchemaIsNotEqualTableIsEqual_ReturnsFalse)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("NotSchema");
 	right.SetTable("Table");
@@ -96,12 +96,12 @@ TEST(SqlTableTests, EqualsOperator_SchemaIsNotEqualTableIsEqual_ReturnsFalse)
 
 TEST(SqlTableTests, EqualsOperator_SchemaIsEqualTableIsNotEqual_ReturnsFalse)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("Schema");
 	right.SetTable("NotTable");
@@ -111,12 +111,12 @@ TEST(SqlTableTests, EqualsOperator_SchemaIsEqualTableIsNotEqual_ReturnsFalse)
 
 TEST(SqlTableTests, NotEqualsOperator_SchemaAndTableAreEqual_ReturnsFalse)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("Schema");
 	right.SetTable("Table");
@@ -126,12 +126,12 @@ TEST(SqlTableTests, NotEqualsOperator_SchemaAndTableAreEqual_ReturnsFalse)
 
 TEST(SqlTableTests, NotEqualsOperator_SchemaIsNotEqualTableIsEqual_ReturnsTrue)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("NotSchema");
 	right.SetTable("Table");
@@ -141,12 +141,12 @@ TEST(SqlTableTests, NotEqualsOperator_SchemaIsNotEqualTableIsEqual_ReturnsTrue)
 
 TEST(SqlTableTests, NotEqualsOperator_SchemaIsEqualTableIsNotEqual_ReturnsTrue)
 {
-	SqlTable left;
+	orm::sql::sql_table left;
 
 	left.SetSchema("Schema");
 	left.SetTable("Table");
 
-	SqlTable right;
+	orm::sql::sql_table right;
 
 	right.SetSchema("Schema");
 	right.SetTable("NotTable");
@@ -158,7 +158,7 @@ TEST(SqlTableTests, SetSchema_SetsSchema)
 {
 	static const char expected[] = "Schema";
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema(expected);
 
@@ -169,7 +169,7 @@ TEST(SqlTableTests, SetSchema_DoesNotSetTable)
 {
 	static const char expected[] = "Schema";
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema(expected);
 
@@ -180,7 +180,7 @@ TEST(SqlTableTests, SetTable_SetsTable)
 {
 	static const char expected[] = "Table";
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetTable(expected);
 
@@ -191,7 +191,7 @@ TEST(SqlTableTests, SetTable_DoesNotSetSchema)
 {
 	static const char expected[] = "Table";
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetTable(expected);
 

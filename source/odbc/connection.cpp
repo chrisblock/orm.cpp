@@ -10,6 +10,7 @@
 #include <odbcss.h>
 #endif
 
+#ifdef COLLECT_PERF_STATS
 std::string GetModuleFileNameA()
 {
 	char buffer[MAX_PATH] = {};
@@ -48,6 +49,8 @@ std::wstring GetModuleFileNameW()
 #define GetModuleFileName GetModuleFileNameW
 #else
 #define GetModuleFileName GetModuleFileNameA
+#endif
+
 #endif
 
 void odbc::swap(odbc::connection &left, odbc::connection &right)

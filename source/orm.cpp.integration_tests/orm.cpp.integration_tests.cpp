@@ -4,9 +4,24 @@
 #include <tchar.h>
 
 #include "TestDatabase.h"
+#include <excpt.h>
+
+void PunchIt()
+{
+	__try
+	{
+		RUN_ALL_TESTS();
+	}
+	__except (EXCEPTION_CONTINUE_EXECUTION)
+	{
+		::_tprintf_s(_T("aw shit son."));
+	}
+}
 
 int _tmain(std::int32_t argc, TCHAR *argv[])
 {
+	
+
 	TestDatabase db("OdbcCppTestDatabase");
 
 	::testing::InitGoogleTest(&argc, argv);
@@ -25,7 +40,7 @@ int _tmain(std::int32_t argc, TCHAR *argv[])
 		}
 	}
 
-	RUN_ALL_TESTS();
+	PunchIt();
 
 	if ((::_isatty(::_fileno(stdin))) && (pause == true))
 	{

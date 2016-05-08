@@ -8,31 +8,41 @@
 #include "SessionFactory.h"
 #include "SessionFactoryConfiguration.h"
 
-SessionFactoryBuilder::SessionFactoryBuilder() :
+void orm::swap(SessionFactoryBuilder &left, SessionFactoryBuilder &right)
+{
+	using std::swap;
+
+	swap(left._environment, right._environment);
+}
+
+orm::SessionFactoryBuilder::SessionFactoryBuilder() :
 	  _environment(std::make_shared<odbc::environment>())
 {
 }
 
-SessionFactoryBuilder::SessionFactoryBuilder(const SessionFactoryBuilder &other) :
+orm::SessionFactoryBuilder::SessionFactoryBuilder(const SessionFactoryBuilder &other) :
 	  _environment(other._environment)
 {
 }
 
-SessionFactoryBuilder::~SessionFactoryBuilder()
+orm::SessionFactoryBuilder::SessionFactoryBuilder(SessionFactoryBuilder &&other) :
+	  SessionFactoryBuilder()
+{
+	swap(*this, other);
+}
+
+orm::SessionFactoryBuilder::~SessionFactoryBuilder()
 {
 }
 
-SessionFactoryBuilder &SessionFactoryBuilder::operator = (const SessionFactoryBuilder &other)
+orm::SessionFactoryBuilder &orm::SessionFactoryBuilder::operator =(SessionFactoryBuilder other)
 {
-	if (this != &other)
-	{
-		_environment = other._environment;
-	}
+	swap(*this, other);
 
 	return *this;
 }
 
-SessionFactory SessionFactoryBuilder::Build(const std::function<void (SessionFactoryConfiguration &)> &configurator) const
+orm::SessionFactory orm::SessionFactoryBuilder::Build(const std::function<void(SessionFactoryConfiguration &)> &configurator) const
 {
 	SessionFactoryConfiguration configuration;
 
@@ -41,7 +51,7 @@ SessionFactory SessionFactoryBuilder::Build(const std::function<void (SessionFac
 	return Build(configuration);
 }
 
-SessionFactory SessionFactoryBuilder::Build(const SessionFactoryConfiguration &configuration) const
+orm::SessionFactory orm::SessionFactoryBuilder::Build(const SessionFactoryConfiguration &configuration) const
 {
 	SessionFactory result(_environment, configuration);
 

@@ -48,7 +48,7 @@ public:
 
 	ConstantExpressionSqlPredicateBuilder &operator =(const ConstantExpressionSqlPredicateBuilder &other);
 
-	virtual SqlPredicate Build(const MappingRegistry &) const;
+	virtual SqlPredicate Build(const MappingRegistry &) const override;
 
 private:
 	SqlPredicate _predicate;

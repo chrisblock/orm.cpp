@@ -17,7 +17,7 @@ public:
 
 	BinaryExpressionSqlPredicateBuilder &operator =(const BinaryExpressionSqlPredicateBuilder &other);
 
-	virtual SqlPredicate Build(const MappingRegistry &registry) const;
+	virtual SqlPredicate Build(const MappingRegistry &registry) const override;
 
 protected:
 	BinaryOperators::Operators _operator;

@@ -19,22 +19,22 @@ void odbc::swap(odbc::column &left, odbc::column &right)
 }
 
 odbc::column::column() :
-	  _bound(false)
-	, _c_type(odbc::sql_c_type::sql_c_slong)
-	, _data(empty_column_data)
+	  _data(empty_column_data)
+	, _width(0)
 	, _indicator(odbc::sql_indicator::sql_null_data)
 	, _type(odbc::sql_type::sql_integer)
-	, _width(0)
+	, _c_type(odbc::sql_c_type::sql_c_slong)
+	, _bound(false)
 {
 }
 
 odbc::column::column(const odbc::column &other) :
-	  _bound(other._bound)
-	, _c_type(other._c_type)
-	, _data(other._data)
+	  _data(other._data)
+	, _width(other._width)
 	, _indicator(other._indicator)
 	, _type(other._type)
-	, _width(other._width)
+	, _c_type(other._c_type)
+	, _bound(other._bound)
 {
 }
 
@@ -556,7 +556,6 @@ odbc::column &odbc::column::operator =(std::shared_ptr<odbc::numeric> value)
 
 odbc::column::operator bool() const
 {
-	bool result = false;
 	std::shared_ptr<bool> ptr = *this;
 
 	if (ptr == nullptr)
@@ -565,17 +564,14 @@ odbc::column::operator bool() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	bool result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator float() const
 {
-	float result = 0.0f;
 	std::shared_ptr<float> ptr = *this;
 
 	if (ptr == nullptr)
@@ -584,17 +580,14 @@ odbc::column::operator float() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	float result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator double() const
 {
-	double result = 0.0;
 	std::shared_ptr<double> ptr = *this;
 
 	if (ptr == nullptr)
@@ -603,17 +596,14 @@ odbc::column::operator double() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	double result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::int8_t() const
 {
-	std::int8_t result = 0;
 	std::shared_ptr<std::int8_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -622,17 +612,14 @@ odbc::column::operator std::int8_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::int8_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::uint8_t() const
 {
-	std::uint8_t result = 0;
 	std::shared_ptr<std::uint8_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -641,17 +628,14 @@ odbc::column::operator std::uint8_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::uint8_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::int16_t() const
 {
-	std::int16_t result = 0;
 	std::shared_ptr<std::int16_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -660,17 +644,14 @@ odbc::column::operator std::int16_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::int16_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::uint16_t() const
 {
-	std::uint16_t result = 0;
 	std::shared_ptr<std::uint16_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -679,17 +660,14 @@ odbc::column::operator std::uint16_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::uint16_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::int32_t() const
 {
-	std::int32_t result = 0;
 	std::shared_ptr<std::int32_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -698,17 +676,14 @@ odbc::column::operator std::int32_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::int32_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::uint32_t() const
 {
-	std::uint32_t result = 0;
 	std::shared_ptr<std::uint32_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -717,17 +692,14 @@ odbc::column::operator std::uint32_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::uint32_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::int64_t() const
 {
-	std::int64_t result = 0;
 	std::shared_ptr<std::int64_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -736,17 +708,14 @@ odbc::column::operator std::int64_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::int64_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::uint64_t() const
 {
-	std::uint64_t result = 0;
 	std::shared_ptr<std::uint64_t> ptr = *this;
 
 	if (ptr == nullptr)
@@ -755,17 +724,14 @@ odbc::column::operator std::uint64_t() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::uint64_t result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::string() const
 {
-	std::string result;
 	std::shared_ptr<std::string> ptr = *this;
 
 	if (ptr == nullptr)
@@ -774,17 +740,13 @@ odbc::column::operator std::string() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+	std::string result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator std::wstring() const
 {
-	std::wstring result;
 	std::shared_ptr<std::wstring> ptr = *this;
 
 	if (ptr == nullptr)
@@ -793,17 +755,14 @@ odbc::column::operator std::wstring() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	std::wstring result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::binary_data() const
 {
-	odbc::binary_data result;
 	std::shared_ptr<binary_data> ptr = *this;
 
 	if (ptr == nullptr)
@@ -812,17 +771,14 @@ odbc::column::operator odbc::binary_data() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	odbc::binary_data result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::date_time() const
 {
-	odbc::date_time result = {};
 	std::shared_ptr<odbc::date_time> ptr = *this;
 
 	if (ptr == nullptr)
@@ -831,17 +787,14 @@ odbc::column::operator odbc::date_time() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	odbc::date_time result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::date() const
 {
-	odbc::date result = {};
 	std::shared_ptr<odbc::date> ptr = *this;
 
 	if (ptr == nullptr)
@@ -850,17 +803,14 @@ odbc::column::operator odbc::date() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	odbc::date result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::time() const
 {
-	odbc::time result = {};
 	std::shared_ptr<odbc::time> ptr = *this;
 
 	if (ptr == nullptr)
@@ -869,17 +819,14 @@ odbc::column::operator odbc::time() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	odbc::time result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::guid() const
 {
-	GUID result = {};
 	std::shared_ptr<GUID> ptr = *this;
 
 	if (ptr == nullptr)
@@ -888,17 +835,14 @@ odbc::column::operator odbc::guid() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	GUID result = *ptr;
 
 	return result;
 }
 
 odbc::column::operator odbc::numeric() const
 {
-	odbc::numeric result = {};
 	std::shared_ptr<odbc::numeric> ptr = *this;
 
 	if (ptr == nullptr)
@@ -907,10 +851,8 @@ odbc::column::operator odbc::numeric() const
 
 		throw e;
 	}
-	else
-	{
-		result = *ptr;
-	}
+
+	odbc::numeric result = *ptr;
 
 	return result;
 }

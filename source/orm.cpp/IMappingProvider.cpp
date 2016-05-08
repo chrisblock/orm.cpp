@@ -2,6 +2,14 @@
 
 #include "IMappingProvider.h"
 
+void swap(IMappingProvider &left, IMappingProvider &right)
+{
+	using std::swap;
+
+	swap(left._schema, right._schema);
+	swap(left._table, right._table);
+}
+
 IMappingProvider::IMappingProvider() :
 	  _schema("dbo")
 {

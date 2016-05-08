@@ -4,8 +4,15 @@
 
 class IRecord;
 class SqlPredicate;
-class SqlProjection;
-class SqlStatement;
+
+namespace orm
+{
+	namespace sql
+	{
+		class projection;
+		class statement;
+	};
+};
 
 class SqlServerDialect : public ISqlDialect
 {
@@ -16,8 +23,8 @@ public:
 
 	SqlServerDialect &operator =(const SqlServerDialect &other);
 
-	virtual SqlStatement BuildSelectStatement(const SqlProjection &projection, const FromClause &fromClause, const SqlPredicate &predicate) const;
-	virtual SqlStatement BuildInsertStatement(const IRecord &record) const;
-	virtual SqlStatement BuildUpdateStatement(const IRecord &record) const;
-	virtual SqlStatement BuildDeleteStatement(const IRecord &record) const;
+	virtual orm::sql::statement BuildSelectStatement(const orm::sql::projection &projection, const orm::sql::from_clause &fromClause, const SqlPredicate &predicate) const override;
+	virtual orm::sql::statement BuildInsertStatement(const IRecord &record) const override;
+	virtual orm::sql::statement BuildUpdateStatement(const IRecord &record) const override;
+	virtual orm::sql::statement BuildDeleteStatement(const IRecord &record) const override;
 };

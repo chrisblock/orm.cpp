@@ -33,7 +33,7 @@ odbc::environment::~environment()
 {
 	if (_environment != nullptr)
 	{
-		SQLFreeHandle(SQL_HANDLE_ENV, _environment);
+		::SQLFreeHandle(SQL_HANDLE_ENV, _environment);
 
 		_environment = nullptr;
 	}
@@ -51,7 +51,7 @@ void odbc::environment::set_up_connection_pooling() const
 	// note about connection pooling:
 	//   connection pooling is largely a process-level setting, so it must be called with a NULL handle
 	//   the setting can be changed; this, however, does not affect already allocated environments
-	//   it is also possible to change the pooling setting for a connection by using passing it's handle to the SQLSetEnvAttr function
+	//   it is also possible to change the pooling setting for a connection by passing it's handle to the SQLSetEnvAttr function
 
 	//   by default, connection pooling is off (SQL_CP_OFF)
 	//   we can manage the number of connection pools to be per-driver (SQL_CP_ONE_PER_DRIVER),
@@ -71,23 +71,49 @@ void odbc::environment::set_up_connection_pooling() const
 }
 
 _Success_(return != SQL_INVALID_HANDLE)
-SQLHENV odbc::environment::get_environment_handle() const
+void *odbc::environment::get_environment_handle() const
 {
 	return _environment;
 }
 
-void odbc::environment::set_attribute(_In_ long attribute, _In_ long value)
+void odbc::environment::get_attribute(_In_ std::int32_t attribute, _Out_ std::int32_t &value) const
+{
+	std::int32_t length = 0;
+
+	RETCODE rc = ::SQLGetEnvAttr(_environment, attribute, &value, 0, reinterpret_cast<SQLINTEGER *>(&length));
+
+	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while reading an environment attribute.");
+}
+
+void odbc::environment::set_attribute(_In_ std::int32_t attribute, _In_ std::int32_t value)
 {
 	RETCODE rc = ::SQLSetEnvAttr(_environment, attribute, &value, 0);
 
 	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while setting an environment attribute.");
 }
 
-void odbc::environment::set_attribute(_In_ long attribute, _In_z_ const char *value)
+void odbc::environment::get_attribute(_In_ std::int32_t attribute, _Out_ std::string &value) const
 {
-	size_t length = ::strlen(value);
+	std::int32_t length = 0;
 
-	RETCODE rc = ::SQLSetEnvAttr(_environment, attribute, (SQLPOINTER) value, length);
+	RETCODE rc = ::SQLGetEnvAttr(_environment, attribute, nullptr, 0, reinterpret_cast<SQLINTEGER *>(&length));
+
+	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while reading an environment attribute.");
+
+	std::unique_ptr<char[]> str = std::make_unique<char[]>(length + 1);
+
+	rc = ::SQLGetEnvAttr(_environment, attribute, str.get(), length + 1, reinterpret_cast<SQLINTEGER *>(&length));
+
+	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while reading an environment attribute.");
+
+	value = str.get();
+}
+
+void odbc::environment::set_attribute(_In_ std::int32_t attribute, _In_ const std::string &value)
+{
+	std::size_t length = value.length();
+
+	RETCODE rc = ::SQLSetEnvAttr(_environment, attribute, (SQLPOINTER) value.data(), length);
 
 	process_return_code(_environment, SQL_HANDLE_ENV, rc, __LOC_A__ "Error caught while setting an environment attribute.");
 }

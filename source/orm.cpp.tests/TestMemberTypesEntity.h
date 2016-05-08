@@ -11,7 +11,7 @@ public:
 
 	int _integer;
 
-	int Accessor();
+	int Getter();
 	int ConstAccessor() const;
 	int &ReferenceAccessor();
 	const int &ConstReferenceAccessor() const;

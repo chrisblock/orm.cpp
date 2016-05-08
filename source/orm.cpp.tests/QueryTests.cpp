@@ -34,13 +34,13 @@ TEST_F(QueryTests, Execute_NoPredicate_HasStatementWithNoWhereClause)
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
+	orm::query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
 
 	std::vector<TestSessionEntity> entities;
 
 	query.Execute(entities);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
 	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable", statement.GetSql());
@@ -51,17 +51,17 @@ TEST_F(QueryTests, Execute_IdGreaterThanFortyTwo_StatementWithWhereClauseWithIdG
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
+	orm::query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
 
 	Predicate<TestSessionEntity> predicate = ::MakeExpression(&TestSessionEntity::_id) > 42;
 
-	Query<TestSessionEntity> q = query.Where(predicate);
+	orm::query<TestSessionEntity> q = query.Where(predicate);
 
 	std::vector<TestSessionEntity> entities;
 
 	q.Execute(entities);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
 	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable WHERE (TestSessionTable.Id > ?)", statement.GetSql());
@@ -73,17 +73,17 @@ TEST_F(QueryTests, Execute_IdLessThanColumn2_StatementWithWhereClauseWithIdLessT
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
+	orm::query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
 
 	Predicate<TestSessionEntity> predicate = ::MakeExpression(&TestSessionEntity::_id) < &TestSessionEntity::_column2;
 
-	Query<TestSessionEntity> q = query.Where(predicate);
+	orm::query<TestSessionEntity> q = query.Where(predicate);
 
 	std::vector<TestSessionEntity> entities;
 
 	q.Execute(entities);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
 	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable WHERE (TestSessionTable.Id < TestSessionTable.Column2)", statement.GetSql());
@@ -95,20 +95,20 @@ TEST_F(QueryTests, Execute_IdLessThanColumn2AndColumn1IsNotEqualTo42_StatementWi
 	std::shared_ptr<ISqlDialect> dialect = std::make_shared<SqlServerDialect>();
 	std::shared_ptr<MockSqlExecutor> executor = std::make_shared<MockSqlExecutor>();
 
-	Query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
+	orm::query<TestSessionEntity> query(_environment, _connectionString, dialect, executor, _registry);
 
 	Predicate<TestSessionEntity> predicate = ::MakeExpression(&TestSessionEntity::_id) < &TestSessionEntity::_column2;
 
 	std::int8_t fortyTwo = 42;
 
-	Query<TestSessionEntity> q = query.Where(predicate)
+	orm::query<TestSessionEntity> q = query.Where(predicate)
 		.Where(::MakeExpression(&TestSessionEntity::_column1) != fortyTwo);
 
 	std::vector<TestSessionEntity> entities;
 
 	q.Execute(entities);
 
-	SqlStatement statement = executor->GetLastStatement();
+	orm::sql::statement statement = executor->GetLastStatement();
 
 	EXPECT_EQ(1, entities.size());
 	EXPECT_EQ("SELECT TestSessionTable.Id, TestSessionTable.Column1, TestSessionTable.Column2 FROM dbo.TestSessionTable WHERE ((TestSessionTable.Id < TestSessionTable.Column2) AND (TestSessionTable.Column1 <> ?))", statement.GetSql());

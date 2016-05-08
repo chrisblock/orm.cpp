@@ -9,29 +9,23 @@ TestExpressionEntityMap::TestExpressionEntityMap()
 
 	Map(&TestExpressionEntity::_field, "Field");
 
-	Map(&TestExpressionEntity::SetterGetterSetter, &TestExpressionEntity::SetterGetterGetter, "SetterGetter");
-	Map(&TestExpressionEntity::SetterConstGetterSetter, &TestExpressionEntity::SetterConstGetterGetter, "SetterConstGetter");
-	Map(&TestExpressionEntity::SetterReferenceGetterSetter, &TestExpressionEntity::SetterReferenceGetterGetter, "SetterReferenceGetter");
-	Map(&TestExpressionEntity::SetterConstReferenceGetterSetter, &TestExpressionEntity::SetterConstReferenceGetterGetter, "SetterConstReferenceGetter");
+	Map(&TestExpressionEntity::SetterGetterGetter, &TestExpressionEntity::SetterGetterSetter, "SetterGetter");
+	Map(&TestExpressionEntity::SetterConstGetterGetter, &TestExpressionEntity::SetterConstGetterSetter, "SetterConstGetter");
+	Map(&TestExpressionEntity::SetterReferenceGetterGetter, &TestExpressionEntity::SetterReferenceGetterSetter, "SetterReferenceGetter");
+	Map(&TestExpressionEntity::SetterConstReferenceGetterGetter, &TestExpressionEntity::SetterConstReferenceGetterSetter, "SetterConstReferenceGetter");
 
-	Map(&TestExpressionEntity::ConstSetterGetterSetter, &TestExpressionEntity::ConstSetterGetterGetter, "ConstSetterGetter");
-	Map(&TestExpressionEntity::ConstSetterConstGetterSetter, &TestExpressionEntity::ConstSetterConstGetterGetter, "ConstSetterConstGetter");
-	Map(&TestExpressionEntity::ConstSetterReferenceGetterSetter, &TestExpressionEntity::ConstSetterReferenceGetterGetter, "ConstSetterReferenceGetter");
-	Map(&TestExpressionEntity::ConstSetterConstReferenceGetterSetter, &TestExpressionEntity::ConstSetterConstReferenceGetterGetter, "ConstSetterConstReferenceGetter");
+	Map(&TestExpressionEntity::ConstSetterGetterGetter, &TestExpressionEntity::ConstSetterGetterSetter, "ConstSetterGetter");
+	Map(&TestExpressionEntity::ConstSetterConstGetterGetter, &TestExpressionEntity::ConstSetterConstGetterSetter, "ConstSetterConstGetter");
+	Map(&TestExpressionEntity::ConstSetterReferenceGetterGetter, &TestExpressionEntity::ConstSetterReferenceGetterSetter, "ConstSetterReferenceGetter");
+	Map(&TestExpressionEntity::ConstSetterConstReferenceGetterGetter, &TestExpressionEntity::ConstSetterConstReferenceGetterSetter, "ConstSetterConstReferenceGetter");
 
-	/*
-	Map(&TestExpressionEntity::ReferenceSetterGetterSetter, &TestExpressionEntity::ReferenceSetterGetterGetter, "ReferenceSetterGetter");
-	Map(&TestExpressionEntity::ReferenceSetterConstGetterSetter, &TestExpressionEntity::ReferenceSetterConstGetterGetter, "ReferenceSetterConstGetter");
-	Map(&TestExpressionEntity::ReferenceSetterReferenceGetterSetter, &TestExpressionEntity::ReferenceSetterReferenceGetterGetter, "ReferenceSetterReferenceGetter");
-	Map(&TestExpressionEntity::ReferenceSetterConstReferenceGetterSetter, &TestExpressionEntity::ReferenceSetterConstReferenceGetterGetter, "ReferenceSetterConstReferenceGetter");
-	*/
+	Map(&TestExpressionEntity::ReferenceSetterGetterGetter, &TestExpressionEntity::ReferenceSetterGetterSetter, "ReferenceSetterGetter");
+	Map(&TestExpressionEntity::ReferenceSetterConstGetterGetter, &TestExpressionEntity::ReferenceSetterConstGetterSetter, "ReferenceSetterConstGetter");
+	Map(&TestExpressionEntity::ReferenceSetterReferenceGetterGetter, &TestExpressionEntity::ReferenceSetterReferenceGetterSetter, "ReferenceSetterReferenceGetter");
+	Map(&TestExpressionEntity::ReferenceSetterConstReferenceGetterGetter, &TestExpressionEntity::ReferenceSetterConstReferenceGetterSetter, "ReferenceSetterConstReferenceGetter");
 
-	Map(&TestExpressionEntity::ConstReferenceSetterGetterSetter, &TestExpressionEntity::ConstReferenceSetterGetterGetter, "ConstReferenceSetterGetter");
-	Map(&TestExpressionEntity::ConstReferenceSetterConstGetterSetter, &TestExpressionEntity::ConstReferenceSetterConstGetterGetter, "ConstReferenceSetterConstGetter");
-	Map(&TestExpressionEntity::ConstReferenceSetterReferenceGetterSetter, &TestExpressionEntity::ConstReferenceSetterReferenceGetterGetter, "ConstReferenceSetterReferenceGetter");
-	Map(&TestExpressionEntity::ConstReferenceSetterConstReferenceGetterSetter, &TestExpressionEntity::ConstReferenceSetterConstReferenceGetterGetter, "ConstReferenceSetterConstReferenceGetter");
-}
-
-TestExpressionEntityMap::~TestExpressionEntityMap()
-{
+	Map(&TestExpressionEntity::ConstReferenceSetterGetterGetter, &TestExpressionEntity::ConstReferenceSetterGetterSetter, "ConstReferenceSetterGetter");
+	Map(&TestExpressionEntity::ConstReferenceSetterConstGetterGetter, &TestExpressionEntity::ConstReferenceSetterConstGetterSetter, "ConstReferenceSetterConstGetter");
+	Map(&TestExpressionEntity::ConstReferenceSetterReferenceGetterGetter, &TestExpressionEntity::ConstReferenceSetterReferenceGetterSetter, "ConstReferenceSetterReferenceGetter");
+	Map(&TestExpressionEntity::ConstReferenceSetterConstReferenceGetterGetter, &TestExpressionEntity::ConstReferenceSetterConstReferenceGetterSetter, "ConstReferenceSetterConstReferenceGetter");
 }

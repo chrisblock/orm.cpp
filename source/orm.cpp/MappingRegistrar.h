@@ -14,9 +14,12 @@ class MappingRegistrar
 public:
 	MappingRegistrar();
 	MappingRegistrar(const MappingRegistrar &other);
+	MappingRegistrar(MappingRegistrar &&other);
 	virtual ~MappingRegistrar();
 
-	MappingRegistrar &operator =(const MappingRegistrar &other);
+	MappingRegistrar &operator =(MappingRegistrar other);
+
+	friend void swap(MappingRegistrar &left, MappingRegistrar &right);
 
 	void Register(MappingRegistry &registry) const;
 
@@ -27,7 +30,7 @@ protected:
 		static_assert(std::is_base_of<ClassMap<TEntity>, TMapping>::value, "Must register a type that extends ClassMap<T> for the mapping of type T.");
 		static_assert(std::is_base_of<IMappingProvider, TMapping>::value, "Cannot CreateMapping for types that do not inherit from IMappingProvider.");
 
-		static_assert(std::has_default_constructor<TMapping>::value, "Mapping must be default constructable.");
+		static_assert(std::is_default_constructible<TMapping>::value, "Mapping must be default constructable.");
 
 		std::string entityTypeName = typeid (TEntity).name();
 
@@ -39,3 +42,5 @@ private:
 
 	std::map<std::string, std::function<std::shared_ptr<IMappingProvider> ()>> _mappings;
 };
+
+void swap(MappingRegistrar &left, MappingRegistrar &right);

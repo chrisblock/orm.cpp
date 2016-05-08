@@ -1,15 +1,11 @@
 #pragma once
 
 #include "Expression.h"
-#include "member_types.h"
 
 #include "BinaryExpressionSqlPredicateBuilder.h"
 #include "ConstantExpressionSqlPredicateBuilder.h"
 #include "FieldMemberExpressionSqlPredicateBuilder.h"
 #include "GetterMemberExpressionSqlPredicateBuilder.h"
-#include "ConstGetterMemberExpressionSqlPredicateBuilder.h"
-#include "ReferenceGetterMemberExpressionSqlPredicateBuilder.h"
-#include "ConstReferenceGetterMemberExpressionSqlPredicateBuilder.h"
 
 // TODO: implement some kind of constant expression thingy
 /*
@@ -24,56 +20,21 @@ Expression<T> MakeExpression(const T &value)
 }
 */
 
-template <typename TEntity, typename TProperty>
-Expression<TEntity, TProperty> MakeExpression(TProperty(TEntity::*field))
+template <typename TMember>
+auto MakeExpression(TMember member)
 {
-	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<FieldMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(field);
+	static_assert(std::is_member_pointer<TMember>::value, "member must be a member pointer.");
 
-	Expression<TEntity, TProperty> result(predicateBuilder);
+	typedef TMember member_type;
+	typedef typename std::result_of<member_types::decomposer (member_type)>::type decomposition_type;
+	typedef typename decomposition_type::entity_type entity_type;
+	typedef typename decomposition_type::property_type property_type;
 
-	return result;
-}
+	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::is_member_function_pointer<member_type>::value
+		? std::static_pointer_cast<ISqlPredicateBuilder>(std::make_shared<GetterMemberExpressionSqlPredicateBuilder<entity_type, member_type>>(member))
+		: std::static_pointer_cast<ISqlPredicateBuilder>(std::make_shared<FieldMemberExpressionSqlPredicateBuilder<entity_type, member_type>>(member));
 
-template <typename TEntity, typename TProperty>
-//Expression<TEntity, TProperty> MakeExpression(typename member_types<TEntity, TProperty>::getter getter)
-Expression<TEntity, TProperty> MakeExpression(TProperty (TEntity::*getter)())
-{
-	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<GetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(getter);
-
-	Expression<TEntity, TProperty> result(predicateBuilder);
-
-	return result;
-}
-
-template <typename TEntity, typename TProperty>
-//Expression<TEntity, TProperty> MakeExpression(typename member_types<TEntity, TProperty>::const_getter getter)
-Expression<TEntity, TProperty> MakeExpression(TProperty(TEntity::*getter)() const)
-{
-	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<ConstGetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(getter);
-
-	Expression<TEntity, TProperty> result(predicateBuilder);
-
-	return result;
-}
-
-template <typename TEntity, typename TProperty>
-//Expression<TEntity, TProperty> MakeExpression(typename member_types<TEntity, TProperty>::reference_getter getter)
-Expression<TEntity, TProperty> MakeExpression(TProperty &(TEntity::*getter)())
-{
-	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<ReferenceGetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(getter);
-
-	Expression<TEntity, TProperty> result(predicateBuilder);
-
-	return result;
-}
-
-template <typename TEntity, typename TProperty>
-//Expression<TEntity, TProperty> MakeExpression(typename member_types<TEntity, TProperty>::const_reference_getter getter)
-Expression<TEntity, TProperty> MakeExpression(const TProperty &(TEntity::*getter)() const)
-{
-	std::shared_ptr<ISqlPredicateBuilder> predicateBuilder = std::make_shared<ConstReferenceGetterMemberExpressionSqlPredicateBuilder<TEntity, TProperty>>(getter);
-
-	Expression<TEntity, TProperty> result(predicateBuilder);
+	Expression<entity_type, property_type> result(predicateBuilder);
 
 	return result;
 }

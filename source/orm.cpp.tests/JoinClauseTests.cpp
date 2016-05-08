@@ -1,135 +1,135 @@
 #include "stdafx.h"
 
-#include <JoinClause.h>
+#include <join_clause.h>
 
-#include <SqlColumn.h>
-#include <SqlTable.h>
+#include <sql_column.h>
+#include <sql_table.h>
 
 TEST(JoinClauseTests, DefaultConstructor_SetsIsOuterJoinToFalse)
 {
-	JoinClause join;
+	orm::sql::join_clause join;
 
 	EXPECT_EQ(false, join.IsOuterJoin());
 }
 
 TEST(JoinClauseTests, DefaultConstructor_SetsSourceTableToEmptyTable)
 {
-	JoinClause join;
+	orm::sql::join_clause join;
 
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	EXPECT_EQ(expected, join.GetSourceTable());
 }
 
 TEST(JoinClauseTests, DefaultConstructor_SetsSourceColumnToEmptyColumn)
 {
-	JoinClause join;
+	orm::sql::join_clause join;
 
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	EXPECT_EQ(expected, join.GetSourceColumn());
 }
 
 TEST(JoinClauseTests, DefaultConstructor_SetsDestinationTableToEmptyTable)
 {
-	JoinClause join;
+	orm::sql::join_clause join;
 
-	SqlTable expected;
+	orm::sql::sql_table expected;
 
 	EXPECT_EQ(expected, join.GetDestinationTable());
 }
 
 TEST(JoinClauseTests, DefaultConstructor_SetsDestinationColumnToEmptyColumn)
 {
-	JoinClause join;
+	orm::sql::join_clause join;
 
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	EXPECT_EQ(expected, join.GetDestinationColumn());
 }
 
 TEST(JoinClauseTests, CopyConstructor_CopiesIsOuterJoin)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
 	expected.SetIsOuterJoin(true);
 
-	JoinClause actual(expected);
+	orm::sql::join_clause actual(expected);
 
 	EXPECT_EQ(expected.IsOuterJoin(), actual.IsOuterJoin());
 }
 
 TEST(JoinClauseTests, CopyConstructor_CopiesSourceTable)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema("Schema");
 	table.SetTable("Table");
 
 	expected.SetSourceTable(table);
 
-	JoinClause actual(expected);
+	orm::sql::join_clause actual(expected);
 
 	EXPECT_EQ(expected.GetSourceTable(), actual.GetSourceTable());
 }
 
 TEST(JoinClauseTests, CopyConstructor_CopiesSourceColumn)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 	column.SetColumn("Column");
 
 	expected.SetSourceColumn(column);
 
-	JoinClause actual(expected);
+	orm::sql::join_clause actual(expected);
 
 	EXPECT_EQ(expected.GetSourceColumn(), actual.GetSourceColumn());
 }
 
 TEST(JoinClauseTests, CopyConstructor_CopiesDestinationTable)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema("Schema");
 	table.SetTable("Table");
 
 	expected.SetDestinationTable(table);
 
-	JoinClause actual(expected);
+	orm::sql::join_clause actual(expected);
 
 	EXPECT_EQ(expected.GetDestinationTable(), actual.GetDestinationTable());
 }
 
 TEST(JoinClauseTests, CopyConstructor_CopiesDestinationColumn)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 	column.SetColumn("Column");
 
 	expected.SetDestinationColumn(column);
 
-	JoinClause actual(expected);
+	orm::sql::join_clause actual(expected);
 
 	EXPECT_EQ(expected.GetDestinationColumn(), actual.GetDestinationColumn());
 }
 
 TEST(JoinClauseTests, AssignmentOperator_AssignsIsOuterJoin)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
 	expected.SetIsOuterJoin(true);
 
-	JoinClause actual;
+	orm::sql::join_clause actual;
 
 	actual = expected;
 
@@ -138,16 +138,16 @@ TEST(JoinClauseTests, AssignmentOperator_AssignsIsOuterJoin)
 
 TEST(JoinClauseTests, AssignmentOperator_AssignsSourceTable)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema("Schema");
 	table.SetTable("Table");
 
 	expected.SetSourceTable(table);
 
-	JoinClause actual;
+	orm::sql::join_clause actual;
 
 	actual = expected;
 
@@ -156,16 +156,16 @@ TEST(JoinClauseTests, AssignmentOperator_AssignsSourceTable)
 
 TEST(JoinClauseTests, AssignmentOperator_AssignsSourceColumn)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 	column.SetColumn("Column");
 
 	expected.SetSourceColumn(column);
 
-	JoinClause actual;
+	orm::sql::join_clause actual;
 
 	actual = expected;
 
@@ -174,16 +174,16 @@ TEST(JoinClauseTests, AssignmentOperator_AssignsSourceColumn)
 
 TEST(JoinClauseTests, AssignmentOperator_AssignsDestinationTable)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema("Schema");
 	table.SetTable("Table");
 
 	expected.SetDestinationTable(table);
 
-	JoinClause actual;
+	orm::sql::join_clause actual;
 
 	actual = expected;
 
@@ -192,16 +192,16 @@ TEST(JoinClauseTests, AssignmentOperator_AssignsDestinationTable)
 
 TEST(JoinClauseTests, AssignmentOperator_AssignsDestinationColumn)
 {
-	JoinClause expected;
+	orm::sql::join_clause expected;
 
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 	column.SetColumn("Column");
 
 	expected.SetDestinationColumn(column);
 
-	JoinClause actual;
+	orm::sql::join_clause actual;
 
 	actual = expected;
 
@@ -210,27 +210,27 @@ TEST(JoinClauseTests, AssignmentOperator_AssignsDestinationColumn)
 
 TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsTrue)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -238,7 +238,7 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
 	right.SetSourceTable(sourceTable);
 	right.SetSourceColumn(sourceColumn);
@@ -251,27 +251,27 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 
 TEST(JoinClauseTests, EqualOperator_SourceTableIsNotEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsFalse)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -279,9 +279,9 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsNotEqualSourceColumnIsEqualDest
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlTable alternateSourceTable;
+	orm::sql::sql_table alternateSourceTable;
 
 	alternateSourceTable.SetSchema("dbo");
 	alternateSourceTable.SetTable("NotSourceTable");
@@ -297,27 +297,27 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsNotEqualSourceColumnIsEqualDest
 
 TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsNotEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsFalse)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -325,9 +325,9 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsNotEqualDest
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlColumn alternateSourceColumn;
+	orm::sql::sql_column alternateSourceColumn;
 
 	alternateSourceColumn.SetTable("SourceTable");
 	alternateSourceColumn.SetColumn("NotSourceTableColumn");
@@ -343,27 +343,27 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsNotEqualDest
 
 TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsNotEqualDestinationColumnIsEqual_ReturnsFalse)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -371,9 +371,9 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlTable alternateDestinationTable;
+	orm::sql::sql_table alternateDestinationTable;
 
 	alternateDestinationTable.SetSchema("dbo");
 	alternateDestinationTable.SetTable("NotDestinationTable");
@@ -389,27 +389,27 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 
 TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsNotEqual_ReturnsFalse)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -417,9 +417,9 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlColumn alternateDestinationColumn;
+	orm::sql::sql_column alternateDestinationColumn;
 
 	alternateDestinationColumn.SetTable("DestinationTable");
 	alternateDestinationColumn.SetColumn("NotDestinationTableColumn");
@@ -435,27 +435,27 @@ TEST(JoinClauseTests, EqualOperator_SourceTableIsEqualSourceColumnIsEqualDestina
 
 TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsFalse)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -463,7 +463,7 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDest
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
 	right.SetSourceTable(sourceTable);
 	right.SetSourceColumn(sourceColumn);
@@ -476,27 +476,27 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDest
 
 TEST(JoinClauseTests, NotEqualOperator_SourceTableIsNotEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsTrue)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -504,9 +504,9 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsNotEqualSourceColumnIsEqualD
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlTable alternateSourceTable;
+	orm::sql::sql_table alternateSourceTable;
 
 	alternateSourceTable.SetSchema("dbo");
 	alternateSourceTable.SetTable("NotSourceTable");
@@ -522,27 +522,27 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsNotEqualSourceColumnIsEqualD
 
 TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsNotEqualDestinationTableIsEqualDestinationColumnIsEqual_ReturnsTrue)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -550,9 +550,9 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsNotEqualD
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlColumn alternateSourceColumn;
+	orm::sql::sql_column alternateSourceColumn;
 
 	alternateSourceColumn.SetTable("SourceTable");
 	alternateSourceColumn.SetColumn("NotSourceTableColumn");
@@ -568,27 +568,27 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsNotEqualD
 
 TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsNotEqualDestinationColumnIsEqual_ReturnsTrue)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -596,9 +596,9 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDest
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlTable alternateDestinationTable;
+	orm::sql::sql_table alternateDestinationTable;
 
 	alternateDestinationTable.SetSchema("dbo");
 	alternateDestinationTable.SetTable("NotDestinationTable");
@@ -614,27 +614,27 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDest
 
 TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDestinationTableIsEqualDestinationColumnIsNotEqual_ReturnsTrue)
 {
-	SqlTable sourceTable;
+	orm::sql::sql_table sourceTable;
 
 	sourceTable.SetSchema("dbo");
 	sourceTable.SetTable("SourceTable");
 
-	SqlColumn sourceColumn;
+	orm::sql::sql_column sourceColumn;
 
 	sourceColumn.SetTable("SourceTable");
 	sourceColumn.SetColumn("SourceTableColumn");
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("DestinationTableColumn");
 
-	JoinClause left;
+	orm::sql::join_clause left;
 
 	left.SetSourceTable(sourceTable);
 	left.SetSourceColumn(sourceColumn);
@@ -642,9 +642,9 @@ TEST(JoinClauseTests, NotEqualOperator_SourceTableIsEqualSourceColumnIsEqualDest
 	left.SetDestinationTable(destinationTable);
 	left.SetDestinationColumn(destinationColumn);
 
-	JoinClause right;
+	orm::sql::join_clause right;
 
-	SqlColumn alternateDestinationColumn;
+	orm::sql::sql_column alternateDestinationColumn;
 
 	alternateDestinationColumn.SetTable("DestinationTable");
 	alternateDestinationColumn.SetColumn("NotDestinationTableColumn");

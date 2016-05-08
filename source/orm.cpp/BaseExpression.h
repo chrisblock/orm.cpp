@@ -12,9 +12,12 @@ public:
 	BaseExpression();
 	BaseExpression(const std::shared_ptr<ISqlPredicateBuilder> &predicateBuilder);
 	BaseExpression(const BaseExpression &other);
+	BaseExpression(BaseExpression &&other);
 	virtual ~BaseExpression();
 
-	BaseExpression &operator =(const BaseExpression &other);
+	BaseExpression &operator =(BaseExpression other);
+
+	friend void swap(BaseExpression &left, BaseExpression &right);
 
 	virtual SqlPredicate GetSqlPredicate(const MappingRegistry &registry) const;
 
@@ -23,3 +26,5 @@ public:
 private:
 	std::shared_ptr<ISqlPredicateBuilder> _predicateBuilder;
 };
+
+void swap(BaseExpression &left, BaseExpression &right);

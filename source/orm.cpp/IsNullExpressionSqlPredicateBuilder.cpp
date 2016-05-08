@@ -38,10 +38,9 @@ SqlPredicate IsNullExpressionSqlPredicateBuilder::Build(const MappingRegistry &r
 
 	SqlPredicate expressionPredicate = _expressionPredicateBuilder->Build(registry);
 
-	for (auto iter = expressionPredicate.GetBegin(); iter != expressionPredicate.GetEnd(); iter++)
+	for (const std::shared_ptr<odbc::parameter> &parameter : expressionPredicate)
 	{
-		std::shared_ptr<odbc::parameter> p = *iter;
-		result.AddParameter(p);
+		result.AddParameter(parameter);
 	}
 
 	std::string predicate("(");

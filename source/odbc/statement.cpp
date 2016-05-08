@@ -26,8 +26,8 @@ odbc::statement::statement() :
 }
 
 odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection) :
-	  _connection(connection)
-	, _statement(nullptr)
+	  _statement(nullptr)
+	, _connection(connection)
 {
 }
 
@@ -39,9 +39,9 @@ odbc::statement::statement(const std::shared_ptr<odbc::connection> &connection, 
 }
 
 odbc::statement::statement(const odbc::statement &other) :
-	  _connection(other._connection)
+	  _statement(other._statement)
+	, _connection(other._connection)
 	, _commandText(other._commandText)
-	, _statement(other._statement)
 {
 }
 
@@ -73,6 +73,11 @@ odbc::statement &odbc::statement::operator =(odbc::statement other)
 	swap(*this, other);
 
 	return *this;
+}
+
+const std::vector<std::shared_ptr<odbc::parameter>> &odbc::statement::get_parameters() const
+{
+	return _parameters;
 }
 
 void odbc::statement::add_parameter(const std::shared_ptr<odbc::parameter> &parameter)
@@ -202,7 +207,7 @@ void odbc::statement::get(const std::uint32_t columnIndex, std::string &value) c
 {
 	const odbc::column &column = get_column(columnIndex);
 
-	value = column;
+	value.assign(column);
 }
 
 void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::string> &value) const
@@ -232,7 +237,7 @@ void odbc::statement::get(const std::uint32_t columnIndex, std::wstring &value) 
 {
 	const odbc::column &column = get_column(columnIndex);
 
-	value = column;
+	value.assign(column);
 }
 
 void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<std::wstring> &value) const
@@ -756,7 +761,7 @@ void odbc::statement::get(const std::uint32_t columnIndex, std::shared_ptr<GUID>
 
 void odbc::statement::prepare()
 {
-	RETCODE rc = ::SQLPrepareA(_statement, (SQLCHAR *) _commandText.c_str(), SQL_NTS);
+	std::int16_t rc = ::SQLPrepareA(_statement, reinterpret_cast<SQLCHAR *>(const_cast<char *>(_commandText.c_str())), SQL_NTS);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error preparing statement.");
 }
@@ -765,11 +770,11 @@ void odbc::statement::bind_parameters()
 {
 	std::int16_t numberOfParameters = 0;
 
-	RETCODE rc = ::SQLNumParams(_statement, &numberOfParameters);
+	std::int16_t rc = ::SQLNumParams(_statement, &numberOfParameters);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading number of parameters.");
 
-	if ((numberOfParameters > 0) && ((std::uint16_t) numberOfParameters > _parameters.size()))
+	if ((numberOfParameters > 0) && (static_cast<std::uint16_t>(numberOfParameters) > _parameters.size()))
 	{
 		std::exception e(__LOC_A__ "Too few parameters supplied to statement.");
 
@@ -831,13 +836,15 @@ void odbc::statement::bind_parameters()
 		};
 		*/
 
+		/*
 		std::string parameterTypeName = odbc_base::get_sql_type_name(sqlDataType);
 		std::string typeName = odbc_base::get_sql_type_name(p->get_type());
-		std::string cTypeName = odbc::odbc_base::get_c_type_name(p->get_c_type());
+		std::string cTypeName = odbc_base::get_c_type_name(p->get_c_type());
 
 		parameterTypeName;
 		typeName;
 		cTypeName;
+		*/
 
 		rc = ::SQLBindParameter(_statement, i + 1, SQL_PARAM_INPUT, p->get_c_type(), sqlDataType, parameterSize, decimalDigits, p->get_value(), p->get_length(), indicator);
 
@@ -866,10 +873,6 @@ void odbc::statement::process_columns()
 
 		std::string name = read_column_name(i + 1);
 
-		//std::string hi = GetSqlTypeName(_columnBindings[i].type);
-
-		//::printf("%s: %s\n", name.c_str(), hi.c_str());
-
 		_nameToIndex[name] = i;
 
 		bind_column(i + 1, _columnBindings[i]);
@@ -885,9 +888,9 @@ void odbc::statement::read_column_type(const std::uint16_t index, odbc::column &
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column type.");
 
-	column.set_type((std::int16_t) type);
+	column.set_type(static_cast<std::int16_t>(type));
 
-	column.set_c_type(odbc_base::get_c_type((std::int16_t) type));
+	column.set_c_type(odbc_base::get_c_type(static_cast<std::int16_t>(type)));
 
 	rc = ::SQLColAttributeA(_statement, index, SQL_DESC_LENGTH, nullptr, 0, nullptr, &width);
 
@@ -906,7 +909,7 @@ std::string odbc::statement::read_column_name(const std::uint16_t columnIndex) c
 	//unique_ptr<TCHAR[]> buffer(new TCHAR[bufferLength]);
 	char buffer[bufferLength] = {};
 
-	RETCODE rc = ::SQLColAttributeA(_statement, columnIndex, SQL_DESC_NAME, (SQLPOINTER) buffer, bufferLength, nullptr, nullptr);
+	RETCODE rc = ::SQLColAttributeA(_statement, columnIndex, SQL_DESC_NAME, static_cast<SQLPOINTER>(buffer), bufferLength, nullptr, nullptr);
 
 	process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error reading column name.");
 
@@ -919,7 +922,7 @@ void odbc::statement::bind_column(const std::uint16_t index, odbc::column &c)
 {
 	std::function<bool (const std::int16_t, void *, const std::int32_t, std::int32_t &)> binder = [=] (const std::int16_t type, void *buffer, const std::int32_t length, std::int32_t &indicator)
 	{
-		RETCODE rc = ::SQLBindCol(_statement, index, type, buffer, length, (SQLINTEGER *)&indicator);
+		RETCODE rc = ::SQLBindCol(_statement, index, type, buffer, length, reinterpret_cast<SQLINTEGER *>(&indicator));
 
 		process_return_code(_statement, SQL_HANDLE_STMT, rc, __LOC_A__ "Error binding column.");
 

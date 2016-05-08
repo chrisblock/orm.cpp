@@ -6,6 +6,13 @@
 #include "MappingRegistry.h"
 #include "SqlPredicate.h"
 
+void swap(BaseExpression &left, BaseExpression &right)
+{
+	using std::swap;
+
+	swap(left._predicateBuilder, right._predicateBuilder);
+}
+
 BaseExpression::BaseExpression()
 {
 }
@@ -20,16 +27,18 @@ BaseExpression::BaseExpression(const BaseExpression &other) :
 {
 }
 
+BaseExpression::BaseExpression(BaseExpression &&other)
+{
+	swap(*this, other);
+}
+
 BaseExpression::~BaseExpression()
 {
 }
 
-BaseExpression &BaseExpression::operator =(const BaseExpression &other)
+BaseExpression &BaseExpression::operator =(BaseExpression other)
 {
-	if (this != &other)
-	{
-		_predicateBuilder = other._predicateBuilder;
-	}
+	swap(*this, other);
 
 	return *this;
 }

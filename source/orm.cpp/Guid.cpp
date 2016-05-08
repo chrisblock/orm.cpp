@@ -3,14 +3,20 @@
 #include "Guid.h"
 
 #include <atlbase.h>
-#include <cstring>
+
+void swap(Guid &left, Guid &right)
+{
+	using std::swap;
+
+	swap(left._guid, right._guid);
+}
 
 const Guid Guid::Empty = Guid(GUID_NULL);
 const char Guid::_guidPattern[] = "%08lx-%04hx-%04hx-%02hx%02hx-%02hx%02hx%02hx%02hx%02hx%02hx";
 
 Guid Guid::NewGuid()
 {
-	GUID guid;
+	GUID guid = {};
 	if (::CoCreateGuid(&guid) != RPC_S_OK)
 	{
 		std::exception e("Couldn't create a new GUID.");
@@ -69,10 +75,10 @@ Guid Guid::GuidComb()
 	ULONGLONG msecs = (systemTimeCurrent.wHour * 3600000UL) + (systemTimeCurrent.wMinute * 60000UL) + (systemTimeCurrent.wSecond * 1000UL) + systemTimeCurrent.wMilliseconds;
 
 	d += daysBeforeEpoch;
-	ULONGLONG m = (ULONGLONG)(msecs / 3.333333);
+	ULONGLONG m = static_cast<ULONGLONG>(msecs / 3.333333);
 
-	BYTE* daysArray = (BYTE *) &d;
-	BYTE* msecsArray = (BYTE *) &m;
+	BYTE* daysArray = reinterpret_cast<BYTE *>(&d);
+	BYTE* msecsArray = reinterpret_cast<BYTE *>(&m);
 
 	Guid guid = Guid::NewGuid();
 
@@ -89,11 +95,11 @@ Guid Guid::GuidComb()
 	return Guid(g);
 }
 
-Guid Guid::Parse(const char *str)
+Guid Guid::Parse(const std::string &str)
 {
 	GUID guid = GUID_NULL;
 
-	if (str != __nullptr)
+	if (str.empty() == false)
 	{
 		// Microsoft's implementation of scanf does not support %hhx for reading unsigned chars
 		// if it did, this would be super easy
@@ -102,7 +108,7 @@ Guid Guid::Parse(const char *str)
 		// except that it corrupts the stack around the end of guid.Data4
 
 		USHORT one, two, three, four, five, six, seven, eight;
-		::scanf_s(str, _guidPattern
+		::scanf_s(str.c_str(), _guidPattern
 			, &guid.Data1
 			, &guid.Data2
 			, &guid.Data3
@@ -115,14 +121,14 @@ Guid Guid::Parse(const char *str)
 			, &seven
 			, &eight);
 
-		guid.Data4[0] = (BYTE)one;
-		guid.Data4[1] = (BYTE)two;
-		guid.Data4[2] = (BYTE)three;
-		guid.Data4[3] = (BYTE)four;
-		guid.Data4[4] = (BYTE)five;
-		guid.Data4[5] = (BYTE)six;
-		guid.Data4[6] = (BYTE)seven;
-		guid.Data4[7] = (BYTE)eight;
+		guid.Data4[0] = static_cast<BYTE>(one);
+		guid.Data4[1] = static_cast<BYTE>(two);
+		guid.Data4[2] = static_cast<BYTE>(three);
+		guid.Data4[3] = static_cast<BYTE>(four);
+		guid.Data4[4] = static_cast<BYTE>(five);
+		guid.Data4[5] = static_cast<BYTE>(six);
+		guid.Data4[6] = static_cast<BYTE>(seven);
+		guid.Data4[7] = static_cast<BYTE>(eight);
 	}
 
 	Guid result(guid);
@@ -143,7 +149,7 @@ BOOL Guid::TryParse(LPCTSTR str, Guid &result)
 	BOOL success = FALSE;
 	result = GUID_NULL;
 
-	if (str != __nullptr)
+	if (str != nullptr)
 	{
 		CString g(str);
 
@@ -193,21 +199,23 @@ Guid::Guid(const Guid &other) :
 {
 }
 
+Guid::Guid(Guid &&other)
+{
+	swap(*this, other);
+}
+
 Guid::~Guid()
 {
 }
 
-Guid &Guid::operator=(const Guid &other)
+Guid &Guid::operator =(Guid other)
 {
-	if (this != &other)
-	{
-		_guid = other._guid;
-	}
+	swap(*this, other);
 
 	return *this;
 }
 
-Guid &Guid::operator=(const GUID &other)
+Guid &Guid::operator =(const GUID &other)
 {
 	_guid = other;
 

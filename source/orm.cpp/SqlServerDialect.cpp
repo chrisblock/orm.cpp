@@ -7,12 +7,12 @@
 
 #include <parameter.h>
 
-#include "FromClause.h"
+#include "from_clause.h"
 #include "IRecord.h"
-#include "SqlColumn.h"
+#include "sql_column.h"
 #include "SqlPredicate.h"
-#include "SqlProjection.h"
-#include "SqlStatement.h"
+#include "projection.h"
+#include "statement.h"
 
 SqlServerDialect::SqlServerDialect()
 {
@@ -39,25 +39,25 @@ SqlServerDialect &SqlServerDialect::operator =(const SqlServerDialect &other)
 // TODO: all of the implementation specific stuff (e.g. things not related to how the SQL itself is structured) need to be abstracted out;
 //       probably need to implement the template method pattern for great success, and place these method into an abstract base class of destiny)
 
-SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &projection, const FromClause &fromClause, const SqlPredicate &predicate) const
+orm::sql::statement SqlServerDialect::BuildSelectStatement(const orm::sql::projection &projection, const orm::sql::from_clause &fromClause, const SqlPredicate &predicate) const
 {
-	SqlStatement result;
+	orm::sql::statement result;
 
 	std::string sql("SELECT ");
 
-	const std::vector<SqlColumn> &columns = projection.GetProjections();
+	const std::vector<orm::sql::sql_column> &columns = projection.GetProjections();
 
-	std::function<void (const SqlColumn &str)> appendToSql = [&sql] (const SqlColumn &column) { sql.append(", "); sql.append(column.GetColumnString()); };
+	std::function<void (const orm::sql::sql_column &str)> appendToSql = [&sql] (const orm::sql::sql_column &column) { sql.append(", "); sql.append(column.GetColumnString()); };
 
-	std::vector<SqlColumn>::const_iterator start = columns.cbegin();
+	std::vector<orm::sql::sql_column>::const_iterator start = columns.cbegin();
 
 	if (start != columns.cend())
 	{
-		const SqlColumn &column = *start;
+		const orm::sql::sql_column &column = *start;
 
 		sql.append(column.GetColumnString());
 
-		start++;
+		++start;
 	}
 
 	std::for_each(start, columns.cend(), appendToSql);
@@ -72,9 +72,9 @@ SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &project
 
 		sql.append(predicate.GetPredicate());
 
-		for (auto iter = predicate.GetBegin(); iter != predicate.GetEnd(); iter++)
+		for (auto item : predicate)
 		{
-			result.AddParameter(*iter);
+			result.AddParameter(item);
 		}
 	}
 
@@ -83,9 +83,9 @@ SqlStatement SqlServerDialect::BuildSelectStatement(const SqlProjection &project
 	return result;
 }
 
-SqlStatement SqlServerDialect::BuildInsertStatement(const IRecord &record) const
+orm::sql::statement SqlServerDialect::BuildInsertStatement(const IRecord &record) const
 {
-	SqlStatement result;
+	orm::sql::statement result;
 
 	std::string sql("INSERT INTO ");
 	sql.append(record.GetSchema());
@@ -142,9 +142,9 @@ SqlStatement SqlServerDialect::BuildInsertStatement(const IRecord &record) const
 	return result;
 }
 
-SqlStatement SqlServerDialect::BuildUpdateStatement(const IRecord &record) const
+orm::sql::statement SqlServerDialect::BuildUpdateStatement(const IRecord &record) const
 {
-	SqlStatement result;
+	orm::sql::statement result;
 
 	std::string sql("UPDATE ");
 	sql.append(record.GetSchema());
@@ -201,9 +201,9 @@ SqlStatement SqlServerDialect::BuildUpdateStatement(const IRecord &record) const
 	return result;
 }
 
-SqlStatement SqlServerDialect::BuildDeleteStatement(const IRecord &record) const
+orm::sql::statement SqlServerDialect::BuildDeleteStatement(const IRecord &record) const
 {
-	SqlStatement result;
+	orm::sql::statement result;
 
 	std::string sql("DELETE FROM ");
 	sql.append(record.GetSchema());

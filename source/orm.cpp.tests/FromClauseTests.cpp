@@ -1,81 +1,81 @@
 #include "stdafx.h"
 
-#include <FromClause.h>
-#include <JoinClause.h>
-#include <SqlTable.h>
+#include <from_clause.h>
+#include <join_clause.h>
+#include <sql_table.h>
 
 TEST(FromClauseTests, DefaultConstructor_MainTableIsEmpty)
 {
-	FromClause clause;
+	orm::sql::from_clause clause;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	EXPECT_EQ(table, clause.GetMainTable());
 }
 
 TEST(FromClauseTests, DefaultConstructor_HasNoJoins)
 {
-	FromClause clause;
+	orm::sql::from_clause clause;
 
-	const std::vector<JoinClause> &joins = clause.GetJoins();
+	const std::vector<orm::sql::join_clause> &joins = clause.GetJoins();
 
 	EXPECT_EQ(0, joins.size());
 }
 
 TEST(FromClauseTests, CopyConstructor_CopiesMainTable)
 {
-	FromClause expected;
+	orm::sql::from_clause expected;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 
 	table.SetSchema("dbo");
 	table.SetTable("Table");
 
 	expected.SetMainTable(table);
 
-	FromClause actual(expected);
+	orm::sql::from_clause actual(expected);
 
 	EXPECT_EQ(expected.GetMainTable(), actual.GetMainTable());
 }
 
 TEST(FromClauseTests, CopyConstructor_CopiesJoins)
 {
-	FromClause expected;
+	orm::sql::from_clause expected;
 
-	SqlTable source;
+	orm::sql::sql_table source;
 
 	source.SetSchema("dbo");
 	source.SetTable("Table");
 
-	SqlTable destination;
+	orm::sql::sql_table destination;
 
 	destination.SetSchema("dbo");
 	destination.SetTable("Table");
 
-	JoinClause join;
+	orm::sql::join_clause join;
 
 	join.SetSourceTable(source);
 	join.SetDestinationTable(destination);
 
 	expected.AddJoin(join);
 
-	FromClause actual(expected);
+	orm::sql::from_clause actual(expected);
 
 	EXPECT_EQ(expected.GetJoins(), actual.GetJoins());
 }
 
 TEST(BuildSqlClause, BuildSqlClause_NoTables_ReturnsEmptyString)
 {
-	FromClause from;
+	orm::sql::from_clause from;
 
 	EXPECT_EQ("", from.BuildSqlClause());
 }
 
 TEST(BuildSqlClause, BuildSqlClause_MainTableSet_ReturnsSimpleFromClause)
 {
-	FromClause from;
+	orm::sql::from_clause from;
 
-	SqlTable table;
+	orm::sql::sql_table table;
 	table.SetSchema("dbo");
 	table.SetTable("Table");
 
@@ -86,29 +86,29 @@ TEST(BuildSqlClause, BuildSqlClause_MainTableSet_ReturnsSimpleFromClause)
 
 TEST(BuildSqlClause, BuildSqlClause_MainTableSetWithOneInnerJoin_ReturnsFromClauseWithInnerJoin)
 {
-	FromClause from;
+	orm::sql::from_clause from;
 
-	SqlTable mainTable;
+	orm::sql::sql_table mainTable;
 	mainTable.SetSchema("dbo");
 	mainTable.SetTable("MainTable");
 
-	SqlColumn mainColumn;
+	orm::sql::sql_column mainColumn;
 
 	mainColumn.SetTable("MainTable");
 	mainColumn.SetColumn("Id");
 
 	from.SetMainTable(mainTable);
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("MainTableId");
 
-	JoinClause join;
+	orm::sql::join_clause join;
 
 	join.SetSourceTable(mainTable);
 	join.SetSourceColumn(mainColumn);
@@ -123,29 +123,29 @@ TEST(BuildSqlClause, BuildSqlClause_MainTableSetWithOneInnerJoin_ReturnsFromClau
 
 TEST(BuildSqlClause, BuildSqlClause_MainTableSetWithOneOuterJoin_ReturnsFromClauseWithOuterJoin)
 {
-	FromClause from;
+	orm::sql::from_clause from;
 
-	SqlTable mainTable;
+	orm::sql::sql_table mainTable;
 	mainTable.SetSchema("dbo");
 	mainTable.SetTable("MainTable");
 
-	SqlColumn mainColumn;
+	orm::sql::sql_column mainColumn;
 
 	mainColumn.SetTable("MainTable");
 	mainColumn.SetColumn("Id");
 
 	from.SetMainTable(mainTable);
 
-	SqlTable destinationTable;
+	orm::sql::sql_table destinationTable;
 	destinationTable.SetSchema("dbo");
 	destinationTable.SetTable("DestinationTable");
 
-	SqlColumn destinationColumn;
+	orm::sql::sql_column destinationColumn;
 
 	destinationColumn.SetTable("DestinationTable");
 	destinationColumn.SetColumn("MainTableId");
 
-	JoinClause join;
+	orm::sql::join_clause join;
 
 	join.SetIsOuterJoin(true);
 

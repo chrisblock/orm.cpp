@@ -8,5 +8,5 @@ class TestMappingEntityMap : public ClassMap<TestMappingEntity>
 {
 public:
 	TestMappingEntityMap();
-	virtual ~TestMappingEntityMap();
+	virtual ~TestMappingEntityMap() = default;
 };

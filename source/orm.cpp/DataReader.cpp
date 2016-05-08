@@ -7,10 +7,28 @@
 
 #include "Guid.h"
 
+void swap(DataReader &left, DataReader &right)
+{
+	using std::swap;
+
+	swap(left._commandText, right._commandText);
+	swap(left._statement, right._statement);
+}
+
+DataReader::DataReader()
+{
+}
+
 DataReader::DataReader(const std::shared_ptr<odbc::statement> &statement, const std::string &commandText) :
 	  _statement(statement)
 	, _commandText(commandText)
 {
+}
+
+DataReader::DataReader(DataReader &&other) :
+	  DataReader()
+{
+	swap(*this, other);
 }
 
 DataReader::~DataReader()

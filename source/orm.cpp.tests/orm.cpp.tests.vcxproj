@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -42,9 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Linkage-gtest>static</Linkage-gtest>
+    <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <Linkage-gtest>static</Linkage-gtest>
+    <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -53,7 +57,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\orm.cpp;$(SolutionDir)\gtest</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\orm.cpp; $(SolutionDir)\gtest;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
@@ -71,7 +75,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\orm.cpp;$(SolutionDir)\gtest</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\orm.cpp; $(SolutionDir)\gtest;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -101,29 +105,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClassMapTests.cpp" />
-    <ClCompile Include="ConstReferenceSetterConstGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstReferenceSetterConstReferenceGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstReferenceSetterGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstReferenceSetterReferenceGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstSetterConstGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstSetterConstReferenceGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstSetterGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ConstSetterReferenceGetterColumnMapperTests.cpp" />
+    <ClCompile Include="GetterSetterColumnMapperTests.cpp" />
+    <ClCompile Include="decompose_tests.cpp" />
     <ClCompile Include="ExpressionOperatorTests.cpp" />
     <ClCompile Include="FieldColumnMapperTests.cpp" />
     <ClCompile Include="FromClauseTests.cpp" />
     <ClCompile Include="IdFieldTestMappingEntityMap.cpp" />
     <ClCompile Include="JoinClauseTests.cpp" />
     <ClCompile Include="MakeExpressionTests.cpp" />
-    <ClCompile Include="member_types_tests.cpp" />
+    <ClCompile Include="to_string_tests.cpp" />
     <ClCompile Include="MockDataReader.cpp" />
     <ClCompile Include="MockSqlExecutor.cpp" />
     <ClCompile Include="orm.cpp.tests.cpp" />
     <ClCompile Include="QueryTests.cpp" />
-    <ClCompile Include="ReferenceSetterConstGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ReferenceSetterConstReferenceGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ReferenceSetterGetterColumnMapperTests.cpp" />
-    <ClCompile Include="ReferenceSetterReferenceGetterColumnMapperTests.cpp" />
     <ClCompile Include="SessionFactoryConfigurationTests.cpp" />
     <ClCompile Include="SessionTests.cpp" />
     <ClCompile Include="SqlColumnTests.cpp" />
@@ -152,6 +146,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
 </Project>

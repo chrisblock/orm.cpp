@@ -1,50 +1,50 @@
 #include "stdafx.h"
 
-#include <SqlColumn.h>
+#include <sql_column.h>
 
 TEST(SqlColumnTests, DefaultConstructor_SetsTableToEmptyString)
 {
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	EXPECT_EQ("", column.GetTable());
 }
 
 TEST(SqlColumnTests, DefaultConstructor_SetsColumnToEmptyString)
 {
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	EXPECT_EQ("", column.GetColumn());
 }
 
 TEST(SqlColumnTests, CopyConstructor_CopiesTable)
 {
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	expected.SetTable("Table");
 
-	SqlColumn actual(expected);
+	orm::sql::sql_column actual(expected);
 
 	EXPECT_EQ(expected.GetTable(), actual.GetTable());
 }
 
 TEST(SqlColumnTests, CopyConstructor_CopiesColumn)
 {
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	expected.SetColumn("Column");
 
-	SqlColumn actual(expected);
+	orm::sql::sql_column actual(expected);
 
 	EXPECT_EQ(expected.GetColumn(), actual.GetColumn());
 }
 
 TEST(SqlColumnTests, AssignmentOperator_AssignsTable)
 {
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	expected.SetTable("Table");
 
-	SqlColumn actual;
+	orm::sql::sql_column actual;
 
 	actual = expected;
 
@@ -53,11 +53,11 @@ TEST(SqlColumnTests, AssignmentOperator_AssignsTable)
 
 TEST(SqlColumnTests, AssignmentOperator_AssignsColumn)
 {
-	SqlColumn expected;
+	orm::sql::sql_column expected;
 
 	expected.SetColumn("Column");
 
-	SqlColumn actual;
+	orm::sql::sql_column actual;
 
 	actual = expected;
 
@@ -66,12 +66,12 @@ TEST(SqlColumnTests, AssignmentOperator_AssignsColumn)
 
 TEST(SqlColumnTests, EqualsOperator_TableIsEqualColumnIsEqual_ReturnsTrue)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("Table");
 	right.SetColumn("Column");
@@ -81,12 +81,12 @@ TEST(SqlColumnTests, EqualsOperator_TableIsEqualColumnIsEqual_ReturnsTrue)
 
 TEST(SqlColumnTests, EqualsOperator_TableIsNotEqualColumnIsEqual_ReturnsFalse)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("NotTable");
 	right.SetColumn("Column");
@@ -96,12 +96,12 @@ TEST(SqlColumnTests, EqualsOperator_TableIsNotEqualColumnIsEqual_ReturnsFalse)
 
 TEST(SqlColumnTests, EqualsOperator_TableIsEqualColumnIsNotEqual_ReturnsFalse)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("Table");
 	right.SetColumn("NotColumn");
@@ -111,12 +111,12 @@ TEST(SqlColumnTests, EqualsOperator_TableIsEqualColumnIsNotEqual_ReturnsFalse)
 
 TEST(SqlColumnTests, NotEqualOperator_TableIsEqualColumnIsEqual_ReturnsFalse)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("Table");
 	right.SetColumn("Column");
@@ -126,12 +126,12 @@ TEST(SqlColumnTests, NotEqualOperator_TableIsEqualColumnIsEqual_ReturnsFalse)
 
 TEST(SqlColumnTests, NotEqualOperator_TableIsNotEqualColumnIsEqual_ReturnsTrue)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("NotTable");
 	right.SetColumn("Column");
@@ -141,12 +141,12 @@ TEST(SqlColumnTests, NotEqualOperator_TableIsNotEqualColumnIsEqual_ReturnsTrue)
 
 TEST(SqlColumnTests, NotEqualOperator_TableIsEqualColumnIsNotEqual_ReturnsTrue)
 {
-	SqlColumn left;
+	orm::sql::sql_column left;
 
 	left.SetTable("Table");
 	left.SetColumn("Column");
 
-	SqlColumn right;
+	orm::sql::sql_column right;
 
 	right.SetTable("Table");
 	right.SetColumn("NotColumn");
@@ -156,14 +156,14 @@ TEST(SqlColumnTests, NotEqualOperator_TableIsEqualColumnIsNotEqual_ReturnsTrue)
 
 TEST(SqlColumnTests, GetColumnString_EmptyAliasEmptyTableEmptyColumn_ReturnsEmptyString)
 {
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	EXPECT_EQ("", column.GetColumnString());
 }
 
 TEST(SqlColumnTests, GetColumnString_EmptyAliasHasTableEmptyColumn_ReturnsTableDot)
 {
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 
@@ -172,7 +172,7 @@ TEST(SqlColumnTests, GetColumnString_EmptyAliasHasTableEmptyColumn_ReturnsTableD
 
 TEST(SqlColumnTests, GetColumnString_EmptyAliasHasTableHasColumn_ReturnsTableDoColumn)
 {
-	SqlColumn column;
+	orm::sql::sql_column column;
 
 	column.SetTable("Table");
 	column.SetColumn("Column");

@@ -5,35 +5,47 @@
 #include <sql_indicator.h>
 #include <sql_type.h>
 
-TEST(column_tests, DefaultConstructor__SetsTypeToInteger)
+class column_tests : public testing::Test
+{
+protected:
+	virtual void SetUp()
+	{
+	};
+
+	virtual void TearDown()
+	{
+	};
+};
+
+TEST_F(column_tests, DefaultConstructor__SetsTypeToInteger)
 {
 	odbc::column c;
 
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, DefaultConstructor__SetsCTypeToSignedLong)
+TEST_F(column_tests, DefaultConstructor__SetsCTypeToSignedLong)
 {
 	odbc::column c;
 
 	EXPECT_EQ(odbc::sql_c_type::sql_c_slong, c.get_c_type());
 }
 
-TEST(column_tests, DefaultConstructor__SetsWidthToZero)
+TEST_F(column_tests, DefaultConstructor__SetsWidthToZero)
 {
 	odbc::column c;
 
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, DefaultConstructor__SetsIndicatorToNull)
+TEST_F(column_tests, DefaultConstructor__SetsIndicatorToNull)
 {
 	odbc::column c;
 
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, DefaultConstructor__SetsValueToZero)
+TEST_F(column_tests, DefaultConstructor__SetsValueToZero)
 {
 	odbc::column c;
 
@@ -71,7 +83,7 @@ TEST(column_tests, DefaultConstructor__SetsValueToZero)
 	EXPECT_EQ(0, bytes[23]);
 }
 
-TEST(column_tests, AssignmentOperator__bool__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__bool__SetsTypeCorrectly)
 {
 	bool expected = false;
 
@@ -82,7 +94,7 @@ TEST(column_tests, AssignmentOperator__bool__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bit, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__bool__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__bool__SetsCTypeCorrectly)
 {
 	bool expected = false;
 
@@ -93,7 +105,7 @@ TEST(column_tests, AssignmentOperator__bool__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_bit, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__bool__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__bool__SetsWidthCorrectly)
 {
 	bool expected = false;
 
@@ -104,7 +116,7 @@ TEST(column_tests, AssignmentOperator__bool__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (bool), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__bool__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__bool__SetsIndicatorCorrectly)
 {
 	bool expected = false;
 
@@ -115,7 +127,7 @@ TEST(column_tests, AssignmentOperator__bool__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (bool), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__bool__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__bool__SetsValueCorrectly)
 {
 	bool expected = false;
 
@@ -128,7 +140,7 @@ TEST(column_tests, AssignmentOperator__bool__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<bool> expected;
 
@@ -139,7 +151,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsTypeCorrectly
 	EXPECT_EQ(odbc::sql_type::sql_bit, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<bool> expected;
 
@@ -150,7 +162,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsCTypeCorrectl
 	EXPECT_EQ(odbc::sql_c_type::sql_c_bit, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<bool> expected;
 
@@ -161,7 +173,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsWidthCorrectl
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<bool> expected;
 
@@ -172,7 +184,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsIndicatorCorr
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsValueCorrectly)
 {
 	std::shared_ptr<bool> expected;
 
@@ -185,7 +197,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__null__SetsValueCorrectl
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__SetsTypeCorrectly)
 {
 	std::shared_ptr<bool> expected = std::make_shared<bool>(true);
 
@@ -196,7 +208,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bit, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__SetsCTypeCorrectly)
 {
 	std::shared_ptr<bool> expected = std::make_shared<bool>(true);
 
@@ -207,7 +219,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_bit, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__SetsWidthCorrectly)
 {
 	std::shared_ptr<bool> expected = std::make_shared<bool>(true);
 
@@ -218,7 +230,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (bool), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<bool> expected = std::make_shared<bool>(true);
 
@@ -229,7 +241,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (bool), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__bool__SetsValueCorrectly)
 {
 	std::shared_ptr<bool> expected = std::make_shared<bool>(true);
 
@@ -242,7 +254,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__bool__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__int8_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int8_t__SetsTypeCorrectly)
 {
 	std::int8_t expected = 42;
 
@@ -253,7 +265,7 @@ TEST(column_tests, AssignmentOperator__int8_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__int8_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int8_t__SetsCTypeCorrectly)
 {
 	std::int8_t expected = 42;
 
@@ -264,7 +276,7 @@ TEST(column_tests, AssignmentOperator__int8_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_stinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__int8_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__int8_t__SetsWidthCorrectly)
 {
 	std::int8_t expected = 42;
 
@@ -275,7 +287,7 @@ TEST(column_tests, AssignmentOperator__int8_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int8_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__int8_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__int8_t__SetsIndicatorCorrectly)
 {
 	std::int8_t expected = 42;
 
@@ -286,7 +298,7 @@ TEST(column_tests, AssignmentOperator__int8_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::int8_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__int8_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__int8_t__SetsValueCorrectly)
 {
 	std::int8_t expected = 42;
 
@@ -299,7 +311,7 @@ TEST(column_tests, AssignmentOperator__int8_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected;
 
@@ -310,7 +322,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsTypeCorrect
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null_SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__null_SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected;
 
@@ -321,7 +333,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null_SetsCTypeCorrect
 	EXPECT_EQ(odbc::sql_c_type::sql_c_stinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected;
 
@@ -332,7 +344,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsWidthCorrec
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected;
 
@@ -343,7 +355,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsIndicatorCo
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected;
 
@@ -356,7 +368,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__null__SetsValueCorrec
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected = std::make_shared<std::int8_t>(42);
 
@@ -367,7 +379,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected = std::make_shared<std::int8_t>(42);
 
@@ -378,7 +390,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_stinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected = std::make_shared<std::int8_t>(42);
 
@@ -389,7 +401,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int8_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected = std::make_shared<std::int8_t>(42);
 
@@ -400,7 +412,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsIndicatorCorrectl
 	EXPECT_EQ(sizeof (std::int8_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int8_t> expected = std::make_shared<std::int8_t>(42);
 
@@ -413,7 +425,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int8_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__uint8_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint8_t__SetsTypeCorrectly)
 {
 	std::uint8_t expected = 42;
 
@@ -424,7 +436,7 @@ TEST(column_tests, AssignmentOperator__uint8_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint8_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint8_t__SetsCTypeCorrectly)
 {
 	std::uint8_t expected = 42;
 
@@ -435,7 +447,7 @@ TEST(column_tests, AssignmentOperator__uint8_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_utinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint8_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint8_t__SetsWidthCorrectly)
 {
 	std::uint8_t expected = 42;
 
@@ -446,7 +458,7 @@ TEST(column_tests, AssignmentOperator__uint8_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint8_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__uint8_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint8_t__SetsIndicatorCorrectly)
 {
 	std::uint8_t expected = 42;
 
@@ -457,7 +469,7 @@ TEST(column_tests, AssignmentOperator__uint8_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::uint8_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__uint8_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint8_t__SetsValueCorrectly)
 {
 	std::uint8_t expected = 42;
 
@@ -470,7 +482,7 @@ TEST(column_tests, AssignmentOperator__uint8_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected;
 
@@ -481,7 +493,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsTypeCorrec
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null_SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__null_SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected;
 
@@ -492,7 +504,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null_SetsCTypeCorrec
 	EXPECT_EQ(odbc::sql_c_type::sql_c_utinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected;
 
@@ -503,7 +515,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsWidthCorre
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected;
 
@@ -514,7 +526,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsIndicatorC
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected;
 
@@ -527,7 +539,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__null__SetsValueCorre
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected = std::make_shared<std::uint8_t>(42);
 
@@ -538,7 +550,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_tinyint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected = std::make_shared<std::uint8_t>(42);
 
@@ -549,7 +561,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_utinyint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected = std::make_shared<std::uint8_t>(42);
 
@@ -560,7 +572,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint8_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected = std::make_shared<std::uint8_t>(42);
 
@@ -571,7 +583,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsIndicatorCorrect
 	EXPECT_EQ(sizeof (std::uint8_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint8_t> expected = std::make_shared<std::uint8_t>(42);
 
@@ -584,7 +596,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint8_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__int16_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int16_t__SetsTypeCorrectly)
 {
 	std::int16_t expected = 42;
 
@@ -595,7 +607,7 @@ TEST(column_tests, AssignmentOperator__int16_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__int16_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int16_t__SetsCTypeCorrectly)
 {
 	std::int16_t expected = 42;
 
@@ -606,7 +618,7 @@ TEST(column_tests, AssignmentOperator__int16_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sshort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__int16_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__int16_t__SetsWidthCorrectly)
 {
 	std::int16_t expected = 42;
 
@@ -617,7 +629,7 @@ TEST(column_tests, AssignmentOperator__int16_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int16_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__int16_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__int16_t__SetsIndicatorCorrectly)
 {
 	std::int16_t expected = 42;
 
@@ -628,7 +640,7 @@ TEST(column_tests, AssignmentOperator__int16_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::int16_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__int16_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__int16_t__SetsValueCorrectly)
 {
 	std::int16_t expected = 42;
 
@@ -641,7 +653,7 @@ TEST(column_tests, AssignmentOperator__int16_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected;
 
@@ -652,7 +664,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsTypeCorrec
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected;
 
@@ -663,7 +675,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsCTypeCorre
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sshort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected;
 
@@ -674,7 +686,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsWidthCorre
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected;
 
@@ -685,7 +697,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsIndicatorC
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected;
 
@@ -698,7 +710,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__null__SetsValueCorre
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected = std::make_shared<std::int16_t>(42);
 
@@ -709,7 +721,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected = std::make_shared<std::int16_t>(42);
 
@@ -720,7 +732,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sshort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected = std::make_shared<std::int16_t>(42);
 
@@ -731,7 +743,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int16_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected = std::make_shared<std::int16_t>(42);
 
@@ -742,7 +754,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsIndicatorCorrect
 	EXPECT_EQ(sizeof (std::int16_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int16_t> expected = std::make_shared<std::int16_t>(42);
 
@@ -755,7 +767,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int16_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__uint16_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint16_t__SetsTypeCorrectly)
 {
 	std::uint16_t expected = 42;
 
@@ -766,7 +778,7 @@ TEST(column_tests, AssignmentOperator__uint16_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint16_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint16_t__SetsCTypeCorrectly)
 {
 	std::uint16_t expected = 42;
 
@@ -777,7 +789,7 @@ TEST(column_tests, AssignmentOperator__uint16_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ushort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint16_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint16_t__SetsWidthCorrectly)
 {
 	std::uint16_t expected = 42;
 
@@ -788,7 +800,7 @@ TEST(column_tests, AssignmentOperator__uint16_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint16_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__uint16_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint16_t__SetsIndicatorCorrectly)
 {
 	std::uint16_t expected = 42;
 
@@ -799,7 +811,7 @@ TEST(column_tests, AssignmentOperator__uint16_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::uint16_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__uint16_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint16_t__SetsValueCorrectly)
 {
 	std::uint16_t expected = 42;
 
@@ -812,7 +824,7 @@ TEST(column_tests, AssignmentOperator__uint16_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected;
 
@@ -823,7 +835,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsTypeCorre
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected;
 
@@ -834,7 +846,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsCTypeCorr
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ushort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected;
 
@@ -845,7 +857,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsWidthCorr
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected;
 
@@ -856,7 +868,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsIndicator
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected;
 
@@ -869,7 +881,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__null__SetsValueCorr
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected = std::make_shared<std::uint16_t>(42);
 
@@ -880,7 +892,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_smallint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected = std::make_shared<std::uint16_t>(42);
 
@@ -891,7 +903,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ushort, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected = std::make_shared<std::uint16_t>(42);
 
@@ -902,7 +914,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint16_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected = std::make_shared<std::uint16_t>(42);
 
@@ -913,7 +925,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsIndicatorCorrec
 	EXPECT_EQ(sizeof (std::uint16_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint16_t> expected = std::make_shared<std::uint16_t>(42);
 
@@ -926,7 +938,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint16_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__int32_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int32_t__SetsTypeCorrectly)
 {
 	std::int32_t expected = 42;
 
@@ -937,7 +949,7 @@ TEST(column_tests, AssignmentOperator__int32_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__int32_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int32_t__SetsCTypeCorrectly)
 {
 	std::int32_t expected = 42;
 
@@ -948,7 +960,7 @@ TEST(column_tests, AssignmentOperator__int32_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_slong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__int32_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__int32_t__SetsWidthCorrectly)
 {
 	std::int32_t expected = 42;
 
@@ -959,7 +971,7 @@ TEST(column_tests, AssignmentOperator__int32_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int32_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__int32_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__int32_t__SetsIndicatorCorrectly)
 {
 	std::int32_t expected = 42;
 
@@ -970,7 +982,7 @@ TEST(column_tests, AssignmentOperator__int32_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::int32_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__int32_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__int32_t__SetsValueCorrectly)
 {
 	std::int32_t expected = 42;
 
@@ -983,7 +995,7 @@ TEST(column_tests, AssignmentOperator__int32_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected;
 
@@ -994,7 +1006,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsTypeCorrec
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected;
 
@@ -1005,7 +1017,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsCTypeCorre
 	EXPECT_EQ(odbc::sql_c_type::sql_c_slong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected;
 
@@ -1016,7 +1028,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsWidthCorre
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected;
 
@@ -1027,7 +1039,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsIndicatorC
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected;
 
@@ -1040,7 +1052,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__null__SetsValueCorre
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected = std::make_shared<std::int32_t>(42);
 
@@ -1051,7 +1063,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected = std::make_shared<std::int32_t>(42);
 
@@ -1062,7 +1074,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_slong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected = std::make_shared<std::int32_t>(42);
 
@@ -1073,7 +1085,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int32_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected = std::make_shared<std::int32_t>(42);
 
@@ -1084,7 +1096,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsIndicatorCorrect
 	EXPECT_EQ(sizeof (std::int32_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int32_t> expected = std::make_shared<std::int32_t>(42);
 
@@ -1097,7 +1109,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int32_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__uint32_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint32_t__SetsTypeCorrectly)
 {
 	std::uint32_t expected = 42;
 
@@ -1108,7 +1120,7 @@ TEST(column_tests, AssignmentOperator__uint32_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint32_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint32_t__SetsCTypeCorrectly)
 {
 	std::uint32_t expected = 42;
 
@@ -1119,7 +1131,7 @@ TEST(column_tests, AssignmentOperator__uint32_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ulong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint32_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint32_t__SetsWidthCorrectly)
 {
 	std::uint32_t expected = 42;
 
@@ -1130,7 +1142,7 @@ TEST(column_tests, AssignmentOperator__uint32_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint32_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__uint32_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint32_t__SetsIndicatorCorrectly)
 {
 	std::uint32_t expected = 42;
 
@@ -1141,7 +1153,7 @@ TEST(column_tests, AssignmentOperator__uint32_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::uint32_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__uint32_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint32_t__SetsValueCorrectly)
 {
 	std::uint32_t expected = 42;
 
@@ -1154,7 +1166,7 @@ TEST(column_tests, AssignmentOperator__uint32_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected;
 
@@ -1165,7 +1177,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsTypeCorre
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected;
 
@@ -1176,7 +1188,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsCTypeCorr
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ulong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected;
 
@@ -1187,7 +1199,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsWidthCorr
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected;
 
@@ -1198,7 +1210,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsIndicator
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected;
 
@@ -1211,7 +1223,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__null__SetsValueCorr
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected = std::make_shared<std::uint32_t>(42);
 
@@ -1222,7 +1234,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_integer, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected = std::make_shared<std::uint32_t>(42);
 
@@ -1233,7 +1245,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ulong, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected = std::make_shared<std::uint32_t>(42);
 
@@ -1244,7 +1256,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint32_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected = std::make_shared<std::uint32_t>(42);
 
@@ -1255,7 +1267,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsIndicatorCorrec
 	EXPECT_EQ(sizeof (std::uint32_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint32_t> expected = std::make_shared<std::uint32_t>(42);
 
@@ -1268,7 +1280,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint32_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__int64_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int64_t__SetsTypeCorrectly)
 {
 	std::int64_t expected = 42;
 
@@ -1279,7 +1291,7 @@ TEST(column_tests, AssignmentOperator__int64_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__int64_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__int64_t__SetsCTypeCorrectly)
 {
 	std::int64_t expected = 42;
 
@@ -1290,7 +1302,7 @@ TEST(column_tests, AssignmentOperator__int64_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sbigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__int64_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__int64_t__SetsWidthCorrectly)
 {
 	std::int64_t expected = 42;
 
@@ -1301,7 +1313,7 @@ TEST(column_tests, AssignmentOperator__int64_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int64_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__int64_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__int64_t__SetsIndicatorCorrectly)
 {
 	std::int64_t expected = 42;
 
@@ -1312,7 +1324,7 @@ TEST(column_tests, AssignmentOperator__int64_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::int64_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__int64_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__int64_t__SetsValueCorrectly)
 {
 	std::int64_t expected = 42;
 
@@ -1325,7 +1337,7 @@ TEST(column_tests, AssignmentOperator__int64_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected;
 
@@ -1336,7 +1348,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsTypeCorrec
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected;
 
@@ -1347,7 +1359,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsCTypeCorre
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sbigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected;
 
@@ -1358,7 +1370,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsWidthCorre
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected;
 
@@ -1369,7 +1381,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsIndicatorC
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected;
 
@@ -1382,7 +1394,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__null__SetsValueCorre
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected = std::make_shared<std::int64_t>(42);
 
@@ -1393,7 +1405,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected = std::make_shared<std::int64_t>(42);
 
@@ -1404,7 +1416,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_sbigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected = std::make_shared<std::int64_t>(42);
 
@@ -1415,7 +1427,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::int64_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected = std::make_shared<std::int64_t>(42);
 
@@ -1426,7 +1438,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsIndicatorCorrect
 	EXPECT_EQ(sizeof (std::int64_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::int64_t> expected = std::make_shared<std::int64_t>(42);
 
@@ -1439,7 +1451,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__int64_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__uint64_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint64_t__SetsTypeCorrectly)
 {
 	std::uint64_t expected = 42;
 
@@ -1450,7 +1462,7 @@ TEST(column_tests, AssignmentOperator__uint64_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint64_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint64_t__SetsCTypeCorrectly)
 {
 	std::uint64_t expected = 42;
 
@@ -1461,7 +1473,7 @@ TEST(column_tests, AssignmentOperator__uint64_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ubigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__uint64_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint64_t__SetsWidthCorrectly)
 {
 	std::uint64_t expected = 42;
 
@@ -1472,7 +1484,7 @@ TEST(column_tests, AssignmentOperator__uint64_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint64_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__uint64_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint64_t__SetsIndicatorCorrectly)
 {
 	std::uint64_t expected = 42;
 
@@ -1483,7 +1495,7 @@ TEST(column_tests, AssignmentOperator__uint64_t__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (std::uint64_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__uint64_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__uint64_t__SetsValueCorrectly)
 {
 	std::uint64_t expected = 42;
 
@@ -1496,7 +1508,7 @@ TEST(column_tests, AssignmentOperator__uint64_t__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected;
 
@@ -1507,7 +1519,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsTypeCorre
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected;
 
@@ -1518,7 +1530,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsCTypeCorr
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ubigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected;
 
@@ -1529,7 +1541,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsWidthCorr
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected;
 
@@ -1540,7 +1552,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsIndicator
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected;
 
@@ -1553,7 +1565,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__null__SetsValueCorr
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected = std::make_shared<std::uint64_t>(42);
 
@@ -1564,7 +1576,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_bigint, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected = std::make_shared<std::uint64_t>(42);
 
@@ -1575,7 +1587,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_ubigint, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected = std::make_shared<std::uint64_t>(42);
 
@@ -1586,7 +1598,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (std::uint64_t), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected = std::make_shared<std::uint64_t>(42);
 
@@ -1597,7 +1609,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsIndicatorCorrec
 	EXPECT_EQ(sizeof (std::uint64_t), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsValueCorrectly)
 {
 	std::shared_ptr<std::uint64_t> expected = std::make_shared<std::uint64_t>(42);
 
@@ -1610,7 +1622,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__uint64_t__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__date__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__date__SetsTypeCorrectly)
 {
 	odbc::date expected = {};
 
@@ -1625,7 +1637,7 @@ TEST(column_tests, AssignmentOperator__date__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_date, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__date__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__date__SetsCTypeCorrectly)
 {
 	odbc::date expected = {};
 
@@ -1640,7 +1652,7 @@ TEST(column_tests, AssignmentOperator__date__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_date, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__date__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__date__SetsWidthCorrectly)
 {
 	odbc::date expected = {};
 
@@ -1655,7 +1667,7 @@ TEST(column_tests, AssignmentOperator__date__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (odbc::date), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__date__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__date__SetsIndicatorCorrectly)
 {
 	odbc::date expected = {};
 
@@ -1670,7 +1682,7 @@ TEST(column_tests, AssignmentOperator__date__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (odbc::date), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__date__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__date__SetsValueCorrectly)
 {
 	odbc::date expected = {};
 
@@ -1689,7 +1701,7 @@ TEST(column_tests, AssignmentOperator__date__SetsValueCorrectly)
 	EXPECT_EQ(expected.year, actual.year);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::date> expected;
 
@@ -1700,7 +1712,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsTypeCorrectly
 	EXPECT_EQ(odbc::sql_type::sql_date, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::date> expected;
 
@@ -1711,7 +1723,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsCTypeCorrectl
 	EXPECT_EQ(odbc::sql_c_type::sql_c_date, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::date> expected;
 
@@ -1722,7 +1734,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsWidthCorrectl
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::date> expected;
 
@@ -1733,7 +1745,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsIndicatorCorr
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__null__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::date> expected;
 
@@ -1746,7 +1758,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__null__SetsValueCorrectl
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::date> expected = std::make_shared<odbc::date>();
 
@@ -1761,7 +1773,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_date, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::date> expected = std::make_shared<odbc::date>();
 
@@ -1776,7 +1788,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_date, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::date> expected = std::make_shared<odbc::date>();
 
@@ -1791,7 +1803,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (odbc::date), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::date> expected = std::make_shared<odbc::date>();
 
@@ -1806,7 +1818,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (odbc::date), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::date> expected = std::make_shared<odbc::date>();
 
@@ -1825,7 +1837,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date__SetsValueCorrectly)
 	EXPECT_EQ(expected->year, actual->year);
 }
 
-TEST(column_tests, AssignmentOperator__time__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__time__SetsTypeCorrectly)
 {
 	odbc::time expected = {};
 
@@ -1840,7 +1852,7 @@ TEST(column_tests, AssignmentOperator__time__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_time, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__time__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__time__SetsCTypeCorrectly)
 {
 	odbc::time expected = {};
 
@@ -1855,7 +1867,7 @@ TEST(column_tests, AssignmentOperator__time__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_time, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__time__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__time__SetsWidthCorrectly)
 {
 	odbc::time expected = {};
 
@@ -1870,7 +1882,7 @@ TEST(column_tests, AssignmentOperator__time__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (odbc::time), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__time__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__time__SetsIndicatorCorrectly)
 {
 	odbc::time expected = {};
 
@@ -1885,7 +1897,7 @@ TEST(column_tests, AssignmentOperator__time__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (odbc::time), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__time__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__time__SetsValueCorrectly)
 {
 	odbc::time expected = {};
 
@@ -1904,7 +1916,7 @@ TEST(column_tests, AssignmentOperator__time__SetsValueCorrectly)
 	EXPECT_EQ(expected.second, actual.second);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::time> expected;
 
@@ -1915,7 +1927,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsTypeCorrectly
 	EXPECT_EQ(odbc::sql_type::sql_time, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::time> expected;
 
@@ -1926,7 +1938,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsCTypeCorrectl
 	EXPECT_EQ(odbc::sql_c_type::sql_c_time, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::time> expected;
 
@@ -1937,7 +1949,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsWidthCorrectl
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::time> expected;
 
@@ -1948,7 +1960,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsIndicatorCorr
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__null__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::time> expected;
 
@@ -1961,7 +1973,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__null__SetsValueCorrectl
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::time> expected = std::make_shared<odbc::time>();
 
@@ -1976,7 +1988,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_time, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::time> expected = std::make_shared<odbc::time>();
 
@@ -1991,7 +2003,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_time, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::time> expected = std::make_shared<odbc::time>();
 
@@ -2006,7 +2018,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (odbc::time), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::time> expected = std::make_shared<odbc::time>();
 
@@ -2021,7 +2033,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (odbc::time), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__time__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::time> expected = std::make_shared<odbc::time>();
 
@@ -2040,7 +2052,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__time__SetsValueCorrectly)
 	EXPECT_EQ(expected->second, actual->second);
 }
 
-TEST(column_tests, AssignmentOperator__date_time__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__date_time__SetsTypeCorrectly)
 {
 	odbc::date_time expected = {};
 
@@ -2059,7 +2071,7 @@ TEST(column_tests, AssignmentOperator__date_time__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_datetime, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__date_time__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__date_time__SetsCTypeCorrectly)
 {
 	odbc::date_time expected = {};
 
@@ -2078,7 +2090,7 @@ TEST(column_tests, AssignmentOperator__date_time__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_datetime, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__date_time__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__date_time__SetsWidthCorrectly)
 {
 	odbc::date_time expected = {};
 
@@ -2097,7 +2109,7 @@ TEST(column_tests, AssignmentOperator__date_time__SetsWidthCorrectly)
 	EXPECT_EQ(sizeof (odbc::date_time), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__date_time__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__date_time__SetsIndicatorCorrectly)
 {
 	odbc::date_time expected = {};
 
@@ -2116,7 +2128,7 @@ TEST(column_tests, AssignmentOperator__date_time__SetsIndicatorCorrectly)
 	EXPECT_EQ(sizeof (odbc::date_time), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__date_time__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__date_time__SetsValueCorrectly)
 {
 	odbc::date_time expected = {};
 
@@ -2143,7 +2155,7 @@ TEST(column_tests, AssignmentOperator__date_time__SetsValueCorrectly)
 	EXPECT_EQ(expected.fraction, actual.fraction);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected;
 
@@ -2154,7 +2166,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsTypeCorr
 	EXPECT_EQ(odbc::sql_type::sql_datetime, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected;
 
@@ -2165,7 +2177,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsCTypeCor
 	EXPECT_EQ(odbc::sql_c_type::sql_c_datetime, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected;
 
@@ -2176,7 +2188,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsWidthCor
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected;
 
@@ -2187,7 +2199,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsIndicato
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected;
 
@@ -2200,7 +2212,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__null__SetsValueCor
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__SetsTypeCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected = std::make_shared<odbc::date_time>();
 
@@ -2219,7 +2231,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_datetime, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__SetsCTypeCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected = std::make_shared<odbc::date_time>();
 
@@ -2238,7 +2250,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsCTypeCorrectly
 	EXPECT_EQ(odbc::sql_c_type::sql_c_datetime, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__SetsWidthCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected = std::make_shared<odbc::date_time>();
 
@@ -2257,7 +2269,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsWidthCorrectly
 	EXPECT_EQ(sizeof (odbc::date_time), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected = std::make_shared<odbc::date_time>();
 
@@ -2276,7 +2288,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsIndicatorCorre
 	EXPECT_EQ(sizeof (odbc::date_time), c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__date_time__SetsValueCorrectly)
 {
 	std::shared_ptr<odbc::date_time> expected = std::make_shared<odbc::date_time>();
 
@@ -2303,7 +2315,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__date_time__SetsValueCorrectly
 	EXPECT_EQ(expected->fraction, actual->fraction);
 }
 
-TEST(column_tests, AssignmentOperator__string__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__string__SetsTypeCorrectly)
 {
 	std::string expected = "Hello, World.";
 
@@ -2314,7 +2326,7 @@ TEST(column_tests, AssignmentOperator__string__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_char, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__string__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__string__SetsCTypeCorrectly)
 {
 	std::string expected = "Hello, World.";
 
@@ -2325,7 +2337,7 @@ TEST(column_tests, AssignmentOperator__string__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_char, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__string__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__string__SetsWidthCorrectly)
 {
 	std::string expected = "Hello, World.";
 
@@ -2336,7 +2348,7 @@ TEST(column_tests, AssignmentOperator__string__SetsWidthCorrectly)
 	EXPECT_EQ((expected.length() + 1) * sizeof (std::string::value_type), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__string__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__string__SetsIndicatorCorrectly)
 {
 	std::string expected = "Hello, World.";
 
@@ -2347,7 +2359,7 @@ TEST(column_tests, AssignmentOperator__string__SetsIndicatorCorrectly)
 	EXPECT_EQ(odbc::sql_indicator::sql_nts, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__string__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__string__SetsValueCorrectly)
 {
 	std::string expected = "Hello, World.";
 
@@ -2360,7 +2372,7 @@ TEST(column_tests, AssignmentOperator__string__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::string> expected;
 
@@ -2371,7 +2383,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsTypeCorrect
 	EXPECT_EQ(odbc::sql_type::sql_char, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::string> expected;
 
@@ -2382,7 +2394,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsCTypeCorrec
 	EXPECT_EQ(odbc::sql_c_type::sql_c_char, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::string> expected;
 
@@ -2393,7 +2405,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsWidthCorrec
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::string> expected;
 
@@ -2404,7 +2416,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsIndicatorCo
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::string> expected;
 
@@ -2417,7 +2429,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__null__SetsValueCorrec
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::string> expected = std::make_shared<std::string>("Hello, World.");
 
@@ -2428,7 +2440,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_char, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::string> expected = std::make_shared<std::string>("Hello, World.");
 
@@ -2439,7 +2451,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_char, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::string> expected = std::make_shared<std::string>("Hello, World.");
 
@@ -2450,7 +2462,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsWidthCorrectly)
 	EXPECT_EQ((expected->length() + 1) * sizeof (std::string::value_type), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::string> expected = std::make_shared<std::string>("Hello, World.");
 
@@ -2461,7 +2473,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsIndicatorCorrectl
 	EXPECT_EQ(odbc::sql_indicator::sql_nts, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__string__SetsValueCorrectly)
 {
 	std::shared_ptr<std::string> expected = std::make_shared<std::string>("Hello, World.");
 
@@ -2474,7 +2486,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__string__SetsValueCorrectly)
 	EXPECT_EQ(*expected, *actual);
 }
 
-TEST(column_tests, AssignmentOperator__wstring__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__wstring__SetsTypeCorrectly)
 {
 	std::wstring expected = L"Hello, World.";
 
@@ -2485,7 +2497,7 @@ TEST(column_tests, AssignmentOperator__wstring__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_wchar, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__wstring__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__wstring__SetsCTypeCorrectly)
 {
 	std::wstring expected = L"Hello, World.";
 
@@ -2496,7 +2508,7 @@ TEST(column_tests, AssignmentOperator__wstring__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_wchar, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__wstring__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__wstring__SetsWidthCorrectly)
 {
 	std::wstring expected = L"Hello, World.";
 
@@ -2507,7 +2519,7 @@ TEST(column_tests, AssignmentOperator__wstring__SetsWidthCorrectly)
 	EXPECT_EQ((expected.length() + 1) * sizeof (std::wstring::value_type), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__wstring__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__wstring__SetsIndicatorCorrectly)
 {
 	std::wstring expected = L"Hello, World.";
 
@@ -2518,7 +2530,7 @@ TEST(column_tests, AssignmentOperator__wstring__SetsIndicatorCorrectly)
 	EXPECT_EQ(odbc::sql_indicator::sql_nts, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__wstring__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__wstring__SetsValueCorrectly)
 {
 	std::wstring expected = L"Hello, World.";
 
@@ -2531,7 +2543,7 @@ TEST(column_tests, AssignmentOperator__wstring__SetsValueCorrectly)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::wstring> expected;
 
@@ -2542,7 +2554,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsTypeCorrec
 	EXPECT_EQ(odbc::sql_type::sql_wchar, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::wstring> expected;
 
@@ -2553,7 +2565,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsCTypeCorre
 	EXPECT_EQ(odbc::sql_c_type::sql_c_wchar, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::wstring> expected;
 
@@ -2564,7 +2576,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsWidthCorre
 	EXPECT_EQ(0, c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::wstring> expected;
 
@@ -2575,7 +2587,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsIndicatorC
 	EXPECT_EQ(odbc::sql_indicator::sql_null_data, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsValueCorrectly)
 {
 	std::shared_ptr<std::wstring> expected;
 
@@ -2588,7 +2600,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__null__SetsValueCorre
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__SetsTypeCorrectly)
 {
 	std::shared_ptr<std::wstring> expected = std::make_shared<std::wstring>(L"Hello, World.");
 
@@ -2599,7 +2611,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsTypeCorrectly)
 	EXPECT_EQ(odbc::sql_type::sql_wchar, c.get_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsCTypeCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__SetsCTypeCorrectly)
 {
 	std::shared_ptr<std::wstring> expected = std::make_shared<std::wstring>(L"Hello, World.");
 
@@ -2610,7 +2622,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsCTypeCorrectly)
 	EXPECT_EQ(odbc::sql_c_type::sql_c_wchar, c.get_c_type());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsWidthCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__SetsWidthCorrectly)
 {
 	std::shared_ptr<std::wstring> expected = std::make_shared<std::wstring>(L"Hello, World.");
 
@@ -2621,7 +2633,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsWidthCorrectly)
 	EXPECT_EQ((expected->length() + 1) * sizeof (std::wstring::value_type), c.get_width());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsIndicatorCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__SetsIndicatorCorrectly)
 {
 	std::shared_ptr<std::wstring> expected = std::make_shared<std::wstring>(L"Hello, World.");
 
@@ -2632,7 +2644,7 @@ TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsIndicatorCorrect
 	EXPECT_EQ(odbc::sql_indicator::sql_nts, c.get_indicator());
 }
 
-TEST(column_tests, AssignmentOperator__shared_ptr__wstring__SetsValueCorrectly)
+TEST_F(column_tests, AssignmentOperator__shared_ptr__wstring__SetsValueCorrectly)
 {
 	std::shared_ptr<std::wstring> expected = std::make_shared<std::wstring>(L"Hello, World.");
 

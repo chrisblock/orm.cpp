@@ -7,7 +7,7 @@ template <typename TEntity>
 class IdColumnBuilder
 {
 public:
-	IdColumnBuilder(IdColumnSpecification<TEntity> &specification) :
+	explicit IdColumnBuilder(IdColumnSpecification<TEntity> &specification) :
 		  _specification(specification)
 	{
 	};

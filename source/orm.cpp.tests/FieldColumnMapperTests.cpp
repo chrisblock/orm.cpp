@@ -2,94 +2,114 @@
 
 #include <FieldColumnMapper.h>
 
-#include <member_types.h>
+#include <memory>
 
 #include "TestMappingEntity.h"
 
-TEST(FieldColumnMapperTests, GetColumnName_ReturnsColumnName)
+class FieldColumnMapperTests : public ::testing::Test
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+protected:
+	virtual void SetUp() override
+	{
+	};
 
-	EXPECT_EQ("Field", mapper.GetColumnName());
+	virtual void TearDown() override
+	{
+	};
+
+	template <typename TEntity, typename TField>
+	std::shared_ptr<FieldColumnMapper<TEntity, TField>> CreateFieldColumnMapper(TField field, const std::string &column) const
+	{
+		auto result = std::make_shared<FieldColumnMapper<TEntity, TField>>(field, column);
+
+		return result;
+	};
+};
+
+TEST_F(FieldColumnMapperTests, GetColumnName_ReturnsColumnName)
+{
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
+
+	EXPECT_EQ("Field", mapper->GetColumnName());
 }
 
-TEST(FieldColumnMapperTests, IsForMember_FieldMember_ReturnsTrue)
+TEST_F(FieldColumnMapperTests, IsForMember_FieldMember_ReturnsTrue)
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
 
-	IColumnMapper<TestMappingEntity> &iMapper = mapper;
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
 
-	EXPECT_TRUE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::_field));
+	EXPECT_TRUE(iMapper.IsForMember(&TestMappingEntity::_field));
 }
 
-//TEST(FieldColumnMapperTests, IsForMember_SetterMember_ReturnsFalse)
-//{
-//	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
-//
-//	IColumnMapper<TestMappingEntity> &iMapper = mapper;
-//
-//	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::SetterGetterSetter));
-//}
-
-//TEST(FieldColumnMapperTests, IsForMember_ConstSetterMember_ReturnsFalse)
-//{
-//	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
-//
-//	IColumnMapper<TestMappingEntity> &iMapper = mapper;
-//
-//	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::ConstSetterGetterSetter));
-//}
-
-//TEST(FieldColumnMapperTests, IsForMember_ReferenceSetterMember_ReturnsFalse)
-//{
-//	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
-//
-//	IColumnMapper<TestMappingEntity> &iMapper = mapper;
-//
-//	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::ReferenceSetterGetterSetter));
-//}
-
-//TEST(FieldColumnMapperTests, IsForMember_ConstReferenceSetterMember_ReturnsFalse)
-//{
-//	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
-//
-//	IColumnMapper<TestMappingEntity> &iMapper = mapper;
-//
-//	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::ConstReferenceSetterGetterSetter));
-//}
-
-TEST(FieldColumnMapperTests, IsForMember_GetterMember_ReturnsFalse)
+TEST_F(FieldColumnMapperTests, IsForMember_SetterMember_ReturnsFalse)
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
 
-	IColumnMapper<TestMappingEntity> &iMapper = mapper;
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
 
-	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::SetterGetterGetter));
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::SetterGetterSetter));
 }
 
-TEST(FieldColumnMapperTests, IsForMember_ConstGetterMember_ReturnsFalse)
+TEST_F(FieldColumnMapperTests, IsForMember_ConstSetterMember_ReturnsFalse)
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
 
-	IColumnMapper<TestMappingEntity> &iMapper = mapper;
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
 
-	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::SetterConstGetterGetter));
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::ConstSetterGetterSetter));
 }
 
-TEST(FieldColumnMapperTests, IsForMember_ReferenceGetterMember_ReturnsFalse)
+TEST_F(FieldColumnMapperTests, IsForMember_ReferenceSetterMember_ReturnsFalse)
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
 
-	IColumnMapper<TestMappingEntity> &iMapper = mapper;
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
 
-	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::SetterReferenceGetterGetter));
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::ReferenceSetterGetterSetter));
 }
 
-TEST(FieldColumnMapperTests, IsForMember_ConstReferenceGetterMember_ReturnsFalse)
+TEST_F(FieldColumnMapperTests, IsForMember_ConstReferenceSetterMember_ReturnsFalse)
 {
-	FieldColumnMapper<TestMappingEntity, std::int32_t> mapper(&TestMappingEntity::_field, "Field");
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
 
-	IColumnMapper<TestMappingEntity> &iMapper = mapper;
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
 
-	EXPECT_FALSE(iMapper.IsForMember<std::int32_t>(&TestMappingEntity::SetterConstReferenceGetterGetter));
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::ConstReferenceSetterGetterSetter));
+}
+
+TEST_F(FieldColumnMapperTests, IsForMember_GetterMember_ReturnsFalse)
+{
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
+
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
+
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::SetterGetterGetter));
+}
+
+TEST_F(FieldColumnMapperTests, IsForMember_ConstGetterMember_ReturnsFalse)
+{
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
+
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
+
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::SetterConstGetterGetter));
+}
+
+TEST_F(FieldColumnMapperTests, IsForMember_ReferenceGetterMember_ReturnsFalse)
+{
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
+
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
+
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::SetterReferenceGetterGetter));
+}
+
+TEST_F(FieldColumnMapperTests, IsForMember_ConstReferenceGetterMember_ReturnsFalse)
+{
+	auto mapper = CreateFieldColumnMapper<TestMappingEntity>(&TestMappingEntity::_field, "Field");
+
+	IColumnMapper<TestMappingEntity> &iMapper = *mapper;
+
+	EXPECT_FALSE(iMapper.IsForMember(&TestMappingEntity::SetterConstReferenceGetterGetter));
 }

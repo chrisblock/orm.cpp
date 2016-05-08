@@ -32,7 +32,7 @@ MockSqlExecutor &MockSqlExecutor::operator =(const MockSqlExecutor &other)
 	return *this;
 }
 
-std::shared_ptr<IDataReader> MockSqlExecutor::ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::shared_ptr<IDataReader> MockSqlExecutor::ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const orm::sql::statement &statement) const
 {
 	environment;
 	connectionString;
@@ -46,7 +46,7 @@ std::shared_ptr<IDataReader> MockSqlExecutor::ExecuteReader(const std::shared_pt
 	return reader;
 }
 
-std::uint32_t MockSqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::uint32_t MockSqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const orm::sql::statement &statement) const
 {
 	environment;
 	connectionString;
@@ -63,7 +63,7 @@ void MockSqlExecutor::SetColumnValue(const std::string &column, const std::int32
 	_columnValues[column] = value;
 }
 
-SqlStatement MockSqlExecutor::GetLastStatement() const
+orm::sql::statement MockSqlExecutor::GetLastStatement() const
 {
 	return _statement;
 }

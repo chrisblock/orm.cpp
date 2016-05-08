@@ -17,29 +17,23 @@ TestMappingEntityMap::TestMappingEntityMap()
 
 	Map(&TestMappingEntity::_field, "Field");
 
-	Map(&TestMappingEntity::SetterGetterSetter, &TestMappingEntity::SetterGetterGetter, "SetterGetter");
-	Map(&TestMappingEntity::SetterConstGetterSetter, &TestMappingEntity::SetterConstGetterGetter, "SetterConstGetter");
-	Map(&TestMappingEntity::SetterReferenceGetterSetter, &TestMappingEntity::SetterReferenceGetterGetter, "SetterReferenceGetter");
-	Map(&TestMappingEntity::SetterConstReferenceGetterSetter, &TestMappingEntity::SetterConstReferenceGetterGetter, "SetterConstReferenceGetter");
+	Map(&TestMappingEntity::SetterGetterGetter, &TestMappingEntity::SetterGetterSetter, "SetterGetter");
+	Map(&TestMappingEntity::SetterConstGetterGetter, &TestMappingEntity::SetterConstGetterSetter, "SetterConstGetter");
+	Map(&TestMappingEntity::SetterReferenceGetterGetter, &TestMappingEntity::SetterReferenceGetterSetter, "SetterReferenceGetter");
+	Map(&TestMappingEntity::SetterConstReferenceGetterGetter, &TestMappingEntity::SetterConstReferenceGetterSetter, "SetterConstReferenceGetter");
 
-	Map(&TestMappingEntity::ConstSetterGetterSetter, &TestMappingEntity::ConstSetterGetterGetter, "ConstSetterGetter");
-	Map(&TestMappingEntity::ConstSetterConstGetterSetter, &TestMappingEntity::ConstSetterConstGetterGetter, "ConstSetterConstGetter");
-	Map(&TestMappingEntity::ConstSetterReferenceGetterSetter, &TestMappingEntity::ConstSetterReferenceGetterGetter, "ConstSetterReferenceGetter");
-	Map(&TestMappingEntity::ConstSetterConstReferenceGetterSetter, &TestMappingEntity::ConstSetterConstReferenceGetterGetter, "ConstSetterConstReferenceGetter");
+	Map(&TestMappingEntity::ConstSetterGetterGetter, &TestMappingEntity::ConstSetterGetterSetter, "ConstSetterGetter");
+	Map(&TestMappingEntity::ConstSetterConstGetterGetter, &TestMappingEntity::ConstSetterConstGetterSetter, "ConstSetterConstGetter");
+	Map(&TestMappingEntity::ConstSetterReferenceGetterGetter, &TestMappingEntity::ConstSetterReferenceGetterSetter, "ConstSetterReferenceGetter");
+	Map(&TestMappingEntity::ConstSetterConstReferenceGetterGetter, &TestMappingEntity::ConstSetterConstReferenceGetterSetter, "ConstSetterConstReferenceGetter");
 
-	/*
-	Map(&TestMappingEntity::ReferenceSetterGetterSetter, &TestMappingEntity::ReferenceSetterGetterGetter, "ReferenceSetterGetter");
-	Map(&TestMappingEntity::ReferenceSetterConstGetterSetter, &TestMappingEntity::ReferenceSetterConstGetterGetter, "ReferenceSetterConstGetter");
-	Map(&TestMappingEntity::ReferenceSetterReferenceGetterSetter, &TestMappingEntity::ReferenceSetterReferenceGetterGetter, "ReferenceSetterReferenceGetter");
-	Map(&TestMappingEntity::ReferenceSetterConstReferenceGetterSetter, &TestMappingEntity::ReferenceSetterConstReferenceGetterGetter, "ReferenceSetterConstReferenceGetter");
-	*/
+	Map(&TestMappingEntity::ReferenceSetterGetterGetter, &TestMappingEntity::ReferenceSetterGetterSetter, "ReferenceSetterGetter");
+	Map(&TestMappingEntity::ReferenceSetterConstGetterGetter, &TestMappingEntity::ReferenceSetterConstGetterSetter, "ReferenceSetterConstGetter");
+	Map(&TestMappingEntity::ReferenceSetterReferenceGetterGetter, &TestMappingEntity::ReferenceSetterReferenceGetterSetter, "ReferenceSetterReferenceGetter");
+	Map(&TestMappingEntity::ReferenceSetterConstReferenceGetterGetter, &TestMappingEntity::ReferenceSetterConstReferenceGetterSetter, "ReferenceSetterConstReferenceGetter");
 
-	Map(&TestMappingEntity::ConstReferenceSetterGetterSetter, &TestMappingEntity::ConstReferenceSetterGetterGetter, "ConstReferenceSetterGetter");
-	Map(&TestMappingEntity::ConstReferenceSetterConstGetterSetter, &TestMappingEntity::ConstReferenceSetterConstGetterGetter, "ConstReferenceSetterConstGetter");
-	Map(&TestMappingEntity::ConstReferenceSetterReferenceGetterSetter, &TestMappingEntity::ConstReferenceSetterReferenceGetterGetter, "ConstReferenceSetterReferenceGetter");
-	Map(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter, &TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter, "ConstReferenceSetterConstReferenceGetter");
-}
-
-TestMappingEntityMap::~TestMappingEntityMap()
-{
+	Map(&TestMappingEntity::ConstReferenceSetterGetterGetter, &TestMappingEntity::ConstReferenceSetterGetterSetter, "ConstReferenceSetterGetter");
+	Map(&TestMappingEntity::ConstReferenceSetterConstGetterGetter, &TestMappingEntity::ConstReferenceSetterConstGetterSetter, "ConstReferenceSetterConstGetter");
+	Map(&TestMappingEntity::ConstReferenceSetterReferenceGetterGetter, &TestMappingEntity::ConstReferenceSetterReferenceGetterSetter, "ConstReferenceSetterReferenceGetter");
+	Map(&TestMappingEntity::ConstReferenceSetterConstReferenceGetterGetter, &TestMappingEntity::ConstReferenceSetterConstReferenceGetterSetter, "ConstReferenceSetterConstReferenceGetter");
 }

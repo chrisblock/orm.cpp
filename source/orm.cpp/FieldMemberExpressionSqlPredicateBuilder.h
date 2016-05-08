@@ -2,16 +2,16 @@
 
 #include "ClassMap.h"
 #include "MappingRegistry.h"
-#include "member_types.h"
-#include "SqlColumn.h"
+#include "sql_column.h"
 
-template <typename TEntity, typename TProperty>
+template <typename TEntity, typename TField>
 class FieldMemberExpressionSqlPredicateBuilder : public ISqlPredicateBuilder
 {
 public:
-	typedef typename member_types<TEntity, TProperty>::field field;
+	typedef TEntity entity_type;
+	typedef TField field_type;
 
-	FieldMemberExpressionSqlPredicateBuilder(field field) :
+	FieldMemberExpressionSqlPredicateBuilder(field_type field) :
 		  _field(field)
 	{
 	};
@@ -35,11 +35,11 @@ public:
 		return *this;
 	};
 
-	virtual SqlPredicate Build(const MappingRegistry &registry) const
+	virtual SqlPredicate Build(const MappingRegistry &registry) const override
 	{
 		std::shared_ptr<ClassMap<TEntity>> map = registry.GetMapping<TEntity>();
 
-		SqlColumn column = map->GetMappedColumn<TProperty>(_field);
+		orm::sql::sql_column column = map->GetMappedColumn(_field);
 
 		SqlPredicate result(column.GetColumnString());
 
@@ -47,5 +47,5 @@ public:
 	};
 
 private:
-	field _field;
+	field_type _field;
 };

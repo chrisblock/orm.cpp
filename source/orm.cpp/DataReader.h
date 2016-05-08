@@ -17,11 +17,15 @@ class Guid;
 class DataReader : public IDataReader
 {
 public:
+	DataReader();
 	DataReader(const std::shared_ptr<odbc::statement> &statement, const std::string &commandText);
 	DataReader(const DataReader &other) = delete;
+	DataReader(DataReader &&other);
 	virtual ~DataReader();
 
 	DataReader &operator =(const DataReader &other) = delete;
+
+	friend void swap(DataReader &left, DataReader &right);
 
 	virtual bool Read();
 
@@ -75,3 +79,5 @@ private:
 
 	std::shared_ptr<odbc::statement> _statement;
 };
+
+void swap(DataReader &left, DataReader &right);

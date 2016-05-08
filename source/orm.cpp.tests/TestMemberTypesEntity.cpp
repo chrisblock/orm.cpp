@@ -26,7 +26,7 @@ TestMemberTypesEntity &TestMemberTypesEntity::operator =(const TestMemberTypesEn
 	return *this;
 }
 
-int TestMemberTypesEntity::Accessor()
+int TestMemberTypesEntity::Getter()
 {
 	return _integer;
 }

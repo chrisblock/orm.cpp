@@ -31,6 +31,9 @@
     <Filter Include="Database\Impl">
       <UniqueIdentifier>{5a39b0ce-9e91-4dfa-8da6-1bb5499c7406}</UniqueIdentifier>
     </Filter>
+    <Filter Include="member_types">
+      <UniqueIdentifier>{1ee33bb3-19ad-4b3d-af8e-00b5ad0d0934}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h" />
@@ -83,64 +86,12 @@
     <ClInclude Include="SqlPredicate.h">
       <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClInclude>
-    <ClInclude Include="member_types.h" />
     <ClInclude Include="Guid.h" />
     <ClInclude Include="FieldColumnMapper.h">
       <Filter>Mapping\ColumnMappers\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="ConstReferenceSetterConstGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstReferenceSetterGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstReferenceSetterReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstReferenceSetterConstReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstSetterConstGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstSetterGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstSetterReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstSetterConstReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceSetterGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceSetterConstGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceSetterReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceSetterConstReferenceGetterColumnMapper.h">
-      <Filter>Mapping\ColumnMappers\Impl</Filter>
-    </ClInclude>
     <ClInclude Include="BaseExpression.h">
       <Filter>Expressions</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstGetterMemberExpressionSqlPredicateBuilder.h">
-      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceGetterMemberExpressionSqlPredicateBuilder.h">
-      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstReferenceGetterMemberExpressionSqlPredicateBuilder.h">
-      <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlColumn.h">
-      <Filter>Expressions\SqlPredicateBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="Session.h">
-      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="SessionFactory.h">
       <Filter>Database</Filter>
@@ -160,25 +111,10 @@
     <ClInclude Include="IDataReader.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="FromClause.h">
-      <Filter>Database\Sql</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlTable.h">
-      <Filter>Database\Sql</Filter>
-    </ClInclude>
     <ClInclude Include="Query.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="IQuery.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="ISqlDialect.h">
-      <Filter>Database\Sql</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlProjection.h">
-      <Filter>Database\Sql</Filter>
-    </ClInclude>
-    <ClInclude Include="SqlStatement.h">
       <Filter>Database\Sql</Filter>
     </ClInclude>
     <ClInclude Include="SqlServerDialect.h">
@@ -196,9 +132,6 @@
     <ClInclude Include="ISqlExecutor.h">
       <Filter>Database\Sql</Filter>
     </ClInclude>
-    <ClInclude Include="JoinClause.h">
-      <Filter>Database\Sql</Filter>
-    </ClInclude>
     <ClInclude Include="SqlParameter.h">
       <Filter>Database\Sql</Filter>
     </ClInclude>
@@ -210,6 +143,48 @@
     </ClInclude>
     <ClInclude Include="Record.h">
       <Filter>Database\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_table.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="join_clause.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_column.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="from_clause.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="projection.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="statement.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="where_clause.h">
+      <Filter>Database\Sql</Filter>
+    </ClInclude>
+    <ClInclude Include="decomposition.h">
+      <Filter>member_types</Filter>
+    </ClInclude>
+    <ClInclude Include="decompose.h">
+      <Filter>member_types</Filter>
+    </ClInclude>
+    <ClInclude Include="decomposer.h">
+      <Filter>member_types</Filter>
+    </ClInclude>
+    <ClInclude Include="memberizer.h">
+      <Filter>member_types</Filter>
+    </ClInclude>
+    <ClInclude Include="GetterSetterColumnMapper.h">
+      <Filter>Mapping\ColumnMappers\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="to_string.h">
+      <Filter>member_types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +201,6 @@
     <ClCompile Include="IsNullExpressionSqlPredicateBuilder.cpp">
       <Filter>Expressions\SqlPredicateBuilders\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="ISqlPredicateBuilder.cpp">
-      <Filter>Expressions\SqlPredicateBuilders</Filter>
-    </ClCompile>
     <ClCompile Include="SqlPredicate.cpp">
       <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClCompile>
@@ -238,9 +210,6 @@
     </ClCompile>
     <ClCompile Include="BaseExpression.cpp">
       <Filter>Expressions</Filter>
-    </ClCompile>
-    <ClCompile Include="SqlColumn.cpp">
-      <Filter>Expressions\SqlPredicateBuilders</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
       <Filter>Database</Filter>
@@ -263,21 +232,6 @@
     <ClCompile Include="IDataReader.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="FromClause.cpp">
-      <Filter>Database\Sql</Filter>
-    </ClCompile>
-    <ClCompile Include="SqlTable.cpp">
-      <Filter>Database\Sql</Filter>
-    </ClCompile>
-    <ClCompile Include="IQuery.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="SqlProjection.cpp">
-      <Filter>Database\Sql</Filter>
-    </ClCompile>
-    <ClCompile Include="SqlStatement.cpp">
-      <Filter>Database\Sql</Filter>
-    </ClCompile>
     <ClCompile Include="SqlServerDialect.cpp">
       <Filter>Database\Sql\Impl</Filter>
     </ClCompile>
@@ -296,14 +250,29 @@
     <ClCompile Include="SqlExecutor.cpp">
       <Filter>Database\Sql\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="JoinClause.cpp">
-      <Filter>Database\Sql</Filter>
-    </ClCompile>
     <ClCompile Include="SqlParameter.cpp">
       <Filter>Database\Sql</Filter>
     </ClCompile>
     <ClCompile Include="Record.cpp">
       <Filter>Database\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_table.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="join_clause.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_column.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="from_clause.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="projection.cpp">
+      <Filter>Database\Sql</Filter>
+    </ClCompile>
+    <ClCompile Include="statement.cpp">
+      <Filter>Database\Sql</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@
 #include <statement.h>
 
 #include "DataReader.h"
-#include "SqlStatement.h"
+#include "statement.h"
 
 SqlExecutor::SqlExecutor()
 {
@@ -33,7 +33,7 @@ SqlExecutor &SqlExecutor::operator =(const SqlExecutor &other)
 	return *this;
 }
 
-std::shared_ptr<IDataReader> SqlExecutor::ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::shared_ptr<IDataReader> SqlExecutor::ExecuteReader(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const orm::sql::statement &statement) const
 {
 	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString);
 
@@ -52,7 +52,7 @@ std::shared_ptr<IDataReader> SqlExecutor::ExecuteReader(const std::shared_ptr<od
 	return reader;
 }
 
-std::uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const SqlStatement &statement) const
+std::uint32_t SqlExecutor::ExecuteSql(const std::shared_ptr<odbc::environment> &environment, const std::string &connectionString, const orm::sql::statement &statement) const
 {
 	std::shared_ptr<odbc::connection> connection = std::make_shared<odbc::connection>(environment, connectionString);
 

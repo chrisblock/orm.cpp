@@ -9,5 +9,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="binary_data_tests.cpp" />
     <ClCompile Include="column_tests.cpp" />
+    <ClCompile Include="statement_tests.cpp" />
+    <ClCompile Include="environment_tests.cpp" />
   </ItemGroup>
 </Project>

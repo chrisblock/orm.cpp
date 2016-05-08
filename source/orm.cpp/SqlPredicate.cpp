@@ -4,6 +4,14 @@
 
 #include <parameter.h>
 
+void swap(SqlPredicate &left, SqlPredicate &right)
+{
+	using std::swap;
+
+	swap(left._parameters, right._parameters);
+	swap(left._predicate, right._predicate);
+}
+
 SqlPredicate::SqlPredicate()
 {
 }
@@ -19,18 +27,25 @@ SqlPredicate::SqlPredicate(const std::string &predicate, const std::vector<std::
 {
 }
 
+SqlPredicate::SqlPredicate(const SqlPredicate &other) :
+	  _predicate(other._predicate)
+	, _parameters(other._parameters)
+{
+}
+
+SqlPredicate::SqlPredicate(SqlPredicate &&other)
+{
+	swap(*this, other);
+}
+
 SqlPredicate::~SqlPredicate()
 {
 	_parameters.clear();
 }
 
-SqlPredicate &SqlPredicate::operator =(const SqlPredicate &other)
+SqlPredicate &SqlPredicate::operator =(SqlPredicate other)
 {
-	if (this != &other)
-	{
-		_predicate = other._predicate;
-		_parameters = other._parameters;
-	}
+	swap(*this, other);
 
 	return *this;
 }
@@ -65,12 +80,22 @@ std::shared_ptr<odbc::parameter> SqlPredicate::GetParameter(const std::uint32_t 
 	return _parameters.at(index);
 }
 
-std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::GetBegin() const
+std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::begin() const
+{
+	return cbegin();
+}
+
+std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::cbegin() const
 {
 	return _parameters.cbegin();
 }
 
-std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::GetEnd() const
+std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::end() const
+{
+	return cend();
+}
+
+std::vector<std::shared_ptr<odbc::parameter>>::const_iterator SqlPredicate::cend() const
 {
 	return _parameters.cend();
 }

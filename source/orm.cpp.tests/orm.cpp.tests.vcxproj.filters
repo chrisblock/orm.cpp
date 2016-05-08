@@ -57,9 +57,6 @@
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="orm.cpp.tests.cpp" />
-    <ClCompile Include="member_types_tests.cpp">
-      <Filter>member_types</Filter>
-    </ClCompile>
     <ClCompile Include="TestMemberTypesEntity.cpp">
       <Filter>member_types</Filter>
     </ClCompile>
@@ -114,45 +111,18 @@
     <ClCompile Include="FieldColumnMapperTests.cpp">
       <Filter>Mapping</Filter>
     </ClCompile>
-    <ClCompile Include="ConstReferenceSetterConstGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstReferenceSetterConstReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstReferenceSetterGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstReferenceSetterReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstSetterConstGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstSetterConstReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstSetterGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstSetterReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ReferenceSetterConstGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ReferenceSetterConstReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ReferenceSetterGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="ReferenceSetterReferenceGetterColumnMapperTests.cpp">
-      <Filter>Mapping</Filter>
-    </ClCompile>
     <ClCompile Include="FromClauseTests.cpp" />
     <ClCompile Include="QueryTests.cpp">
       <Filter>Sessions</Filter>
+    </ClCompile>
+    <ClCompile Include="decompose_tests.cpp">
+      <Filter>member_types</Filter>
+    </ClCompile>
+    <ClCompile Include="to_string_tests.cpp">
+      <Filter>member_types</Filter>
+    </ClCompile>
+    <ClCompile Include="GetterSetterColumnMapperTests.cpp">
+      <Filter>Mapping</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

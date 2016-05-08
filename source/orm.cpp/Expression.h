@@ -21,17 +21,27 @@ public:
 	{
 	};
 
+	Expression(Expression &&other) :
+		  Expression()
+	{
+		swap(*this, other);
+	};
+
 	virtual ~Expression()
 	{
 	};
 
-	Expression &operator =(const Expression &other)
+	Expression &operator =(Expression other)
 	{
-		if (this != &other)
-		{
-			BaseExpression::operator =(other);
-		}
+		swap(*this, other);
 
 		return *this;
+	};
+
+	friend void swap(Expression &left, Expression &right)
+	{
+		using std::swap;
+
+		swap(static_cast<BaseExpression &>(left), static_cast<BaseExpression &>(right));
 	};
 };

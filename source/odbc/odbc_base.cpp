@@ -249,6 +249,7 @@ odbc::sql_c_type odbc::odbc_base::get_c_type(const odbc::sql_type &sqlType) cons
 		std::exception e("Sql type out of range.");
 
 		throw e;
+
 		break;
 	}
 

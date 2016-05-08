@@ -9,20 +9,30 @@ namespace odbc
 	class environment;
 };
 
-class Session;
-
-class SessionFactory
+namespace orm
 {
-public:
-	SessionFactory(const std::shared_ptr<odbc::environment> &connection, const SessionFactoryConfiguration &configuration);
-	SessionFactory(const SessionFactory &other);
-	virtual ~SessionFactory();
+	class session;
+}
 
-	SessionFactory &operator =(const SessionFactory &other);
+namespace orm
+{
+	class SessionFactory
+	{
+	public:
+		SessionFactory();
+		SessionFactory(const std::shared_ptr<odbc::environment> &connection, const SessionFactoryConfiguration &configuration);
+		SessionFactory(const SessionFactory &other);
+		SessionFactory(SessionFactory &&other);
+		virtual ~SessionFactory();
 
-	Session Open() const;
+		SessionFactory &operator =(SessionFactory other);
 
-private:
-	std::shared_ptr<odbc::environment> _environment;
-	SessionFactoryConfiguration _configuration;
+		friend void swap(SessionFactory &left, SessionFactory &right);
+
+		orm::session Open() const;
+
+	private:
+		std::shared_ptr<odbc::environment> _environment;
+		SessionFactoryConfiguration _configuration;
+	};
 };

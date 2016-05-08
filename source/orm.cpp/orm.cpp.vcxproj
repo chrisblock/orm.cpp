@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -52,6 +52,7 @@
       <EnablePREfast>true</EnablePREfast>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(SolutionDir)\odbc</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -69,6 +70,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\odbc</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -82,22 +84,17 @@
     <ClInclude Include="BinaryExpressionSqlPredicateBuilder.h" />
     <ClInclude Include="BinaryOperators.h" />
     <ClInclude Include="ClassMap.h" />
-    <ClInclude Include="ConstGetterMemberExpressionSqlPredicateBuilder.h" />
-    <ClInclude Include="ConstReferenceGetterMemberExpressionSqlPredicateBuilder.h" />
-    <ClInclude Include="ConstSetterConstGetterColumnMapper.h" />
     <ClInclude Include="ConstantExpressionSqlPredicateBuilder.h" />
-    <ClInclude Include="ConstReferenceSetterConstReferenceGetterColumnMapper.h" />
-    <ClInclude Include="ConstReferenceSetterGetterColumnMapper.h" />
-    <ClInclude Include="ConstReferenceSetterReferenceGetterColumnMapper.h" />
-    <ClInclude Include="ConstSetterConstReferenceGetterColumnMapper.h" />
-    <ClInclude Include="ConstSetterGetterColumnMapper.h" />
-    <ClInclude Include="ConstSetterReferenceGetterColumnMapper.h" />
+    <ClInclude Include="GetterSetterColumnMapper.h" />
     <ClInclude Include="DataReader.h" />
+    <ClInclude Include="decompose.h" />
+    <ClInclude Include="decomposer.h" />
+    <ClInclude Include="decomposition.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="ExpressionOperators.h" />
     <ClInclude Include="FieldColumnMapper.h" />
     <ClInclude Include="FieldMemberExpressionSqlPredicateBuilder.h" />
-    <ClInclude Include="FromClause.h" />
+    <ClInclude Include="from_clause.h" />
     <ClInclude Include="GenerationStrategy.h" />
     <ClInclude Include="GetterMemberExpressionSqlPredicateBuilder.h" />
     <ClInclude Include="Guid.h" />
@@ -106,39 +103,34 @@
     <ClInclude Include="IdColumnBuilder.h" />
     <ClInclude Include="IdColumnSpecification.h" />
     <ClInclude Include="IMappingProvider.h" />
-    <ClInclude Include="IQuery.h" />
     <ClInclude Include="IRecord.h" />
     <ClInclude Include="IsNullExpressionSqlPredicateBuilder.h" />
     <ClInclude Include="ISqlDialect.h" />
     <ClInclude Include="ISqlExecutor.h" />
     <ClInclude Include="ISqlPredicateBuilder.h" />
-    <ClInclude Include="JoinClause.h" />
+    <ClInclude Include="join_clause.h" />
     <ClInclude Include="MakeExpression.h" />
     <ClInclude Include="MappingRegistrar.h" />
     <ClInclude Include="MappingRegistry.h" />
-    <ClInclude Include="member_types.h" />
+    <ClInclude Include="memberizer.h" />
     <ClInclude Include="Predicate.h" />
-    <ClInclude Include="Query.h" />
-    <ClInclude Include="Session.h" />
+    <ClInclude Include="query.h" />
+    <ClInclude Include="session.h" />
     <ClInclude Include="SessionFactory.h" />
     <ClInclude Include="SessionFactoryConfiguration.h" />
-    <ClInclude Include="SqlColumn.h" />
+    <ClInclude Include="sql_column.h" />
     <ClInclude Include="Record.h" />
-    <ClInclude Include="ConstReferenceSetterConstGetterColumnMapper.h" />
-    <ClInclude Include="ReferenceGetterMemberExpressionSqlPredicateBuilder.h" />
-    <ClInclude Include="ReferenceSetterConstGetterColumnMapper.h" />
-    <ClInclude Include="ReferenceSetterConstReferenceGetterColumnMapper.h" />
-    <ClInclude Include="ReferenceSetterGetterColumnMapper.h" />
-    <ClInclude Include="ReferenceSetterReferenceGetterColumnMapper.h" />
     <ClInclude Include="SqlExecutor.h" />
     <ClInclude Include="SqlParameter.h" />
     <ClInclude Include="SqlPredicate.h" />
-    <ClInclude Include="SqlProjection.h" />
+    <ClInclude Include="projection.h" />
     <ClInclude Include="SqlServerDialect.h" />
-    <ClInclude Include="SqlStatement.h" />
-    <ClInclude Include="SqlTable.h" />
+    <ClInclude Include="statement.h" />
+    <ClInclude Include="sql_table.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="to_string.h" />
+    <ClInclude Include="where_clause.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseExpression.cpp" />
@@ -146,35 +138,31 @@
     <ClCompile Include="BinaryOperators.cpp" />
     <ClCompile Include="ConstantExpressionSqlPredicateBuilder.cpp" />
     <ClCompile Include="DataReader.cpp" />
-    <ClCompile Include="FromClause.cpp" />
+    <ClCompile Include="from_clause.cpp" />
     <ClCompile Include="Guid.cpp" />
     <ClCompile Include="IDataReader.cpp" />
     <ClCompile Include="IMappingProvider.cpp" />
-    <ClCompile Include="IQuery.cpp" />
     <ClCompile Include="IRecord.cpp" />
     <ClCompile Include="IsNullExpressionSqlPredicateBuilder.cpp" />
     <ClCompile Include="ISqlDialect.cpp" />
     <ClCompile Include="ISqlExecutor.cpp" />
-    <ClCompile Include="ISqlPredicateBuilder.cpp" />
-    <ClCompile Include="JoinClause.cpp" />
+    <ClCompile Include="join_clause.cpp" />
     <ClCompile Include="MappingRegistrar.cpp" />
     <ClCompile Include="MappingRegistry.cpp" />
-    <ClCompile Include="Session.cpp" />
+    <ClCompile Include="session.cpp" />
     <ClCompile Include="SessionFactory.cpp" />
     <ClCompile Include="SessionFactoryBuilder.cpp" />
-    <ClInclude Include="SessionFactoryBuilder.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
+    <ClInclude Include="SessionFactoryBuilder.h" />
     <ClCompile Include="SessionFactoryConfiguration.cpp" />
-    <ClCompile Include="SqlColumn.cpp" />
+    <ClCompile Include="sql_column.cpp" />
     <ClCompile Include="Record.cpp" />
     <ClCompile Include="SqlExecutor.cpp" />
     <ClCompile Include="SqlParameter.cpp" />
     <ClCompile Include="SqlPredicate.cpp" />
-    <ClCompile Include="SqlProjection.cpp" />
+    <ClCompile Include="projection.cpp" />
     <ClCompile Include="SqlServerDialect.cpp" />
-    <ClCompile Include="SqlStatement.cpp" />
-    <ClCompile Include="SqlTable.cpp" />
+    <ClCompile Include="statement.cpp" />
+    <ClCompile Include="sql_table.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
